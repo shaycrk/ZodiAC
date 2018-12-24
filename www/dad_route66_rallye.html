@@ -211,10 +211,10 @@ var courseMarkers = [
 
 var checkpoints = [
 	// lat, 		long, 			label, 		visibleHeading
-  [38.526059, -121.965151, 'Start Checkpoint', west],
-  [38.518716, -121.977428, 'Checkpoint 2', west],
-  [38.518716, -121.977428, 'Checkpoint 3', east],
-	[38.482848, -122.000869, 'End Checkpoint', west]
+  [38.526059, -121.965151, 'Start Checkpoint', west, '<b>SI:</b> Enjoy the rallye! Hover over coursemarkers to see their label.'],
+  [38.518716, -121.977428, 'Checkpoint 2', west, '<b>SI:</b> On Course'],
+  [38.518716, -121.977428, 'Checkpoint 3', east, '<b>SI:</b> DRI 13, L at Emery, CRI 14'],
+	[38.482848, -122.000869, 'End Checkpoint', west, '<b>SI:</b> Congratulations on finishing the rallye - hope you had fun!']
 ];
 
 var otherObjects = [
@@ -298,8 +298,7 @@ function placeCPs(map, iconScale=1.0) {
   
   var cp_markers = [];
   checkpoints.forEach(function(cp) {
-  	cp_markers.push(
-    	new DirectionalMarker({
+  	var marker = new DirectionalMarker({
       	position: {lat: cp[0], lng: cp[1]},
         map: map,
         icon: cpIcon,
@@ -307,9 +306,18 @@ function placeCPs(map, iconScale=1.0) {
       },
       cp[3]
       )
-    );
+
+  	cp_markers.push(marker);
+
+		var infoWindowObject = new google.maps.InfoWindow;
+		var infoWindowHTML = cp[4];
+		google.maps.event.addListener(marker, 'click', function() {
+			infoWindowObject.setContent(infoWindowHTML);
+			infoWindowObject.open(map, marker);
+		});
+
   });
-  
+
   return cp_markers;
 }
 

@@ -214,7 +214,7 @@ var checkpoints = [
   // lat,     long,       label,    visibleHeading
   [38.526059, -121.965151, 'Start Checkpoint', west, '<b>SI:</b> Enjoy the rallye! Hover over coursemarkers to see their label.'],
   [38.518716, -121.977428, 'Checkpoint 2', west, '<b>SI:</b> On Course'],
-  [38.518716, -121.977428, 'Checkpoint 3', east, '<b>SI:</b> DRI 13, L at Emery, CRI 14'],
+  [38.518716, -121.977428, 'Checkpoint 3', east, '<b>SI:</b> Exit the CP heading west. DRI 13, L at Emery, CRI 14'],
   [38.482848, -122.000869, 'End Checkpoint', west, '<b>SI:</b> Congratulations on finishing the rallye - hope you had fun!']
 ];
 
@@ -446,6 +446,22 @@ function checkDistance(center, marker) {
   //console.log(distance);
 }
 
+function removeMarker(markerTitle) {
+  markers.forEach(function(m) { 
+    if ((m.title != null) && (m.title == markerTitle)) { 
+      m.setMap(null); 
+    } 
+  });
+}
+
+function setVisibleAngle(markerTitle, newAngle) {
+  markers.forEach(function(m) { 
+    if ((m.title != null) && (m.title == markerTitle)) { 
+      m.visibleAngle = newAngle;
+    } 
+  });
+}
+
 </script>
 
 <script>
@@ -491,6 +507,14 @@ function recordCM() {
     parent.insertAdjacentHTML('beforeend', newChild);
   }
   document.getElementById("inputCM").value = '';
+
+  // if we just recorded M13 ("No Barking") need to fix up direction of CP3 entry...
+  // FIXME: find a way to get this out of code!
+  if (newCM == 'M13') {
+    removeMarker('Checkpoint 2');
+    setVisibleAngle('Checkpoint 3', 180);
+  }
+
   return false;
 }
 

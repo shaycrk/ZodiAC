@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Street View Events</title>
+    <style>
+			/* Always set the map height explicitly to define the size of the div
+			 * element that contains the map. */
+			#map {
+			  height: 50%;
+			}
+			/* Optional: Makes the sample page fill the window. */
+			html, body {
+			  height: 100%;
+			  margin: 0;
+			  padding: 0;
+			}
+			#floating-panel {
+			  position: absolute;
+			  top: 10px;
+			  left: 25%;
+			  z-index: 5;
+			  background-color: #fff;
+			  padding: 5px;
+			  border: 1px solid #999;
+			  text-align: center;
+			  font-family: 'Roboto','sans-serif';
+			  line-height: 30px;
+			  padding-left: 10px;
+			}
+			#floating-panel {
+			  margin-left: -100px;
+			}
+			#menu {
+				background-color: #000;
+				font-family: Helvetica;
+			}
+			#menu > ul {
+				margin: 0;
+				padding: 0;
+				color: white;
+			  list-style-type: none;
+			  margin: 0;
+			  padding: 0;
+			  overflow: hidden;
+			  background-color: #333;
+			}
+			li {
+			  float: left;
+			}
+
+			li a {
+			  display: block;
+			  color: white;
+			  text-align: center;
+			  padding: 14px 16px;
+			  text-decoration: none;
+			}
+
+			/* Change the link color to #111 (black) on hover */
+			li a:hover {
+			  background-color: #111;
+			}
+
+			li a.active {
+				background-color: #fff;
+				color: #000;
+			}
+
+			#content {
+				background-color: #fff;
+				padding: 2px;
+				height: 40%;
+				font-family: Helvetica;
+			}
+
+			#instructions {
+				width: 78%;
+				height: 100%;
+				display: inline-block;
+				vertical-align: top;
+				overflow: scroll;
+			}
+
+			#scoresheet {
+				width: 20%;
+				height: 100%;
+				display: inline-block;
+				vertical-align: top;
+				overflow: scroll;
+				border-left: 1px solid black;
+				padding-left: 7px;
+			}
+
+			h2 {
+				margin: 0;
+				padding: 0;
+			}
+
+			.scoreInput {
+				float: right;
+				padding: 13px 16px;
+			}
+
+			.recordedCM {
+				margin-bottom: 2px;
+				padding: 1px;
+				background-color: #f0f0f0;
+				border-radius: 4px;
+			}
+
+			a.xout {
+				padding-right: 7px;
+				color: #988;
+				font-size: 10px;
+				text-decoration: none;
+				padding-left: 5px;
+				font-weight: bold;
+			}
+
+			a.xout:hover {
+				color: red;
+			}
+
+			#instructions iframe {
+				width: 100%;
+				height: 100%;
+			}
+
+    </style>
+  </head>
+  <body>
+		<!--
+		<div id="floating-panel">
+		  <input type="button" value="Toggle Street View" onclick="toggleStreetView();"></input>
+		</div>
+		-->
+		<div id="map"></div>
+		<div id="menu">
+			<ul>
+				<li><a href="#" class="active" id="web" onClick="loadInstructions('web');">How To Play</a></li>
+				<li><a href="#" id="generals" onClick="loadInstructions('generals');">General Instructions</a></li>
+				<li><a href="#" id="route" onClick="loadInstructions('route');">Route Instructions</a></li>
+				<li><a href="#" id="supps" onClick="loadInstructions('supps');">Supplemental Instructions</a></li>
+				<li class="scoreInput">
+					<form>
+					<input id="inputCM" type="text" width=25></input>
+					<input type="submit" value="Record CM" onClick="return recordCM();"></input>
+					</form>
+				</li>
+			</ul>
+		</div>
+		<div id="content">
+			<div id="instructions"><iframe src="virtual_rallye_info.pdf"></iframe></div>
+			<div id="scoresheet"><h2>Scoresheet</h2></div>
+		</div>
+
+<script>
+var panorama;
+
+// some variables for headings
+// Winters grid about -10 deg off true north,
+// so traveling north is 350 and so on
+var north = 350
+var south = 170
+var west = 260
+var east = 80
+
+var startLoc = {lat: 38.5261, lng: -121.9648};
+//var startLoc = {lat: 38.483338, lng: -121.998583}; //end
+var startHeading = 240;
+
+var courseMarkers = [
+	// lat, 		long, 			label, 		visibleHeading
+	[38.525653, -121.967800, 'A\n27', north],
+  [38.526014, -121.965279, 'E\n66', west],
+  [38.524990, -121.968197, 'H\n20', west],
+	[38.525519, -121.96601, 'PP\n6', east],
+  [38.524763, -121.967306, 'U\n1', south],
+  [38.524025, -121.968251, 'Y\n10', west],
+  [38.523143, -121.968272, 'X\n25', west],
+  [38.523236, -121.966394, 'B\n9', south],
+  [38.522480, -121.967714, 'HHH\n19', south],
+  [38.524033, -121.970895, 'G\n14', west],
+  [38.522315, -121.970109, 'K\n17', east],
+  [38.520947, -121.969970, 'SS\n21', north],
+  [38.522736, -121.971073, 'R\n33', south],
+  [38.523126, -121.971269, 'I\n22', south],
+  [38.523490, -121.971481, 'N\n23', north],
+  [38.524104, -121.971849, 'II\n3', north],
+  [38.523439, -121.972470, 'O\n12', west],
+  [38.521254, -121.971947, 'T\n11', north],
+  [38.520161, -121.969709, 'SSS\n31', south],
+  [38.519739, -121.972135, 'F\n4', east],
+  [38.521471, -121.973899, 'Z\n666', south],
+  [38.521599, -121.975002, 'YY\n7', west],
+  [38.520154, -121.975059, 'V\n8', south],
+  [38.520404, -121.975786, 'W\n29', east],
+  [38.520097, -121.976635, 'J\n26', west],
+  [38.519240, -121.975990, 'M\n13', east],
+  [38.518633, -121.975247, 'D\n28', west],
+  [38.518039, -121.974593, 'AA\n2', south],
+  [38.518173, -121.976235, 'III\n30', west],
+  [38.518940, -121.978580, 'BNG\n31', north],
+  [38.518250, -121.978784, 'Q\n16', east],
+  [38.518518, -121.979364, 'S\n5', 310],
+  [38.518122, -121.980834, 'P\n18', west],
+  [38.519656, -121.981234, 'HH\n15', north],
+  [38.483035, -122.000249, 'L\n34', 10]
+];
+
+var checkpoints = [
+	// lat, 		long, 			label, 		visibleHeading
+  [38.526059, -121.965151, 'Start Checkpoint', west],
+  [38.518716, -121.977428, 'Checkpoint 2', west],
+  [38.518716, -121.977428, 'Checkpoint 3', east],
+	[38.482848, -122.000869, 'End Checkpoint', west]
+];
+
+var otherObjects = [
+	// lat, long, label, url, width, height, visibleHeading
+  [38.518685, -121.977501, 'No Barking Sign', 'https://shaycrk.files.wordpress.com/2018/12/no_barking.gif', 30, 60, east],
+  [38.482995, -122.000226, 'Red Rocking Chair', 'https://shaycrk.files.wordpress.com/2018/12/red_rocking_chair.gif', 35, 56, 280]
+];
+
+
+function classLoader() {
+
+class DirectionalMarker extends google.maps.Marker {
+
+	// distance in meters, angle in degrees to one side
+	constructor(markerOpts, visibleHeading, visibleDistance=50, visibleAngle=60) {
+  	super(markerOpts);
+    this.visibleDistance = visibleDistance;
+    this.visibleHeading = visibleHeading;
+    this.visibleAngle = visibleAngle;
+  }
+
+	checkVisibility(latlong, heading) {
+  	if (
+    	(this.distanceTo(latlong) <= this.visibleDistance ) &&
+      (this.angleBetween(heading) <= this.visibleAngle)
+    ) {
+    	this.setVisible(true);
+    } else {
+    	this.setVisible(false);
+    }
+  }
+  
+  distanceTo(latlong) {
+  	return google.maps.geometry.spherical.computeDistanceBetween(
+    latlong, this.getPosition());
+  }
+  
+  angleBetween(heading) {
+		var diff = Math.abs(this.visibleHeading - heading);
+		return Math.min(360-diff, diff);
+  }
+
+}
+
+return DirectionalMarker;
+}
+
+function placeObjects(map, iconScale=1.0) {
+	DirectionalMarker = classLoader();
+  
+  var obj_markers = [];
+  otherObjects.forEach(function(obj) {
+		var objIcon = {
+    	url: obj[3],
+      scaledSize: new google.maps.Size(obj[4]*iconScale, obj[5]*iconScale)
+    };
+		obj_markers.push(
+    	new DirectionalMarker({
+      	position: {lat: obj[0], lng: obj[1]},
+        map: map,
+        icon: objIcon
+      },
+      obj[6]
+      )
+    );
+  });
+  
+  return obj_markers;
+}
+
+function placeCPs(map, iconScale=1.0) {
+	DirectionalMarker = classLoader();
+
+	// sign size to display (pixels)
+  var cpWidth = 30*iconScale;
+  var cpHeight = 45*iconScale;
+  var cpIcon = {
+  	url: 'https://shaycrk.files.wordpress.com/2018/12/checkpoint.gif',
+    scaledSize: new google.maps.Size(cpWidth, cpHeight)
+  };
+  
+  var cp_markers = [];
+  checkpoints.forEach(function(cp) {
+  	cp_markers.push(
+    	new DirectionalMarker({
+      	position: {lat: cp[0], lng: cp[1]},
+        map: map,
+        icon: cpIcon,
+        title: cp[2]
+      },
+      cp[3]
+      )
+    );
+  });
+  
+  return cp_markers;
+}
+
+function placeCMs(map, iconScale=1.0) {
+	DirectionalMarker = classLoader();
+
+	// course marker size to display (pixels)
+  var cmWidth = 35*iconScale
+  var cmHeight = 150*iconScale
+	var cmIcon = {
+  	url: 'https://shaycrk.files.wordpress.com/2018/12/cm_on_pole.gif',
+    scaledSize: new google.maps.Size(cmWidth, cmHeight)
+  };
+
+	var markers = [];
+	courseMarkers.forEach(function(cm) {
+  	markers.push(
+    	new DirectionalMarker({
+      	position: {lat: cm[0], lng: cm[1]},
+        map: map,
+        icon: cmIcon,
+        title: cm[2]
+      },
+      cm[3]
+      )
+    );
+  });
+  
+  return markers;
+}
+
+// map version: view for the rallye master
+function initGoogleMap() {
+  var map = new google.maps.Map(
+  	document.getElementById('map'), {
+    center: startLoc,
+    zoom: 18,
+    streetViewControl: true
+  });
+  panorama = map.getStreetView();
+  
+  var markers = placeCMs(map, 0.3);
+  markers = markers.concat(placeCPs(map, 0.3));
+  markers = markers.concat(placeObjects(map, 0.3));
+}
+
+// street view version: actually run the rallye
+function initStreetView() {
+  var map = new google.maps.StreetViewPanorama(
+    document.getElementById('map'), {
+    position: startLoc,
+    pov: {
+      heading: startHeading,
+      pitch: 0
+    },
+    visible: true
+  });
+  panorama = map;
+
+	var markers = placeCMs(map, 1.6);
+  markers = markers.concat(placeCPs(map, 1.6));
+  markers = markers.concat(placeObjects(map, 1.6));
+  
+  var center = panorama.getPosition();
+  var heading = panorama.getPov().heading;
+	markers.forEach(
+  	function(marker) { marker.checkVisibility(center, heading); }
+  );
+
+  panorama.addListener('position_changed', function() {
+  	center = panorama.getPosition();
+    heading = panorama.getPov().heading;
+    markers.forEach(
+    	function(marker) { marker.checkVisibility(center, heading); }
+    );
+  });
+
+  panorama.addListener('pov_changed', function() {
+  	center = panorama.getPosition();
+    heading = panorama.getPov().heading;
+    markers.forEach(
+    	function(marker) { marker.checkVisibility(center, heading); }
+    );
+  });
+
+}
+
+function toggleStreetView() {
+  var toggle = panorama.getVisible();
+  if (toggle == false) {
+    panorama.setVisible(true);
+  } else {
+    panorama.setVisible(false);
+  }
+}
+
+function checkDistance(center, marker) {
+	var markerLatLng = marker.getPosition();
+  var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
+  if (distance <= 50.0) {
+  	marker.setVisible(true);
+  } else {
+  	marker.setVisible(false);
+  }
+  //console.log(distance);
+}
+
+</script>
+
+<script>
+
+function loadInstructions(instruction) {
+	// todo: pull in actual content here...
+	switch (instruction) {
+		case 'web':
+			srcURL = 'virtual_rallye_info.pdf';
+			break;
+		case 'generals':
+			srcURL = 'general_instructions.pdf';
+			break;
+		case 'route':
+			srcURL = 'route_instructions.pdf';
+			break;
+		case 'supps':
+			srcURL = 'supplemental_instructions.pdf';
+			break;
+	}
+	document.getElementById("instructions").innerHTML = "<iframe src='"+srcURL+"'></iframe>";
+
+	// remove active class from any current menu item (using array prototype forEach)
+	var elms = document.getElementsByClassName("active");
+	[].forEach.call(elms, function(s) { s.classList.remove("active"); });
+
+	// add the active class to the clicked menu item
+	document.getElementById(instruction).classList.add("active");
+}
+
+function cleanInputCM(inputValue) {
+	var regex = /[^A-Z0-9]/g;
+	return inputValue.toUpperCase().replace(regex, '');
+}
+
+function recordCM() {
+	// TODO: keep track in a list to allow for scoring? (ideally by sending data to a server so CM point values can remain hidden?)
+	var newCM = cleanInputCM(document.getElementById("inputCM").value);
+	if (document.getElementById('recordedCM-'+newCM) == null) {
+		// only add if not already recorded
+		var parent = document.getElementById("scoresheet");
+		var newChild = '<div id="recordedCM-'+newCM+'" class="recordedCM"><a href="#" class="xout" onClick="removeCM(\''+newCM+'\');">X</a>'+newCM+'</div>';
+		parent.insertAdjacentHTML('beforeend', newChild);
+	}
+	document.getElementById("inputCM").value = '';
+	return false;
+}
+
+function removeCM(toRemove) {
+	document.getElementById('recordedCM-'+toRemove).remove();
+}
+
+</script>
+
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3-5-mUDJ2dfNR3l-8u_g2_XCBOeNbJvU&libraries=geometry&callback=initStreetView">
+		</script>
+  </body>
+

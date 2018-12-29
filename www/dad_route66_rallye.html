@@ -156,6 +156,7 @@
     </div>
 
 <script>
+var mapObj;
 var panorama;
 var markers;
 
@@ -214,7 +215,7 @@ var courseMarkers = [
 var checkpoints = [
   // lat,     long,       label,    visibleHeading
   [38.526059, -121.965151, 'Start Checkpoint', west, '<b>SI:</b> Enjoy the rallye! Hover over coursemarkers to see their label.'],
-  [38.518716, -121.977428, 'Checkpoint 2', west, '<b>SI:</b> On Course'],
+  [38.518716, -121.977428, 'Checkpoint 2', west, '<b>SI:</b> On Course. Exit the CP heading west, CRI 5.'],
   [38.518716, -121.977428, 'Checkpoint 3', east, '<b>SI:</b> Exit the CP heading west. DRI 13, L at Emery, CRI 14'],
   [38.482848, -122.000869, 'End Checkpoint', west, '<b>SI:</b> Congratulations on finishing the rallye - hope you had fun!']
 ];
@@ -351,6 +352,41 @@ function placeCMs(map, iconScale=1.0) {
   return cm_markers;
 }
 
+function placeArrow(map, lat, lng, angle, height, title=null) {
+  var arrowCenter = new google.maps.Point(0, -2);
+  new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    icon: {
+      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+      scale: 2,
+      strokeColor: "#a0f",
+      fillColor: "#a0f",
+      fillOpacity: 1.0,
+      anchor: addPoints(rotateCoordinates(0, height, -1*angle), arrowCenter, subtract=true),
+      rotation: angle
+    },
+    zIndex: 9999,
+    title: title,
+    map: map
+  });
+}
+
+function placeArrows(map) {
+
+  courseMarkers.forEach(function(cm) {
+    placeArrow(map, cm[0], cm[1], cm[3] - 180, 13, cm[2]);
+  });
+
+  checkpoints.forEach(function(cp) {
+    placeArrow(map, cp[0], cp[1], cp[3] - 180, 9, cp[2]);
+  });
+
+  otherObjects.forEach(function(obj) {
+    placeArrow(map, obj[0], obj[1], obj[6] - 180, 13);
+  });
+
+}
+
 function getQueryVariable(variable)
 {
        var query = window.location.search.substring(1);
@@ -360,6 +396,28 @@ function getQueryVariable(variable)
                if(pair[0] == variable){return pair[1];}
        }
        return(false);
+}
+
+function addPoints(p1, p2, subtract=false) {
+  var fac = 1.0;
+  if (subtract) {
+    fac = -1.0;
+  }
+  return new google.maps.Point(p1.x + fac*p2.x, p1.y + fac*p2.y)
+}
+
+function rotateCoordinates(x, y, phi) {
+  // phi is a clockwise rotation of the coordinate system,
+  // expressed in degrees
+  var r = Math.sqrt(x**2 + y**2)
+  var theta = Math.atan(y/x)
+  if (x < 0) {
+    // correct for arctan range
+    theta = theta + Math.PI
+  }
+  var x_prime = r*Math.cos(theta + phi*Math.PI/180)
+  var y_prime = r*Math.sin(theta + phi*Math.PI/180)
+  return new google.maps.Point(x_prime, y_prime)
 }
 
 function initMap() {
@@ -377,13 +435,18 @@ function initGoogleMap() {
     document.getElementById('map'), {
     center: startLoc,
     zoom: 16,
-    streetViewControl: true
+    streetViewControl: true,
+    mapTypeControl: false,
+    rotateControl: false
   });
   panorama = map.getStreetView();
+  mapObj = map;
   
   markers = placeCMs(map, 0.3);
   markers = markers.concat(placeCPs(map, 0.3));
   markers = markers.concat(placeObjects(map, 0.3));
+
+  placeArrows(map);
 }
 
 // street view version: actually run the rallye

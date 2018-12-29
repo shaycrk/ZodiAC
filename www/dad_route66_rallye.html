@@ -353,6 +353,18 @@ function placeCMs(map, iconScale=1.0) {
 }
 
 function placeArrow(map, lat, lng, angle, height, title=null) {
+  // place an arrow over a map marker, rotated to point a certain direction (e.g., the
+  // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
+  // translation by `anchor` is done after rotating the coordinate system, so have
+  // to rotate the coordinates of the translation as well. Finally, because rotations
+  // happen around the tip of the arrow, translate back (in the original coordinates) 
+  // by the size of the arrow to have the center end up where we want it.
+
+  // Two notes that add a little complexity:
+  //  1. The coordinate system appears to be left-handed, with greater x-values
+  //     further to the west
+  //  2. rotations are taken clockwise from due north (the y-axis) as opposed to
+  //     polar-coordinates that measure counter-clockwise from the x-axis
   var arrowCenter = new google.maps.Point(0, -2);
   new google.maps.Marker({
     position: {lat: lat, lng: lng},

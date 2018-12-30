@@ -167,6 +167,8 @@
 
         <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or 0-360 degrees clockwise from north).</p>
 
+        <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' /><br />
+        <br />
         Rallye Name: <input id="rallyeName" type="text" size=50></input><br />
         <br />
         Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10"></input><br />
@@ -946,6 +948,95 @@ function downloadRallye() {
 }
 
 
+
+</script>
+
+<script type="text/javascript">
+
+  function loadFile() {
+    var input, file, fr;
+
+    if (typeof window.FileReader !== 'function') {
+      alert("The file API isn't supported on this browser yet.");
+      return;
+    }
+
+    input = document.getElementById('fileinput');
+    if (!input) {
+      alert("Um, couldn't find the fileinput element.");
+    }
+    else if (!input.files) {
+      alert("This browser doesn't seem to support the `files` property of file inputs.");
+    }
+    else if (!input.files[0]) {
+      alert("Please select a file before clicking 'Load'");
+    }
+    else {
+      file = input.files[0];
+      fr = new FileReader();
+      fr.onload = receivedText;
+      fr.readAsText(file);
+    }
+
+    function receivedText(e) {
+      let lines = e.target.result;
+      var rallyeDict = JSON.parse(lines); 
+      rallyeFromDict(rallyeDict);
+
+    }
+  }
+
+  function rallyeFromDict(rallyeDict) {
+    document.getElementById("rallyeName").value = rallyeDict['rallyeName'];
+
+    document.getElementById("northOffset").value = rallyeDict['gridOffset'];
+    gridOffset();
+
+    document.getElementById("giURL").value = rallyeDict['generalsURL'];
+    document.getElementById("riURL").value = rallyeDict['routeURL'];
+    document.getElementById("suppURL").value = rallyeDict['suppsURL'];
+
+    var lat, lng, selectIdx, heading, label, cpSI;
+
+    lat = rallyeDict['rallye_start']['lat'];
+    lng = rallyeDict['rallye_start']['lng'];
+    heading = rallyeDict['rallye_start']['heading'];
+    setEditorValues(lat, lng, heading, '', '', 'start');
+    handleObject(confirm=true);
+    mapObj.setCenter({lat: lat, lng: lng});
+
+    rallyeDict['courseMarkers'].forEach(function(cm) {
+      setEditorValues(cm[0], cm[1], cm[3], cm[2], '', 'cm');
+      handleObject(confirm=true);
+    });
+
+    rallyeDict['checkpoints'].forEach(function(cp) {
+      setEditorValues(cp[0], cp[1], cp[3], cp[2], cp[4].replace('<b>SI </b>', ''), 'cp');
+      handleObject(confirm=true);
+    });
+
+  }
+
+  function setEditorValues(lat, lng, heading, label, cpSI, objType) {
+    var selectIdx;
+    switch (objType) {
+      case 'cm':
+        selectIdx = 0;
+        break;
+      case 'cp':
+        selectIdx = 1;
+        break;
+      case 'start':
+        selectIdx = 2;
+        break;
+    }
+    document.getElementById("objectType").selectedIndex = selectIdx;
+    document.getElementById("objectLat").innerHTML = lat;
+    document.getElementById("objectLng").innerHTML = lng;
+    document.getElementById("objectHeading").value = heading;
+    document.getElementById("objectLabel").value = label;
+    document.getElementById("cpSI").value = cpSI;
+  }
 
 </script>
 

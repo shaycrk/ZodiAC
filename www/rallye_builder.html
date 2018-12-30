@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>ZodiAC Presents...</title>
+    <title>ZodiAC Rallye Builder</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -127,6 +127,30 @@
         height: 100%;
       }
 
+      #errorMsg {
+        width: 100%;
+        color: #a00;
+        font-family: Helvetica;
+        margin: 3px;
+      }
+
+      #objectEditor {
+        width: 29%;
+        vertical-align: top;
+        overflow: scroll;
+        font-family: Helvetica;
+        display: inline-block;
+      }
+
+      #settings {
+        width: 69%;
+        vertical-align: top;
+        overflow: scroll;
+        font-family: Helvetica;
+        display: inline-block;
+        padding: 2px;
+      }
+
     </style>
   </head>
   <body>
@@ -136,96 +160,57 @@
     </div>
     -->
     <div id="map"></div>
-    <div id="menu">
-      <ul>
-        <li><a href="#" class="active" id="web" onClick="loadInstructions('web');">How To Play</a></li>
-        <li><a href="#" id="generals" onClick="loadInstructions('generals');">General Instructions</a></li>
-        <li><a href="#" id="route" onClick="loadInstructions('route');">Route Instructions</a></li>
-        <li><a href="#" id="supps" onClick="loadInstructions('supps');">Supplemental Instructions</a></li>
-        <li class="scoreInput">
-          <form>
-          <input id="inputCM" type="text" width=25></input>
-          <input type="submit" value="Record CM" onClick="return recordCM();"></input>
-          </form>
-        </li>
-      </ul>
-    </div>
+    <div id="errorMsg"></div>
     <div id="content">
-      <div id="instructions"><iframe src="virtual_rallye_info.pdf"></iframe></div>
-      <div id="scoresheet"><h2>Scoresheet</h2></div>
+      <div id="settings">
+        <p>Click on the map above to place a course marker, checkpoint, or the rallye starting point, then set the object information in the form to the right. Click <b>Preview</b> to see where it will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
+
+        <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or 0-360 degrees clockwise from north).</p>
+
+        Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10"></input><br />
+        <br />
+        General Instructions URL: <input id="giURL" type="text" size=70></input><br />
+        Route Instructions URL: <input id="riURL" type="text" size=70></input><br />
+        Supplemental Instructions URL: <input id="suppURL" type="text" size=70></input><br />
+      </div>
+      <div id="objectEditor">
+        Latitude: <span id="objectLat"></span><br />
+        Longitude: <span id="objectLng"></span><br />
+        <br />
+        Type: <select id="objectType">
+        <option value="cm">Course Marker</option>
+        <option value="cp">Checkpoint</option>
+        <option value="start">Rallye Start</option>
+        </select><br />
+        Heading: <input id="objectHeading" type="text" size=21></input><br />
+        Label: <input id="objectLabel" type="text" size=25></input><br />
+        Checkpoint SI:<br /><textarea id="cpSI" cols=30 rows=4></textarea><br />
+        <input type="button" value="Preview" onclick="handleObject();"></input>
+        <input type="button" value="Confirm" onclick="handleObject(confirm=true);"></input>
+      </div>
     </div>
 
 <script>
 var mapObj;
-var panorama;
-var markers;
+var currMarker;
+var currArrow;
+var openInfoWindow;
+
+var rallyeStart;
+var courseMarkers = {};
+var checkpoints = {};
 
 // some variables for headings
 // Winters grid about -10 deg off true north,
 // so traveling north is 350 and so on
-var north = 350
-var south = 170
-var west = 260
-var east = 80
+var north = 0
+var south = 180
+var west = 270
+var east = 90
 
 var startLoc = {lat: 38.5261, lng: -121.9648};
 //var startLoc = {lat: 38.483338, lng: -121.998583}; //end
 var startHeading = 240;
-
-var courseMarkers = [
-  // lat,     long,       label,    visibleHeading
-  [38.525653, -121.967800, 'A\n27', north],
-  [38.526014, -121.965279, 'E\n66', west],
-  [38.524990, -121.968197, 'H\n20', west],
-  [38.525519, -121.96601, 'PP\n6', east],
-  [38.524763, -121.967306, 'U\n1', south],
-  [38.524025, -121.968251, 'Y\n10', west],
-  [38.523143, -121.968272, 'X\n25', west],
-  [38.523236, -121.966394, 'B\n9', south],
-  [38.522480, -121.967714, 'HHH\n19', south],
-  [38.524033, -121.970895, 'G\n14', west],
-  [38.522315, -121.970109, 'K\n17', east],
-  [38.520947, -121.969970, 'SS\n21', north],
-  [38.522736, -121.971073, 'R\n33', south],
-  [38.523126, -121.971269, 'I\n22', south],
-  [38.523490, -121.971481, 'N\n23', north],
-  [38.524104, -121.971849, 'II\n3', north],
-  [38.523439, -121.972470, 'O\n12', west],
-  [38.521254, -121.971947, 'T\n11', north],
-  [38.520161, -121.969709, 'SSS\n31', south],
-  [38.519739, -121.972135, 'F\n4', east],
-  [38.521471, -121.973899, 'Z\n666', south],
-  [38.523507, -121.971790, 'EE\n32', east],
-  [38.521599, -121.975002, 'YY\n7', west],
-  [38.520154, -121.975059, 'V\n8', south],
-  [38.520404, -121.975786, 'W\n29', east],
-  [38.520097, -121.976635, 'J\n26', west],
-  [38.519240, -121.975990, 'M\n13', east],
-  [38.518633, -121.975247, 'D\n28', west],
-  [38.518039, -121.974593, 'AA\n2', south],
-  [38.518173, -121.976235, 'III\n30', west],
-  [38.518940, -121.978580, 'BNG\n31', north],
-  [38.518250, -121.978784, 'Q\n16', east],
-  [38.518518, -121.979364, 'S\n5', 310],
-  [38.518122, -121.980834, 'P\n18', west],
-  [38.519656, -121.981234, 'HH\n15', north],
-  [38.483035, -122.000249, 'L\n34', 10]
-];
-
-var checkpoints = [
-  // lat,     long,       label,    visibleHeading
-  [38.526059, -121.965151, 'Start Checkpoint', west, '<b>SI:</b> Enjoy the rallye! Hover over coursemarkers to see their label.'],
-  [38.518716, -121.977428, 'Checkpoint 2', west, '<b>SI:</b> On Course. Exit the CP heading west, CRI 5.'],
-  [38.518716, -121.977428, 'Checkpoint 3', east, '<b>SI:</b> Exit the CP heading west. DRI 13, L at Emery, CRI 14'],
-  [38.482848, -122.000869, 'End Checkpoint', west, '<b>SI:</b> Congratulations on finishing the rallye - hope you had fun!']
-];
-
-var otherObjects = [
-  // lat, long, label, url, width, height, visibleHeading
-  [38.518685, -121.977501, 'No Barking Sign', 'https://shaycrk.files.wordpress.com/2018/12/no_barking.gif', 30, 60, east],
-  [38.482995, -122.000226, 'Red Rocking Chair', 'https://shaycrk.files.wordpress.com/2018/12/red_rocking_chair.gif', 35, 56, 280]
-];
-
 
 function classLoader() {
 
@@ -288,7 +273,76 @@ function placeObjects(map, iconScale=1.0) {
   return obj_markers;
 }
 
-function placeCPs(map, iconScale=1.0) {
+function editObj(objType, title) {
+
+  var lat, lng, selectIdx, heading, label, cpSI;
+
+  switch (objType) {
+    case 'cm':
+      lat = courseMarkers[title]['lat'];
+      lng = courseMarkers[title]['lng'];
+      selectIdx = 0;
+      heading = courseMarkers[title]['rawHeading'];
+      label = title;
+      cpSI = '';
+      break;
+    case 'cp':
+      lat = checkpoints[title]['lat'];
+      lng = checkpoints[title]['lng'];
+      selectIdx = 1;
+      heading = checkpoints[title]['rawHeading'];
+      label = title;
+      cpSI = checkpoints[title]['checkpoint_si'];
+      break;
+    case 'start':
+      lat = rallyeStart['lat'];
+      lng = rallyeStart['lng'];
+      selectIdx = 2;
+      heading = rallyeStart['rawHeading'];
+      label = '';
+      cpSI = '';
+      break;
+  }
+
+  document.getElementById("objectType").selectedIndex = selectIdx;
+  document.getElementById("objectLat").innerHTML = lat;
+  document.getElementById("objectLng").innerHTML = lng;
+  document.getElementById("objectHeading").value = heading;
+  document.getElementById("objectLabel").value = label;
+  document.getElementById("cpSI").value = cpSI;
+
+  // remove the existing object
+  removeObj(objType, title);
+
+  // replace it with a preview from the editor
+  handleObject();
+}
+
+function removeObj(objType, title) {
+  if (openInfoWindow) {
+    openInfoWindow.close();
+    openInfoWindow = null;
+  }
+
+  switch (objType) {
+    case 'cm':
+      courseMarkers[title]['marker_object'].setVisible(false);
+      courseMarkers[title]['arrow_object'].setVisible(false);
+      delete courseMarkers[title];
+      break;
+    case 'cp':
+      checkpoints[title]['marker_object'].setVisible(false);
+      checkpoints[title]['arrow_object'].setVisible(false);
+      delete checkpoints[title];
+      break;
+    case 'start':
+      rallyeStart['arrow_object'].setVisible(false);
+      rallyeStart = null;
+      break;
+  }
+}
+
+function placeCP(map, lat, lng, heading, title, cpSI, iconScale=1.0) {
   DirectionalMarker = classLoader();
 
   // sign size to display (pixels)
@@ -299,32 +353,34 @@ function placeCPs(map, iconScale=1.0) {
     scaledSize: new google.maps.Size(cpWidth, cpHeight)
   };
   
-  var cp_markers = [];
-  checkpoints.forEach(function(cp) {
-    var marker = new DirectionalMarker({
-        position: {lat: cp[0], lng: cp[1]},
-        map: map,
-        icon: cpIcon,
-        title: cp[2]
-      },
-      cp[3]
-      )
+  var marker = new DirectionalMarker({
+      position: {lat: lat, lng: lng},
+      map: map,
+      icon: cpIcon,
+      title: title
+    },
+    heading
+    )
 
-    cp_markers.push(marker);
+  var infoWindowObject = new google.maps.InfoWindow;
 
-    var infoWindowObject = new google.maps.InfoWindow;
-    var infoWindowHTML = cp[4];
-    google.maps.event.addListener(marker, 'click', function() {
-      infoWindowObject.setContent(infoWindowHTML);
-      infoWindowObject.open(map, marker);
-    });
+  var infoWindowHTML = '<b>SI:</b> ' + cpSI;
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cp\', \''+title+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\'cp\', \''+title+'\');">Remove</a><br />';
 
+  google.maps.event.addListener(marker, 'click', function() {
+    if (openInfoWindow) {
+      openInfoWindow.close();
+    }
+    infoWindowObject.setContent(infoWindowHTML);
+    infoWindowObject.open(map, marker);
+    openInfoWindow = infoWindowObject;
   });
 
-  return cp_markers;
+  return marker;
 }
 
-function placeCMs(map, iconScale=1.0) {
+function placeCM(map, lat, lng, heading, title, iconScale=1.0) {
   DirectionalMarker = classLoader();
 
   // course marker size to display (pixels)
@@ -335,24 +391,34 @@ function placeCMs(map, iconScale=1.0) {
     scaledSize: new google.maps.Size(cmWidth, cmHeight)
   };
 
-  var cm_markers = [];
-  courseMarkers.forEach(function(cm) {
-    cm_markers.push(
-      new DirectionalMarker({
-        position: {lat: cm[0], lng: cm[1]},
+  var marker = new DirectionalMarker({
+        position: {lat: lat, lng: lng},
         map: map,
         icon: cmIcon,
-        title: cm[2]
+        title: title
       },
-      cm[3]
-      )
-    );
+      heading
+      );
+
+  var infoWindowObject = new google.maps.InfoWindow;
+
+  var infoWindowHTML = title;
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cm\', \''+title+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\'cm\', \''+title+'\');">Remove</a><br />';
+
+  google.maps.event.addListener(marker, 'click', function() {
+    if (openInfoWindow) {
+      openInfoWindow.close();
+    }
+    infoWindowObject.setContent(infoWindowHTML);
+    infoWindowObject.open(map, marker);
+    openInfoWindow = infoWindowObject;
   });
-  
-  return cm_markers;
+
+  return marker;
 }
 
-function placeArrow(map, lat, lng, angle, height, title=null) {
+function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
   // place an arrow over a map marker, rotated to point a certain direction (e.g., the
   // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
   // translation by `anchor` is done after rotating the coordinate system, so have
@@ -366,13 +432,13 @@ function placeArrow(map, lat, lng, angle, height, title=null) {
   //  2. rotations are taken clockwise from due north (the y-axis) as opposed to
   //     polar-coordinates that measure counter-clockwise from the x-axis
   var arrowCenter = new google.maps.Point(0, -2);
-  new google.maps.Marker({
+  return new google.maps.Marker({
     position: {lat: lat, lng: lng},
     icon: {
       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
       scale: 2,
-      strokeColor: "#a0f",
-      fillColor: "#a0f",
+      strokeColor: color,
+      fillColor: color,
       fillOpacity: 1.0,
       anchor: addPoints(rotateCoordinates(0, height, -1*angle), arrowCenter, subtract=true),
       rotation: angle
@@ -380,6 +446,23 @@ function placeArrow(map, lat, lng, angle, height, title=null) {
     zIndex: 9999,
     title: title,
     map: map
+  });
+}
+
+function arrowInfoWindow(map, marker, objType, title) {
+  var infoWindowObject = new google.maps.InfoWindow;
+
+  var infoWindowHTML = title;
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\''+objType+'\', \''+title+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\''+objType+'\', \''+title+'\');">Remove</a><br />';
+
+  google.maps.event.addListener(marker, 'click', function() {
+    if (openInfoWindow) {
+      openInfoWindow.close();
+    }
+    infoWindowObject.setContent(infoWindowHTML);
+    infoWindowObject.open(map, marker);
+    openInfoWindow = infoWindowObject;
   });
 }
 
@@ -439,12 +522,8 @@ function rotateCoordinates(x, y, phi) {
 }
 
 function initMap() {
-  rmView = getQueryVariable('rallyemaster-view') || 'false';
-  if (rmView.toLowerCase() == 'true') {
-    initGoogleMap();
-  } else {
-    initStreetView();
-  }
+  gridOffset();
+  initGoogleMap();
 }
 
 // map version: view for the rallye master
@@ -455,16 +534,18 @@ function initGoogleMap() {
     zoom: 16,
     streetViewControl: true,
     mapTypeControl: false,
-    rotateControl: false
+    rotateControl: false,
+    draggableCursor: 'crosshair'
   });
-  panorama = map.getStreetView();
   mapObj = map;
   
-  markers = placeCMs(map, 0.3);
-  markers = markers.concat(placeCPs(map, 0.3));
-  markers = markers.concat(placeObjects(map, 0.3));
-
-  placeArrows(map);
+  map.addListener('click', function(e) { 
+    if (openInfoWindow) {
+      openInfoWindow.close();
+      openInfoWindow = null;
+    }
+    updateEditor(e.latLng.lat(), e.latLng.lng()); 
+  });
 }
 
 // street view version: actually run the rallye
@@ -604,10 +685,192 @@ function removeCM(toRemove) {
   document.getElementById('recordedCM-'+toRemove).remove();
 }
 
+function updateEditor(lat, lng) {
+  document.getElementById("objectLat").innerHTML = lat;
+  document.getElementById("objectLng").innerHTML = lng;
+}
+
+function parseHeading(rawHeading) {
+  var heading;
+  switch (rawHeading) {
+    case 'north':
+      heading = north;
+      break;
+    case 'south':
+      heading = south;
+      break;
+    case 'east':
+      heading = east;
+      break;
+    case 'west':
+      heading = west;
+      break;
+    default:
+      heading = parseFloat(rawHeading);
+  }
+  return heading;
+}
+
+function gridOffset() {
+  var offset = parseFloat(document.getElementById("northOffset").value) || 0;
+  north = 0 + offset;
+  south = 180 + offset;
+  east = 90 + offset;
+  west = 270 + offset;
+
+  Object.keys(courseMarkers).forEach(function(key) {
+    courseMarkers[key]['arrow_object'].setVisible(false);
+    newArrow = placeArrow(
+      mapObj, 
+      courseMarkers[key]['lat'], 
+      courseMarkers[key]['lng'], 
+      parseHeading(courseMarkers[key]['rawHeading'])-180, 
+      13, 
+      courseMarkers[key]['label']
+    );
+    courseMarkers[key]['arrow_object'] = newArrow;
+  });
+
+  Object.keys(checkpoints).forEach(function(key) {
+    checkpoints[key]['arrow_object'].setVisible(false);
+    newArrow = placeArrow(
+      mapObj, 
+      checkpoints[key]['lat'], 
+      checkpoints[key]['lng'], 
+      parseHeading(checkpoints[key]['rawHeading'])-180, 
+      9, 
+      checkpoints[key]['label']
+    );
+    checkpoints[key]['arrow_object'] = newArrow;
+  });
+
+  if (rallyeStart) {
+    rallyeStart['arrow_object'].setVisible(false);
+    newArrow = placeArrow(
+      mapObj, 
+      rallyeStart['lat'], 
+      rallyeStart['lng'], 
+      parseHeading(rallyeStart['rawHeading']), 
+      0, 
+      'Rallye Start',
+      "#006400"
+    );
+    rallyeStart['arrow_object'] = newArrow;
+  }
+
+}
+
+function showError(errorText) {
+  document.getElementById("errorMsg").innerHTML = errorText;
+}
+
+function handleObject(confirm=false) {
+  var objType = document.getElementById("objectType").value;
+  var lat = parseFloat(document.getElementById("objectLat").textContent);
+  var lng = parseFloat(document.getElementById("objectLng").textContent);
+  var rawHeading = document.getElementById("objectHeading").value.toLowerCase();
+  var heading = parseHeading(rawHeading);
+  var label = document.getElementById("objectLabel").value.replace("\\n", "\n");
+  var cpSI = document.getElementById("cpSI").value;
+
+  // clear any current error
+  showError('');
+
+  if (!lat || !lng || rawHeading == '') {
+    showError('ERROR: Specify a location and heading!');
+    return false;
+  }
+
+  if (currMarker) {
+    currMarker.setVisible(false);
+    currMarker = null;
+  }
+
+  if (currArrow) {
+    currArrow.setVisible(false);
+    currArrow = null;
+  }
+
+  switch (objType) {
+    case 'cm':
+      if (courseMarkers[label]) {
+        showError('ERROR: Course marker '+label+' already exists!');
+      } else if (!label) {
+        showError('ERROR: Must specify a label for the course marker');
+      } else {
+        currMarker = placeCM(mapObj, lat, lng, heading, label, 0.3);
+        currArrow = placeArrow(mapObj, lat, lng, heading-180, 13, label);
+        arrowInfoWindow(mapObj, currArrow, 'cm', label);
+        if (confirm) {
+          courseMarkers[label] = {
+            'label': label,
+            'lat': lat,
+            'lng': lng,
+            'rawHeading': rawHeading,
+            'marker_object': currMarker,
+            'arrow_object': currArrow
+          };
+        }
+      }
+      break;
+    case 'cp':
+      if (checkpoints[label]) {
+        showError('ERROR: Checkpoint '+label+' already exists!');
+      } else if (!label || !cpSI) {
+        showError('ERROR: Specify a label and SI for the checkpoint');
+      } else {
+        currMarker = placeCP(mapObj, lat, lng, heading, label, cpSI, 0.3);
+        currArrow = placeArrow(mapObj, lat, lng, heading-180, 9, label);
+        if (confirm) {
+          checkpoints[label] = {
+            'label': label,
+            'lat': lat,
+            'lng': lng,
+            'rawHeading': rawHeading,
+            'checkpoint_si': cpSI,
+            'marker_object': currMarker,
+            'arrow_object': currArrow
+          };
+        }
+      }
+      break;
+    case 'start':
+      if (rallyeStart) {
+        showError("ERROR: Start already exists!");
+      } else {
+        currArrow = placeArrow(mapObj, lat, lng, heading, 0, 'Rallye Start', "#006400");
+        arrowInfoWindow(mapObj, currArrow, 'start', '');
+        if (confirm) {
+          rallyeStart = {
+            'lat': lat,
+            'lng': lng,
+            'rawHeading': rawHeading,
+            'arrow_object': currArrow
+          }
+        }
+      }
+      break;
+  }
+
+  if (confirm) {
+    // these have been added to the global vars, so remove them
+    currMarker = null;
+    currArrow = null;
+
+    // reset the object editor form
+    document.getElementById("objectType").selectedIndex = 0;
+    document.getElementById("objectLat").innerHTML = '';
+    document.getElementById("objectLng").innerHTML = '';
+    document.getElementById("objectHeading").value = '';
+    document.getElementById("objectLabel").value = '';
+    document.getElementById("cpSI").value = '';
+  }
+}
+
+
 </script>
 
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3-5-mUDJ2dfNR3l-8u_g2_XCBOeNbJvU&libraries=geometry&callback=initMap">
     </script>
   </body>
-

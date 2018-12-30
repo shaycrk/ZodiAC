@@ -15,57 +15,6 @@
         margin: 0;
         padding: 0;
       }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-      #floating-panel {
-        margin-left: -100px;
-      }
-      #menu {
-        background-color: #000;
-        font-family: Helvetica;
-      }
-      #menu > ul {
-        margin: 0;
-        padding: 0;
-        color: white;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background-color: #333;
-      }
-      li {
-        float: left;
-      }
-
-      li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-      }
-
-      /* Change the link color to #111 (black) on hover */
-      li a:hover {
-        background-color: #111;
-      }
-
-      li a.active {
-        background-color: #fff;
-        color: #000;
-      }
 
       #content {
         background-color: #fff;
@@ -75,57 +24,9 @@
         overflow: scroll;
       }
 
-      #instructions {
-        width: 78%;
-        height: 100%;
-        display: inline-block;
-        vertical-align: top;
-        overflow: scroll;
-      }
-
-      #scoresheet {
-        width: 20%;
-        height: 100%;
-        display: inline-block;
-        vertical-align: top;
-        overflow: scroll;
-        border-left: 1px solid black;
-        padding-left: 7px;
-      }
-
       h2 {
         margin: 0;
         padding: 0;
-      }
-
-      .scoreInput {
-        float: right;
-        padding: 13px 16px;
-      }
-
-      .recordedCM {
-        margin-bottom: 2px;
-        padding: 1px;
-        background-color: #f0f0f0;
-        border-radius: 4px;
-      }
-
-      a.xout {
-        padding-right: 7px;
-        color: #988;
-        font-size: 10px;
-        text-decoration: none;
-        padding-left: 5px;
-        font-weight: bold;
-      }
-
-      a.xout:hover {
-        color: red;
-      }
-
-      #instructions iframe {
-        width: 100%;
-        height: 100%;
       }
 
       #errorMsg {
@@ -294,29 +195,6 @@ class DirectionalMarker extends google.maps.Marker {
 }
 
 return DirectionalMarker;
-}
-
-function placeObjects(map, iconScale=1.0) {
-  DirectionalMarker = classLoader();
-  
-  var obj_markers = [];
-  otherObjects.forEach(function(obj) {
-    var objIcon = {
-      url: obj[3],
-      scaledSize: new google.maps.Size(obj[4]*iconScale, obj[5]*iconScale)
-    };
-    obj_markers.push(
-      new DirectionalMarker({
-        position: {lat: obj[0], lng: obj[1]},
-        map: map,
-        icon: objIcon
-      },
-      obj[6]
-      )
-    );
-  });
-  
-  return obj_markers;
 }
 
 function editObj(objType, title) {
@@ -610,142 +488,9 @@ function initGoogleMap() {
   });
 }
 
-// street view version: actually run the rallye
-function initStreetView() {
-  var map = new google.maps.StreetViewPanorama(
-    document.getElementById('map'), {
-    position: startLoc,
-    pov: {
-      heading: startHeading,
-      pitch: 0
-    },
-    visible: true
-  });
-  panorama = map;
-
-  markers = placeCMs(map, 1.6);
-  markers = markers.concat(placeCPs(map, 1.6));
-  markers = markers.concat(placeObjects(map, 1.6));
-  
-  var center = panorama.getPosition();
-  var heading = panorama.getPov().heading;
-  markers.forEach(
-    function(marker) { marker.checkVisibility(center, heading); }
-  );
-
-  panorama.addListener('position_changed', function() {
-    center = panorama.getPosition();
-    heading = panorama.getPov().heading;
-    markers.forEach(
-      function(marker) { marker.checkVisibility(center, heading); }
-    );
-  });
-
-  panorama.addListener('pov_changed', function() {
-    center = panorama.getPosition();
-    heading = panorama.getPov().heading;
-    markers.forEach(
-      function(marker) { marker.checkVisibility(center, heading); }
-    );
-  });
-
-}
-
-function toggleStreetView() {
-  var toggle = panorama.getVisible();
-  if (toggle == false) {
-    panorama.setVisible(true);
-  } else {
-    panorama.setVisible(false);
-  }
-}
-
-function checkDistance(center, marker) {
-  var markerLatLng = marker.getPosition();
-  var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
-  if (distance <= 50.0) {
-    marker.setVisible(true);
-  } else {
-    marker.setVisible(false);
-  }
-  //console.log(distance);
-}
-
-function removeMarker(markerTitle) {
-  markers.forEach(function(m) { 
-    if ((m.title != null) && (m.title == markerTitle)) { 
-      m.setMap(null); 
-    } 
-  });
-}
-
-function setVisibleAngle(markerTitle, newAngle) {
-  markers.forEach(function(m) { 
-    if ((m.title != null) && (m.title == markerTitle)) { 
-      m.visibleAngle = newAngle;
-    } 
-  });
-}
-
 </script>
 
 <script>
-
-function loadInstructions(instruction) {
-  // todo: pull in actual content here...
-  switch (instruction) {
-    case 'web':
-      srcURL = 'virtual_rallye_info.pdf';
-      break;
-    case 'generals':
-      srcURL = 'general_instructions.pdf';
-      break;
-    case 'route':
-      srcURL = 'route_instructions.pdf';
-      break;
-    case 'supps':
-      srcURL = 'supplemental_instructions.pdf';
-      break;
-  }
-  document.getElementById("instructions").innerHTML = "<iframe src='"+srcURL+"'></iframe>";
-
-  // remove active class from any current menu item (using array prototype forEach)
-  var elms = document.getElementsByClassName("active");
-  [].forEach.call(elms, function(s) { s.classList.remove("active"); });
-
-  // add the active class to the clicked menu item
-  document.getElementById(instruction).classList.add("active");
-}
-
-function cleanInputCM(inputValue) {
-  var regex = /[^A-Z0-9]/g;
-  return inputValue.toUpperCase().replace(regex, '');
-}
-
-function recordCM() {
-  // TODO: keep track in a list to allow for scoring? (ideally by sending data to a server so CM point values can remain hidden?)
-  var newCM = cleanInputCM(document.getElementById("inputCM").value);
-  if (document.getElementById('recordedCM-'+newCM) == null) {
-    // only add if not already recorded
-    var parent = document.getElementById("scoresheet");
-    var newChild = '<div id="recordedCM-'+newCM+'" class="recordedCM"><a href="#" class="xout" onClick="removeCM(\''+newCM+'\');">X</a>'+newCM+'</div>';
-    parent.insertAdjacentHTML('beforeend', newChild);
-  }
-  document.getElementById("inputCM").value = '';
-
-  // if we just recorded M13 ("No Barking") need to fix up direction of CP3 entry...
-  // FIXME: find a way to get this out of code!
-  if (newCM == 'M13') {
-    removeMarker('Checkpoint 2');
-    setVisibleAngle('Checkpoint 3', 180);
-  }
-
-  return false;
-}
-
-function removeCM(toRemove) {
-  document.getElementById('recordedCM-'+toRemove).remove();
-}
 
 function updateEditor(lat, lng) {
   document.getElementById("objectLat").innerHTML = lat;
@@ -791,6 +536,7 @@ function gridOffset() {
       courseMarkers[key]['label']
     );
     courseMarkers[key]['arrow_object'] = newArrow;
+    arrowInfoWindow(mapObj, newArrow, 'cm', courseMarkers[key]['label']);
   });
 
   Object.keys(checkpoints).forEach(function(key) {
@@ -818,6 +564,7 @@ function gridOffset() {
       "#006400"
     );
     rallyeStart['arrow_object'] = newArrow;
+    arrowInfoWindow(mapObj, newArrow, 'start', 'Rallye Start');
   }
 
 }
@@ -1009,6 +756,7 @@ function downloadRallye() {
 
 <script type="text/javascript">
 
+  // from: https://stackoverflow.com/questions/7346563/loading-local-json-file
   function loadFile() {
     var input, file, fr;
 

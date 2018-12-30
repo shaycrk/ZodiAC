@@ -167,11 +167,15 @@
 
         <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or 0-360 degrees clockwise from north).</p>
 
+        Rallye Name: <input id="rallyeName" type="text" size=50></input><br />
+        <br />
         Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10"></input><br />
         <br />
         General Instructions URL: <input id="giURL" type="text" size=70></input><br />
         Route Instructions URL: <input id="riURL" type="text" size=70></input><br />
         Supplemental Instructions URL: <input id="suppURL" type="text" size=70></input><br />
+        <br />
+        <input type="button" value="Export Rallye" onclick="downloadRallye();"></input>
       </div>
       <div id="objectEditor">
         Latitude: <span id="objectLat"></span><br />
@@ -839,7 +843,7 @@ function handleObject(confirm=false) {
         showError("ERROR: Start already exists!");
       } else {
         currArrow = placeArrow(mapObj, lat, lng, heading, 0, 'Rallye Start', "#006400");
-        arrowInfoWindow(mapObj, currArrow, 'start', '');
+        arrowInfoWindow(mapObj, currArrow, 'start', 'Rallye Start');
         if (confirm) {
           rallyeStart = {
             'lat': lat,
@@ -866,6 +870,81 @@ function handleObject(confirm=false) {
     document.getElementById("cpSI").value = '';
   }
 }
+
+function rallyeToJSON() {
+  var rallyeName = document.getElementById("rallyeName").value;
+  if (!rallyeStart || !rallyeName) {
+    showError('ERROR: Set a name and starting point before exporting!');
+    return;
+  }
+
+  var cms = [];
+  Object.keys(courseMarkers).forEach(function(key) {
+    cms.push([
+      courseMarkers[key]['lat'],
+      courseMarkers[key]['lng'],
+      courseMarkers[key]['label'],
+      courseMarkers[key]['rawHeading']
+      ]);
+  });
+
+  var cps = [];
+  Object.keys(checkpoints).forEach(function(key) {
+    cps.push([
+      checkpoints[key]['lat'],
+      checkpoints[key]['lng'],
+      checkpoints[key]['label'],
+      checkpoints[key]['rawHeading'],
+      '<b>SI:</b> ' + checkpoints[key]['checkpoint_si']
+      ]);
+  });
+
+  var d = {
+    'rallyeName': rallyeName,
+    'gridOffset': parseFloat(document.getElementById("northOffset").value) || 0,
+    'generalsURL': document.getElementById("giURL").value,
+    'routeURL': document.getElementById("riURL").value,
+    'suppsURL': document.getElementById("suppURL").value,
+    'rallye_start': {
+      lat: rallyeStart['lat'],
+      lng: rallyeStart['lng'],
+      heading: rallyeStart['rawHeading']
+    },
+    'courseMarkers': cms,
+    'checkpoints': cps
+  }
+
+  return JSON.stringify(d);
+}
+
+// from: https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
+// The download function takes a data string, the filename and mimeType as parameters
+function downloadFile(content, fileName, mimeType) {
+  var a = document.createElement('a');
+  mimeType = mimeType || 'application/octet-stream';
+
+  if (navigator.msSaveBlob) { // IE10
+    navigator.msSaveBlob(new Blob([content], {
+      type: mimeType
+    }), fileName);
+  } else if (URL && 'download' in a) { //html5 A[download]
+    a.href = URL.createObjectURL(new Blob([content], {
+      type: mimeType
+    }));
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+  }
+}
+
+function downloadRallye() {
+  var fileName = document.getElementById("rallyeName").value + '.json';
+  downloadFile(rallyeToJSON(), fileName, 'text/plain;encoding:utf-8');
+}
+
 
 
 </script>

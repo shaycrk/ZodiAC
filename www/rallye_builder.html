@@ -70,8 +70,9 @@
       #content {
         background-color: #fff;
         padding: 2px;
-        height: 40%;
+        height: 48%;
         font-family: Helvetica;
+        overflow: scroll;
       }
 
       #instructions {
@@ -135,20 +136,51 @@
       }
 
       #objectEditor {
-        width: 29%;
+        width: 31%;
         vertical-align: top;
         overflow: scroll;
         font-family: Helvetica;
         display: inline-block;
+        padding-left: 15px;
       }
 
       #settings {
-        width: 69%;
+        width: 40%;
         vertical-align: top;
         overflow: scroll;
         font-family: Helvetica;
         display: inline-block;
         padding: 2px;
+        margin-left: 15px;
+        border-right: 1px solid black;
+      }
+
+      #settings h3 {
+        display: inline-block;
+      }
+
+      #howto {
+        display: inline-block;
+        width: 23%;
+        font-family: Helvetica;
+        padding: 2px;
+        background-color: lightgrey;
+        border-right: 1px solid black;
+      }
+
+      #exportButton {
+        font-size: 20px;
+        font-weight: bold;
+        color: red;
+        display: inline-block;
+        float: right;
+      }
+
+      #loadJSON {
+        font-size: 14px;
+        padding-left: 20px;
+        padding-top: 5px;
+        margin-bottom: 15px;
       }
 
     </style>
@@ -162,24 +194,32 @@
     <div id="map"></div>
     <div id="errorMsg"></div>
     <div id="content">
-      <div id="settings">
+      <div id="howto">
+        <h3>Instructions</h3>
         <p>Click on the map above to place a course marker, checkpoint, or the rallye starting point, then set the object information in the form to the right. Click <b>Preview</b> to see where it will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
 
-        <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or 0-360 degrees clockwise from north).</p>
-
-        <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' /><br />
+        <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or as a number of degrees clockwise from north).</p>
+      </div>
+      <div id="settings">
+        <h3>Settings</h3>
+        <input id="exportButton" type="button" value="Export Rallye" onclick="downloadRallye();"></input>
         <br />
         Rallye Name: <input id="rallyeName" type="text" size=50></input><br />
-        <br />
+        <div id="loadJSON">
+          [Optional] Load an existing saved rallye:<br />
+          <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' />
+        </div>
         Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10"></input><br />
         <br />
-        General Instructions URL: <input id="giURL" type="text" size=70></input><br />
-        Route Instructions URL: <input id="riURL" type="text" size=70></input><br />
-        Supplemental Instructions URL: <input id="suppURL" type="text" size=70></input><br />
-        <br />
-        <input type="button" value="Export Rallye" onclick="downloadRallye();"></input>
+        General Instructions URL:<br />
+        <input id="giURL" type="text" size=60></input><br />
+        Route Instructions URL:<br />
+        <input id="riURL" type="text" size=60></input><br />
+        Supplemental Instructions URL:<br />
+        <input id="suppURL" type="text" size=60></input><br />
       </div>
       <div id="objectEditor">
+        <h3>Object Editor</h3>
         Latitude: <span id="objectLat"></span><br />
         Longitude: <span id="objectLng"></span><br />
         <br />
@@ -346,6 +386,22 @@ function removeObj(objType, title) {
       rallyeStart = null;
       break;
   }
+}
+
+function removeAll() {
+
+  Object.keys(courseMarkers).forEach(function(key) {
+    removeObj('cm', key);
+  });
+
+  Object.keys(checkpoints).forEach(function(key) {
+    removeObj('cp', key);
+  });
+
+  if (rallyeStart) {
+    removeObj('start', '');
+  }
+
 }
 
 function placeCP(map, lat, lng, heading, title, cpSI, iconScale=1.0) {
@@ -987,6 +1043,9 @@ function downloadRallye() {
   }
 
   function rallyeFromDict(rallyeDict) {
+    // remove any the existing objects to replace with loaded ones
+    removeAll();
+
     document.getElementById("rallyeName").value = rallyeDict['rallyeName'];
 
     document.getElementById("northOffset").value = rallyeDict['gridOffset'];
@@ -1011,7 +1070,7 @@ function downloadRallye() {
     });
 
     rallyeDict['checkpoints'].forEach(function(cp) {
-      setEditorValues(cp[0], cp[1], cp[3], cp[2], cp[4].replace('<b>SI </b>', ''), 'cp');
+      setEditorValues(cp[0], cp[1], cp[3], cp[2], cp[4].replace('<b>SI:</b> ', ''), 'cp');
       handleObject(confirm=true);
     });
 

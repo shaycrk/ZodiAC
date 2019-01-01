@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ZodiAC Presents...</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 50%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #intro-window {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 99%;
+        height: 99%;
+        z-index: 100;
+        background-color: #fff;
+        border: 1px solid #999;
+        margin: 5px;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+      }
+
+      #intro-window h2 {
+        padding-top: 150px;
+      }
+
+      #select-form {
+        display: none;
+      }
+
+      #file-loader {
+        display: none;
+      }
+
+      #url-loader {
+        display: none;
+      }
+
+      #menu {
+        background-color: #000;
+        font-family: Helvetica;
+      }
+      #menu > ul {
+        margin: 0;
+        padding: 0;
+        color: white;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+
+      /* Change the link color to #111 (black) on hover */
+      li a:hover {
+        background-color: #111;
+      }
+
+      li a.active {
+        background-color: #fff;
+        color: #000;
+      }
+
+      #content {
+        background-color: #fff;
+        padding: 2px;
+        height: 40%;
+        font-family: Helvetica;
+      }
+
+      #instructions {
+        width: 78%;
+        height: 100%;
+        display: inline-block;
+        vertical-align: top;
+        overflow: scroll;
+      }
+
+      #scoresheet {
+        width: 20%;
+        height: 100%;
+        display: inline-block;
+        vertical-align: top;
+        overflow: scroll;
+        border-left: 1px solid black;
+        padding-left: 7px;
+      }
+
+      h2 {
+        margin: 0;
+        padding: 0;
+      }
+
+      .scoreInput {
+        float: right;
+        padding: 13px 16px;
+      }
+
+      .recordedCM {
+        margin-bottom: 2px;
+        padding: 1px;
+        background-color: #f0f0f0;
+        border-radius: 4px;
+      }
+
+      a.xout {
+        padding-right: 7px;
+        color: #988;
+        font-size: 10px;
+        text-decoration: none;
+        padding-left: 5px;
+        font-weight: bold;
+      }
+
+      a.xout:hover {
+        color: red;
+      }
+
+      #instructions iframe {
+        width: 100%;
+        height: 100%;
+      }
+
+    </style>
+  </head>
+  <body>
+    <!--
+    <div id="floating-panel">
+      <input type="button" value="Toggle Street View" onclick="toggleStreetView();"></input>
+    </div>
+    -->
+    <div id="intro-window">
+      <h2>Welcome to ZodiAC Online</h2>
+      <div id="loading">
+        <img src="https://www.vedantaresources.com/SiteAssets/Images/loading.gif"></img>
+        <h3>L o a d i n g . . .</h3>
+      </div>
+      <div id="select-form">
+        <select id="rallyeSelect" onchange="handleSelect();">
+          <option value="" selected disabled>Choose a Rallye...</option>
+          <option disabled>──────────────</option>
+          <option value="dad_route66_rallye.json">Get Your Kicks on Route 66</option>
+          <option disabled>──────────────</option>
+          <option value="LOAD_FROM_URL">Load from URL...</option>
+          <option value="LOAD_FROM_FILE">Upload File...</option>
+        </select>
+        <div id="file-loader">
+          <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' />
+        </div>
+        <div id="url-loader">
+          URL: <input id="rallye-url" type="text" size=50></input> <input type="button" value="Load" onclick="loadRallyeURL();"></input>
+        </div>
+      </div>
+    </div>
+    <div id="map"></div>
+    <div id="menu">
+      <ul>
+        <li><a href="#" class="active" id="web" onClick="loadInstructions('web');">How To Play</a></li>
+        <li><a href="#" id="generals" onClick="loadInstructions('generals');">General Instructions</a></li>
+        <li><a href="#" id="route" onClick="loadInstructions('route');">Route Instructions</a></li>
+        <li><a href="#" id="supps" onClick="loadInstructions('supps');">Supplemental Instructions</a></li>
+        <li class="scoreInput">
+          <form>
+          <input id="inputCM" type="text" width=25></input>
+          <input type="submit" value="Record CM" onClick="return recordCM();"></input>
+          </form>
+        </li>
+      </ul>
+    </div>
+    <div id="content">
+      <div id="instructions"><iframe src="virtual_rallye_info.pdf"></iframe></div>
+      <div id="scoresheet"><h2>Scoresheet</h2></div>
+    </div>
+
+<script>
+var mapObj;
+var panorama;
+var markers;
+
+// some variables for headings
+// Winters grid about -10 deg off true north,
+// so traveling north is 350 and so on
+var north = 0;
+var south = 180;
+var west = 270;
+var east = 90;
+
+var startLoc, startHeading;
+var courseMarkers, checkpoints, otherObjects;
+var giURL, riURL, suppURL;
+var updateActions;
+
+
+function classLoader() {
+
+class DirectionalMarker extends google.maps.Marker {
+
+  // distance in meters, angle in degrees to one side
+  constructor(markerOpts, visibleHeading, visibleDistance=50, visibleAngle=60) {
+    super(markerOpts);
+    this.visibleDistance = visibleDistance;
+    this.visibleHeading = visibleHeading;
+    this.visibleAngle = visibleAngle;
+  }
+
+  checkVisibility(latlong, heading) {
+    if (
+      (this.distanceTo(latlong) <= this.visibleDistance ) &&
+      (this.angleBetween(heading) <= this.visibleAngle)
+    ) {
+      this.setVisible(true);
+    } else {
+      this.setVisible(false);
+    }
+  }
+  
+  distanceTo(latlong) {
+    return google.maps.geometry.spherical.computeDistanceBetween(
+    latlong, this.getPosition());
+  }
+  
+  angleBetween(heading) {
+    var diff = Math.abs(this.visibleHeading - heading);
+    return Math.min(360-diff, diff);
+  }
+
+}
+
+return DirectionalMarker;
+}
+
+function placeObjects(map, iconScale=1.0) {
+  DirectionalMarker = classLoader();
+  
+  var obj_markers = [];
+  otherObjects.forEach(function(obj) {
+    var objIcon = {
+      url: obj[3],
+      scaledSize: new google.maps.Size(obj[4]*iconScale, obj[5]*iconScale)
+    };
+    obj_markers.push(
+      new DirectionalMarker({
+        position: {lat: obj[0], lng: obj[1]},
+        map: map,
+        icon: objIcon
+      },
+      parseHeading(obj[6])
+      )
+    );
+  });
+  
+  return obj_markers;
+}
+
+function placeCPs(map, iconScale=1.0) {
+  DirectionalMarker = classLoader();
+
+  // sign size to display (pixels)
+  var cpWidth = 30*iconScale;
+  var cpHeight = 45*iconScale;
+  var cpIcon = {
+    url: 'https://shaycrk.files.wordpress.com/2018/12/checkpoint.gif',
+    scaledSize: new google.maps.Size(cpWidth, cpHeight)
+  };
+  
+  var cp_markers = [];
+  checkpoints.forEach(function(cp) {
+    var marker = new DirectionalMarker({
+        position: {lat: cp[0], lng: cp[1]},
+        map: map,
+        icon: cpIcon,
+        title: cp[2]
+      },
+      parseHeading(cp[3])
+      )
+
+    cp_markers.push(marker);
+
+    var infoWindowObject = new google.maps.InfoWindow;
+    var infoWindowHTML = cp[4];
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindowObject.setContent(infoWindowHTML);
+      infoWindowObject.open(map, marker);
+    });
+
+  });
+
+  return cp_markers;
+}
+
+function placeCMs(map, iconScale=1.0) {
+  DirectionalMarker = classLoader();
+
+  // course marker size to display (pixels)
+  var cmWidth = 35*iconScale
+  var cmHeight = 150*iconScale
+  var cmIcon = {
+    url: 'https://shaycrk.files.wordpress.com/2018/12/cm_on_pole.gif',
+    scaledSize: new google.maps.Size(cmWidth, cmHeight)
+  };
+
+  var cm_markers = [];
+  courseMarkers.forEach(function(cm) {
+    cm_markers.push(
+      new DirectionalMarker({
+        position: {lat: cm[0], lng: cm[1]},
+        map: map,
+        icon: cmIcon,
+        title: cm[2]
+      },
+      parseHeading(cm[3])
+      )
+    );
+  });
+  
+  return cm_markers;
+}
+
+function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
+  // place an arrow over a map marker, rotated to point a certain direction (e.g., the
+  // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
+  // translation by `anchor` is done after rotating the coordinate system, so have
+  // to rotate the coordinates of the translation as well. Finally, because rotations
+  // happen around the tip of the arrow, translate back (in the original coordinates) 
+  // by the size of the arrow to have the center end up where we want it.
+
+  // Two notes that add a little complexity:
+  //  1. The coordinate system appears to be left-handed, with greater x-values
+  //     further to the west
+  //  2. rotations are taken clockwise from due north (the y-axis) as opposed to
+  //     polar-coordinates that measure counter-clockwise from the x-axis
+  var arrowCenter = new google.maps.Point(0, -2);
+  new google.maps.Marker({
+    position: {lat: lat, lng: lng},
+    icon: {
+      path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+      scale: 2,
+      strokeColor: color,
+      fillColor: color,
+      fillOpacity: 1.0,
+      anchor: addPoints(rotateCoordinates(0, height, -1*angle), arrowCenter, subtract=true),
+      rotation: angle
+    },
+    zIndex: 9999,
+    title: title,
+    map: map
+  });
+}
+
+function placeArrows(map) {
+
+  courseMarkers.forEach(function(cm) {
+    placeArrow(map, cm[0], cm[1], parseHeading(cm[3]) - 180, 13, cm[2]);
+  });
+
+  checkpoints.forEach(function(cp) {
+    placeArrow(map, cp[0], cp[1], parseHeading(cp[3]) - 180, 9, cp[2]);
+  });
+
+  otherObjects.forEach(function(obj) {
+    placeArrow(map, obj[0], obj[1], parseHeading(obj[6]) - 180, 13);
+  });
+
+  placeArrow(map, startLoc['lat'], startLoc['lng'], startHeading, 0, 'Rallye Start', "#006400");
+
+}
+
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
+function addPoints(p1, p2, subtract=false) {
+  var fac = 1.0;
+  if (subtract) {
+    fac = -1.0;
+  }
+  return new google.maps.Point(p1.x + fac*p2.x, p1.y + fac*p2.y)
+}
+
+function rotateCoordinates(x, y, phi) {
+  // phi is a clockwise rotation of the coordinate system,
+  // expressed in degrees
+
+  // handle the origin as a special case:
+  if ((Math.abs(x) < 1e-6) && (Math.abs(y) < 1e-6)) {
+    return new google.maps.Point(0, 0);
+  }
+
+  var r = Math.sqrt(x**2 + y**2)
+  var theta = Math.atan(y/x)
+  if (x < 0) {
+    // correct for arctan range
+    theta = theta + Math.PI
+  }
+  var x_prime = r*Math.cos(theta + phi*Math.PI/180)
+  var y_prime = r*Math.sin(theta + phi*Math.PI/180)
+  return new google.maps.Point(x_prime, y_prime)
+}
+
+function parseHeading(rawHeading) {
+  var heading;
+  switch (rawHeading) {
+    case 'north':
+      heading = north;
+      break;
+    case 'south':
+      heading = south;
+      break;
+    case 'east':
+      heading = east;
+      break;
+    case 'west':
+      heading = west;
+      break;
+    default:
+      heading = parseFloat(rawHeading);
+  }
+  return heading;
+}
+
+// from: https://stackoverflow.com/questions/12460378/how-to-get-json-from-url-in-javascript
+function getJSON(url, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.responseType = 'json';
+    xhr.onload = function() {
+      var status = xhr.status;
+      if (status === 200) {
+        callback(null, xhr.response);
+      } else {
+        callback(status, xhr.response);
+      }
+    };
+    xhr.send();
+};
+
+function loadRallyeURL(url="") {
+
+  // Use a URL passed as a parameter if present, else read from form
+  if (!url) {
+    url = document.getElementById("rallye-url").value.trim();
+  }
+
+  getJSON(url, function(err, rallyeDict) {
+    if (err !== null) {
+      alert('Something went wrong: ' + err);
+    } else {
+      document.getElementById("intro-window").style.display = "none";
+      initFromDict(rallyeDict);
+    }
+  });
+}
+
+// from: https://stackoverflow.com/questions/7346563/loading-local-json-file
+function loadFile() {
+  var input, file, fr;
+
+  if (typeof window.FileReader !== 'function') {
+    alert("The file API isn't supported on this browser yet.");
+    return;
+  }
+
+  input = document.getElementById('fileinput');
+  if (!input) {
+    alert("Um, couldn't find the fileinput element.");
+  }
+  else if (!input.files) {
+    alert("This browser doesn't seem to support the `files` property of file inputs.");
+  }
+  else if (!input.files[0]) {
+    alert("Please select a file before clicking 'Load'");
+  }
+  else {
+    file = input.files[0];
+    fr = new FileReader();
+    fr.onload = receivedText;
+    fr.readAsText(file);
+  }
+
+  function receivedText(e) {
+    let lines = e.target.result;
+    var rallyeDict = JSON.parse(lines); 
+    document.getElementById("intro-window").style.display = "none";
+    initFromDict(rallyeDict);
+
+  }
+}
+
+function initFromDict(rallyeDict) {
+  var offset = rallyeDict['gridOffset'] || 0;
+  north = 0 + offset;
+  south = 180 + offset;
+  east = 90 + offset;
+  west = 270 + offset;
+
+  giURL = rallyeDict['generalsURL'];
+  riURL = rallyeDict['routeURL'];
+  suppURL = rallyeDict['suppsURL'];
+
+  startLoc = {lat: rallyeDict['rallye_start']['lat'], lng: rallyeDict['rallye_start']['lng']};
+  startHeading = parseHeading(rallyeDict['rallye_start']['heading']);
+
+  courseMarkers = rallyeDict['courseMarkers'];
+  checkpoints = rallyeDict['checkpoints'] || [];
+  otherObjects = rallyeDict['other_objects'] || [];
+
+  updateActions = rallyeDict['update_actions'] || [];
+
+  initMap();
+}
+
+function initMap() {
+  rmView = getQueryVariable('rallyemaster-view') || 'false';
+  if (rmView.toLowerCase() == 'true') {
+    initGoogleMap();
+  } else {
+    initStreetView();
+  }
+}
+
+// map version: view for the rallye master
+function initGoogleMap() {
+  var map = new google.maps.Map(
+    document.getElementById('map'), {
+    center: startLoc,
+    zoom: 16,
+    streetViewControl: true,
+    mapTypeControl: false,
+    rotateControl: false
+  });
+  panorama = map.getStreetView();
+  mapObj = map;
+  
+  markers = placeCMs(map, 0.3);
+  markers = markers.concat(placeCPs(map, 0.3));
+  markers = markers.concat(placeObjects(map, 0.3));
+
+  placeArrows(map);
+}
+
+// street view version: actually run the rallye
+function initStreetView() {
+  var map = new google.maps.StreetViewPanorama(
+    document.getElementById('map'), {
+    position: startLoc,
+    pov: {
+      heading: startHeading,
+      pitch: 0
+    },
+    visible: true
+  });
+  panorama = map;
+
+  markers = placeCMs(map, 1.6);
+  markers = markers.concat(placeCPs(map, 1.6));
+  markers = markers.concat(placeObjects(map, 1.6));
+  
+  var center = panorama.getPosition();
+  var heading = panorama.getPov().heading;
+  markers.forEach(
+    function(marker) { marker.checkVisibility(center, heading); }
+  );
+
+  panorama.addListener('position_changed', function() {
+    center = panorama.getPosition();
+    heading = panorama.getPov().heading;
+    markers.forEach(
+      function(marker) { marker.checkVisibility(center, heading); }
+    );
+  });
+
+  panorama.addListener('pov_changed', function() {
+    center = panorama.getPosition();
+    heading = panorama.getPov().heading;
+    markers.forEach(
+      function(marker) { marker.checkVisibility(center, heading); }
+    );
+  });
+
+}
+
+function toggleStreetView() {
+  var toggle = panorama.getVisible();
+  if (toggle == false) {
+    panorama.setVisible(true);
+  } else {
+    panorama.setVisible(false);
+  }
+}
+
+function checkDistance(center, marker) {
+  var markerLatLng = marker.getPosition();
+  var distance = google.maps.geometry.spherical.computeDistanceBetween(center, markerLatLng);
+  if (distance <= 50.0) {
+    marker.setVisible(true);
+  } else {
+    marker.setVisible(false);
+  }
+  //console.log(distance);
+}
+
+function removeMarker(markerTitle) {
+  markers.forEach(function(m) { 
+    if ((m.title != null) && (m.title == markerTitle)) { 
+      m.setMap(null); 
+    } 
+  });
+}
+
+function setVisibleAngle(markerTitle, newAngle) {
+  markers.forEach(function(m) { 
+    if ((m.title != null) && (m.title == markerTitle)) { 
+      m.visibleAngle = newAngle;
+    } 
+  });
+}
+
+</script>
+
+<script>
+
+function loadInstructions(instruction) {
+  // todo: pull in actual content here...
+  switch (instruction) {
+    case 'web':
+      srcURL = 'virtual_rallye_info.pdf';
+      break;
+    case 'generals':
+      srcURL = giURL;
+      break;
+    case 'route':
+      srcURL = riURL;
+      break;
+    case 'supps':
+      srcURL = suppURL;
+      break;
+  }
+  document.getElementById("instructions").innerHTML = "<iframe src='"+srcURL+"'></iframe>";
+
+  // remove active class from any current menu item (using array prototype forEach)
+  var elms = document.getElementsByClassName("active");
+  [].forEach.call(elms, function(s) { s.classList.remove("active"); });
+
+  // add the active class to the clicked menu item
+  document.getElementById(instruction).classList.add("active");
+}
+
+function cleanInputCM(inputValue) {
+  var regex = /[^A-Z0-9]/g;
+  return inputValue.toUpperCase().replace(regex, '');
+}
+
+function recordCM() {
+  // TODO: keep track in a list to allow for scoring? (ideally by sending data to a server so CM point values can remain hidden?)
+  var newCM = cleanInputCM(document.getElementById("inputCM").value);
+  if (document.getElementById('recordedCM-'+newCM) == null) {
+    // only add if not already recorded
+    var parent = document.getElementById("scoresheet");
+    var newChild = '<div id="recordedCM-'+newCM+'" class="recordedCM"><a href="#" class="xout" onClick="removeCM(\''+newCM+'\');">X</a>'+newCM+'</div>';
+    parent.insertAdjacentHTML('beforeend', newChild);
+  }
+  document.getElementById("inputCM").value = '';
+
+  // if we just recorded M13 ("No Barking") need to fix up direction of CP3 entry...
+  var updateActionMap = {
+    "remove_object": removeMarker,
+    "setVisibleAngle": setVisibleAngle
+  };
+
+  updateActions.forEach(function(a) {
+    if (haveRecordedCMs(a['after_cms'])) {
+      a['actions'].forEach(function(ua) {
+        var fcn = updateActionMap[ua[0]];
+        var args = ua[1];
+        fcn(...args);
+      });
+    }
+  });
+
+  return false;
+}
+
+function removeCM(toRemove) {
+  document.getElementById('recordedCM-'+toRemove).remove();
+}
+
+function haveRecordedCMs(checkCMs) {
+  var elms = document.getElementsByClassName("recordedCM");
+  var recordedCMs = [];
+  for (var i = 0; i < elms.length; i++) {
+    recordedCMs.push(elms[i].id.replace("recordedCM-", ""));
+  }
+  return checkCMs.every(function(cm) {return recordedCMs.includes(cm);});
+}
+
+function handleSelect() {
+  // If load from file or url, show apropriate form elements
+  // else, load from url in option value
+  var selectValue = document.getElementById("rallyeSelect").value;
+  switch (selectValue) {
+    case 'LOAD_FROM_FILE':
+      document.getElementById("url-loader").style.display = "none";
+      document.getElementById("file-loader").style.display = "block";
+      break;
+    case 'LOAD_FROM_URL':
+      document.getElementById("file-loader").style.display = "none";
+      document.getElementById("url-loader").style.display = "block";
+      break;
+    default:
+      document.getElementById("file-loader").style.display = "none";
+      document.getElementById("url-loader").style.display = "none";
+      loadRallyeURL(selectValue);
+      break;
+  }
+
+}
+
+function initForm() {
+  // hide loading spinner
+  document.getElementById("loading").style.display = "none";
+
+  // check for URL parameter for json URL, skip form if exists
+  var queryparamURL = decodeURIComponent(getQueryVariable('rallye-url')) || 'false';
+  if (queryparamURL != 'false') {
+    loadRallyeURL(queryparamURL);
+  } else {
+    // otherwise, show the form to select a rallye
+    document.getElementById("select-form").style.display = "block";
+  }
+
+}
+
+</script>
+
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3-5-mUDJ2dfNR3l-8u_g2_XCBOeNbJvU&libraries=geometry&callback=initForm">
+    </script>
+  </body>
+

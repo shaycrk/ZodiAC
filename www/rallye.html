@@ -152,7 +152,8 @@
       }
 
       a.close-score {
-        float: right;
+        position: fixed;
+        right: 5px;
         margin: 10px;
         font-size: 16px;
         border-radius: 15px;
@@ -256,6 +257,7 @@ var west = 270;
 var east = 90;
 
 var startLoc, startHeading;
+var endLoc, endHeading;
 var courseMarkers, checkpoints, otherObjects;
 var giURL, riURL, suppURL;
 var updateActions;
@@ -387,6 +389,32 @@ function placeCMs(map, iconScale=1.0) {
   return cm_markers;
 }
 
+function placeEnd(map, iconScale=1.0) {
+
+  // end sign size to display (pixels)
+  var endWidth = 139*iconScale;
+  var endHeight = 150*iconScale;
+  var endIcon = {
+    url: 'https://shaycrk.files.wordpress.com/2019/01/rallye_end.gif',
+    scaledSize: new google.maps.Size(endWidth, endHeight)
+  };
+
+  var marker = new DirectionalMarker({
+        position: {lat: endLoc['lat'], lng: endLoc['lng']},
+        map: map,
+        icon: endIcon,
+        title: 'Submit your scoresheet to the Rallyemaster and have a slice of pizza!'
+      },
+      endHeading
+      );
+
+    google.maps.event.addListener(marker, 'click', function() {
+      scoreRallye();
+    });
+
+    return marker;
+}
+
 function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
   // place an arrow over a map marker, rotated to point a certain direction (e.g., the
   // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
@@ -434,6 +462,7 @@ function placeArrows(map) {
 
   placeArrow(map, startLoc['lat'], startLoc['lng'], startHeading, 0, 'Rallye Start', "#006400");
 
+  placeArrow(map, endLoc['lat'], endLoc['lng'], endHeading - 180, 0, 'Rallye End', "#640000");
 }
 
 function getQueryVariable(variable)
@@ -578,6 +607,9 @@ function initFromDict(rallyeDict) {
   startLoc = {lat: rallyeDict['rallye_start']['lat'], lng: rallyeDict['rallye_start']['lng']};
   startHeading = parseHeading(rallyeDict['rallye_start']['heading']);
 
+  endLoc = {lat: rallyeDict['rallye_end']['lat'], lng: rallyeDict['rallye_end']['lng']};
+  endHeading = parseHeading(rallyeDict['rallye_end']['heading']);
+
   courseMarkers = rallyeDict['courseMarkers'];
   checkpoints = rallyeDict['checkpoints'] || [];
   otherObjects = rallyeDict['other_objects'] || [];
@@ -634,6 +666,7 @@ function initStreetView() {
   markers = placeCMs(map, 1.6);
   markers = markers.concat(placeCPs(map, 1.6));
   markers = markers.concat(placeObjects(map, 1.6));
+  markers.push(placeEnd(map, 1.6));
   
   var center = panorama.getPosition();
   var heading = panorama.getPov().heading;

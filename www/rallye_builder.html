@@ -129,6 +129,7 @@
         <option value="cm">Course Marker</option>
         <option value="cp">Checkpoint</option>
         <option value="start">Rallye Start</option>
+        <option value="end">Rallye End</option>
         </select><br />
         Heading: <input id="objectHeading" type="text" size=21></input><br />
         Label: <input id="objectLabel" type="text" size=25></input><br />
@@ -144,7 +145,7 @@ var currMarker;
 var currArrow;
 var openInfoWindow;
 
-var rallyeStart;
+var rallyeStart, rallyeEnd;
 var courseMarkers = {};
 var checkpoints = {};
 
@@ -228,6 +229,14 @@ function editObj(objType, title) {
       label = '';
       cpSI = '';
       break;
+    case 'end':
+      lat = rallyeEnd['lat'];
+      lng = rallyeEnd['lng'];
+      selectIdx = 3;
+      heading = rallyeEnd['rawHeading'];
+      label = '';
+      cpSI = '';
+      break;
   }
 
   document.getElementById("objectType").selectedIndex = selectIdx;
@@ -267,6 +276,10 @@ function removeObj(objType, title) {
       rallyeStart['arrow_object'].setVisible(false);
       rallyeStart = null;
       break;
+    case 'end':
+      rallyeEnd['arrow_object'].setVisible(false);
+      rallyeEnd = null;
+      break;
   }
 }
 
@@ -282,6 +295,10 @@ function removeAll() {
 
   if (rallyeStart) {
     removeObj('start', '');
+  }
+
+  if (rallyeEnd) {
+    removeObj('end', '');
   }
 
 }
@@ -571,6 +588,21 @@ function gridOffset() {
     arrowInfoWindow(mapObj, newArrow, 'start', 'Rallye Start');
   }
 
+  if (rallyeEnd) {
+    rallyeEnd['arrow_object'].setVisible(false);
+    newArrow = placeArrow(
+      mapObj, 
+      rallyeEnd['lat'], 
+      rallyeEnd['lng'], 
+      parseHeading(rallyeEnd['rawHeading'])-180, 
+      0, 
+      'Rallye End',
+      "#640000"
+    );
+    rallyeEnd['arrow_object'] = newArrow;
+    arrowInfoWindow(mapObj, newArrow, 'end', 'Rallye End');
+  }
+
 }
 
 function showError(errorText) {
@@ -663,6 +695,22 @@ function handleObject(confirm=false) {
         }
       }
       break;
+    case 'end':
+      if (rallyeEnd) {
+        showError("ERROR: End already exists!");
+      } else {
+        currArrow = placeArrow(mapObj, lat, lng, heading-180, 0, 'Rallye End', "#640000");
+        arrowInfoWindow(mapObj, currArrow, 'end', 'Rallye End');
+        if (confirm) {
+          rallyeEnd = {
+            'lat': lat,
+            'lng': lng,
+            'rawHeading': rawHeading,
+            'arrow_object': currArrow
+          }
+        }
+      }
+      break;
   }
 
   if (confirm) {
@@ -682,8 +730,8 @@ function handleObject(confirm=false) {
 
 function rallyeToJSON() {
   var rallyeName = document.getElementById("rallyeName").value;
-  if (!rallyeStart || !rallyeName) {
-    showError('ERROR: Set a name and starting point before exporting!');
+  if (!rallyeStart || !rallyeName || !rallyeEnd) {
+    showError('ERROR: Set a name, starting point, and ending point before exporting!');
     return;
   }
 
@@ -718,6 +766,11 @@ function rallyeToJSON() {
       lat: rallyeStart['lat'],
       lng: rallyeStart['lng'],
       heading: rallyeStart['rawHeading']
+    },
+    'rallye_end': {
+      lat: rallyeEnd['lat'],
+      lng: rallyeEnd['lng'],
+      heading: rallyeEnd['rawHeading']
     },
     'courseMarkers': cms,
     'checkpoints': cps
@@ -816,6 +869,12 @@ function downloadRallye() {
     handleObject(confirm=true);
     mapObj.setCenter({lat: lat, lng: lng});
 
+    lat = rallyeDict['rallye_end']['lat'];
+    lng = rallyeDict['rallye_end']['lng'];
+    heading = rallyeDict['rallye_end']['heading'];
+    setEditorValues(lat, lng, heading, '', '', 'end');
+    handleObject(confirm=true);
+
     rallyeDict['courseMarkers'].forEach(function(cm) {
       setEditorValues(cm[0], cm[1], cm[3], cm[2], '', 'cm');
       handleObject(confirm=true);
@@ -839,6 +898,9 @@ function downloadRallye() {
         break;
       case 'start':
         selectIdx = 2;
+        break;
+      case 'end':
+        selectIdx = 3;
         break;
     }
     document.getElementById("objectType").selectedIndex = selectIdx;

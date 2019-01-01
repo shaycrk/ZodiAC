@@ -713,13 +713,34 @@ function removeCM(toRemove) {
   document.getElementById('recordedCM-'+toRemove).remove();
 }
 
-function haveRecordedCMs(checkCMs) {
+function haveRecordedCMs(checkCMs, mustHaveAll=true) {
   var elms = document.getElementsByClassName("recordedCM");
   var recordedCMs = [];
   for (var i = 0; i < elms.length; i++) {
     recordedCMs.push(elms[i].id.replace("recordedCM-", ""));
   }
-  return checkCMs.every(function(cm) {return recordedCMs.includes(cm);});
+  if (mustHaveAll) {
+    // the recorded CMs must include ALL the "checkCMs" to return true, else false
+    return checkCMs.every(function(cm) {return recordedCMs.includes(cm);});
+  } else {
+    // the recorded CMs must have AT LEAST ONE of the "checkCMs" to return true, else false
+    return checkCMs.some(function(cm) {return recordedCMs.includes(cm);});
+  }
+}
+
+function haveNotRecordedCMs(checkCMs, mustHaveNone=true) {
+  var elms = document.getElementsByClassName("recordedCM");
+  var recordedCMs = [];
+  for (var i = 0; i < elms.length; i++) {
+    recordedCMs.push(elms[i].id.replace("recordedCM-", ""));
+  }
+  if (mustHaveNone) {
+    // true if NONE of checkCMs have been recorded, else false
+    return checkCMs.every(function(cm) {return !(recordedCMs.includes(cm));});
+  } else {
+    // true if ANY of checkCMs is absent from recorded CMs, else false
+    return checkCMs.some(function(cm) {return !(recordedCMs.includes(cm));});
+  }
 }
 
 function handleSelect() {

@@ -65,5 +65,198 @@
 				["setVisibleAngle", ["Checkpoint 3", 180]]
 			]
 		}
+	],
+	"score_values": [
+		{
+			"includeCMs": ["E66"],
+			"value": 10,
+			"reason": "Start CM is good"
+		},
+		{
+			"includeCMs": ["H20"],
+			"value": 10,
+			"reason": "All streets were renamed to Route 66"
+		},
+		{
+			"includeCMs": ["A27"],
+			"value": 20,
+			"reason": "RI 1 still in effect, L at East"
+		},
+		{
+			"includeCMs": ["A27"],
+			"excludeCMs": ["H20"],
+			"value": -30,
+			"reason": "Recorded A27 without H20 (no reason to turn this direction at East without catching street rename gimmick)"
+		},
+		{
+			"includeCMs": ["PP6"],
+			"value": 5,
+			"reason": "If you caught the streets renamed gimmick but missed that RI 1 was still active"
+		},
+		{
+			"includeCMs": ["U1"],
+			"value": 10,
+			"reason": "On course, begin RI 2"
+		},
+		{
+			"includeCMs": ["Y10"],
+			"value": 30,
+			"reason": "R at uninstructed T - no stem"
+		},
+		{
+			"includeCMs": ["B9"],
+			"value": 10,
+			"reason": "E does not appear on signs"
+		},
+		{
+			"includeCMs": ["X25"],
+			"value": 10,
+			"reason": "On course, begin SI"
+		},
+		{
+			"includeCMs": ["G14"],
+			"value": 10,
+			"reason": "On course, RI 3"
+		},
+		{
+			"includeCMs": ["I22"],
+			"value": 15,
+			"reason": "Blown off at First with north wind"
+		},
+		{
+			"includeCMs": ["II3"],
+			"value": 10,
+			"reason": "Blown off at First with north wind, but got direction wrong"
+		},
+		{
+			"includeCMs": ["I22", "II3"],
+			"value": -30,
+			"reason": "If you recorded both I22 and II3 (recorded CMs for both wind directions)"
+		},
+		{
+			"includeCMs": ["R33"],
+			"value": 10,
+			"reason": "Supps for 22 were numbered, not lettered"
+		},
+		{
+			"includeCMs": ["N23"],
+			"value": 10,
+			"reason": "SI to DG the wind"
+		},
+		{
+			"includeCMs": ["O12"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["T11"],
+			"value": 10,
+			"reason": "Still onto Zombie"
+		},
+		{
+			"includeCMs": ["S5"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["HH15"],
+			"value": 10,
+			"reason": "Abbey misspelled"
+		},
+		{
+			"includeCMs": ["W29"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["V8"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["D28"],
+			"value": 10,
+			"reason": "Tow Mater can only go R at T's"
+		},
+		{
+			"includeCMs": ["AA2"],
+			"value": 10,
+			"reason": "T gimmick still in effect"
+		},
+		{
+			"includeCMs": ["F4"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["SS21"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["K17"],
+			"value": 10,
+			"reason": "Saw Newt's, R first ch"
+		},
+		{
+			"includeCMs": ["YY7"],
+			"value": 10,
+			"reason": "Goat ate directions, go straight"
+		},
+		{
+			"includeCMs": ["Z666"],
+			"value": 10,
+			"reason": "On course, GI go to church"
+		},
+		{
+			"includeCMs": ["EE32"],
+			"value": 10,
+			"reason": "On way to church after seeing devil"
+		},
+		{
+			"includeCMs": ["J26"],
+			"value": 10,
+			"reason": "On course"
+		},
+		{
+			"includeCMs": ["P18"],
+			"value": 10,
+			"reason": "Street not on sign"
+		},
+		{
+			"includeCMs": ["Q16"],
+			"value": 10,
+			"reason": "On course, you pick up Ellie Mae"
+		},
+		{
+			"includeCMs": ["M13"],
+			"value": 50,
+			"reason": "Could not enter CP due to 'No Barking' sign"
+		},
+		{
+			"includeCMs": ["III30"],
+			"value": 10,
+			"reason": "Turn around at Li Wai Village"
+		},
+		{
+			"includeCMs": ["L34"],
+			"value": 50,
+			"reason": "Stopped at the red rocking chair"
+		},
+		{
+			"includeCMs": ["HHH19"],
+			"value": -100,
+			"reason": "FISH"
+		},
+		{
+			"includeCMs": ["BNG31"],
+			"value": -100,
+			"reason": "FISH (-1000 if your initials are BNG)"
+		},
+		{
+			"includeCMs": ["SSS31"],
+			"value": -100,
+			"reason": "FISH"
+		}
 	]
 }

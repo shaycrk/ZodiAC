@@ -732,7 +732,7 @@ function rallyeToJSON() {
   var rallyeName = document.getElementById("rallyeName").value;
   if (!rallyeStart || !rallyeName || !rallyeEnd) {
     showError('ERROR: Set a name, starting point, and ending point before exporting!');
-    return;
+    return 'ERROR';
   }
 
   var cms = [];
@@ -804,7 +804,10 @@ function downloadFile(content, fileName, mimeType) {
 
 function downloadRallye() {
   var fileName = document.getElementById("rallyeName").value + '.json';
-  downloadFile(rallyeToJSON(), fileName, 'text/plain;encoding:utf-8');
+  var jsonData = rallyeToJSON();
+  if (jsonData != 'ERROR') {
+    downloadFile(jsonData, fileName, 'text/plain;encoding:utf-8');
+  }
 }
 
 

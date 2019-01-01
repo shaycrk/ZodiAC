@@ -200,6 +200,7 @@ return DirectionalMarker;
 function editObj(objType, title) {
 
   var lat, lng, selectIdx, heading, label, cpSI;
+  title = title.replace("\\n", "\n");
 
   switch (objType) {
     case 'cm':
@@ -232,7 +233,7 @@ function editObj(objType, title) {
   document.getElementById("objectLat").innerHTML = lat;
   document.getElementById("objectLng").innerHTML = lng;
   document.getElementById("objectHeading").value = heading;
-  document.getElementById("objectLabel").value = label;
+  document.getElementById("objectLabel").value = label.replace("\n", "\\n");
   document.getElementById("cpSI").value = cpSI;
 
   // remove the existing object
@@ -243,6 +244,8 @@ function editObj(objType, title) {
 }
 
 function removeObj(objType, title) {
+  title = title.replace("\\n", "\n");
+
   if (openInfoWindow) {
     openInfoWindow.close();
     openInfoWindow = null;
@@ -305,8 +308,8 @@ function placeCP(map, lat, lng, heading, title, cpSI, iconScale=1.0) {
   var infoWindowObject = new google.maps.InfoWindow;
 
   var infoWindowHTML = '<b>SI:</b> ' + cpSI;
-  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cp\', \''+title+'\');">Edit</a> | ';
-  infoWindowHTML += '<a href="#" onClick="removeObj(\'cp\', \''+title+'\');">Remove</a><br />';
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cp\', \''+title.replace("\n", "\\n")+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\'cp\', \''+title.replace("\n", "\\n")+'\');">Remove</a><br />';
 
   google.maps.event.addListener(marker, 'click', function() {
     if (openInfoWindow) {
@@ -342,9 +345,9 @@ function placeCM(map, lat, lng, heading, title, iconScale=1.0) {
 
   var infoWindowObject = new google.maps.InfoWindow;
 
-  var infoWindowHTML = title;
-  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cm\', \''+title+'\');">Edit</a> | ';
-  infoWindowHTML += '<a href="#" onClick="removeObj(\'cm\', \''+title+'\');">Remove</a><br />';
+  var infoWindowHTML = title.replace("\n", "<br \>");
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\'cm\', \''+title.replace("\n", "\\n")+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\'cm\', \''+title.replace("\n", "\\n")+'\');">Remove</a><br />';
 
   google.maps.event.addListener(marker, 'click', function() {
     if (openInfoWindow) {
@@ -392,9 +395,9 @@ function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
 function arrowInfoWindow(map, marker, objType, title) {
   var infoWindowObject = new google.maps.InfoWindow;
 
-  var infoWindowHTML = title;
-  infoWindowHTML += '<hr><a href="#" onClick="editObj(\''+objType+'\', \''+title+'\');">Edit</a> | ';
-  infoWindowHTML += '<a href="#" onClick="removeObj(\''+objType+'\', \''+title+'\');">Remove</a><br />';
+  var infoWindowHTML = title.replace("\n", "<br \>");
+  infoWindowHTML += '<hr><a href="#" onClick="editObj(\''+objType+'\', \''+title.replace("\n", "\\n")+'\');">Edit</a> | ';
+  infoWindowHTML += '<a href="#" onClick="removeObj(\''+objType+'\', \''+title.replace("\n", "\\n")+'\');">Remove</a><br />';
 
   google.maps.event.addListener(marker, 'click', function() {
     if (openInfoWindow) {
@@ -841,7 +844,7 @@ function downloadRallye() {
     document.getElementById("objectLat").innerHTML = lat;
     document.getElementById("objectLng").innerHTML = lng;
     document.getElementById("objectHeading").value = heading;
-    document.getElementById("objectLabel").value = label;
+    document.getElementById("objectLabel").value = label.replace("\n", "\\n");
     document.getElementById("cpSI").value = cpSI;
   }
 

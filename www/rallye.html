@@ -16,7 +16,7 @@
         margin: 0;
         padding: 0;
       }
-      #intro-window {
+      .floating-window {
         position: absolute;
         top: 0px;
         left: 0px;
@@ -26,9 +26,11 @@
         background-color: #fff;
         border: 1px solid #999;
         margin: 5px;
-        text-align: center;
         font-family: 'Roboto','sans-serif';
         line-height: 30px;
+      }
+      #intro-window {
+        text-align: center;
       }
 
       #intro-window h2 {
@@ -143,6 +145,48 @@
         height: 100%;
       }
 
+      #score-container {
+        display: none;
+        overflow: scroll;
+        padding-left: 5px;
+      }
+
+      a.close-score {
+        float: right;
+        margin: 10px;
+        font-size: 16px;
+        border-radius: 15px;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        vertical-align: middle;
+        padding-bottom: 1px;
+        color: white;
+        background-color: #d44;
+        text-decoration: none;
+      }
+
+      a.close-score:hover {
+        background-color: #f00;
+        font-weight: bold;
+      }
+
+      #score-container table {
+        width: 85%;
+        margin-left: 25px;
+        margin-top: 10px;
+        border-collapse: collapse;
+      }
+
+      #score-container td,th {
+        border: 1px solid black;
+        padding: 3px;
+      }
+
+      #critique-html {
+        padding-top: 75px;
+      }
+
     </style>
   </head>
   <body>
@@ -151,7 +195,7 @@
       <input type="button" value="Toggle Street View" onclick="toggleStreetView();"></input>
     </div>
     -->
-    <div id="intro-window">
+    <div id="intro-window" class="floating-window">
       <h2>Welcome to ZodiAC Online</h2>
       <div id="loading">
         <img src="https://www.vedantaresources.com/SiteAssets/Images/loading.gif"></img>
@@ -193,6 +237,10 @@
       <div id="instructions"><iframe src="virtual_rallye_info.pdf"></iframe></div>
       <div id="scoresheet"><h2>Scoresheet</h2></div>
     </div>
+    <div id="score-container" class="floating-window">
+      <a href="#" class="close-score" onClick="closeScoreWindow();">X</a>
+      <div id="critique-html"></div>
+    </div>
 
 <script>
 var mapObj;
@@ -211,6 +259,7 @@ var startLoc, startHeading;
 var courseMarkers, checkpoints, otherObjects;
 var giURL, riURL, suppURL;
 var updateActions;
+var scoreValues;
 
 
 function classLoader() {
@@ -535,6 +584,8 @@ function initFromDict(rallyeDict) {
 
   updateActions = rallyeDict['update_actions'] || [];
 
+  scoreValues = rallyeDict['score_values'] || [];
+
   initMap();
 }
 
@@ -714,6 +765,11 @@ function removeCM(toRemove) {
 }
 
 function haveRecordedCMs(checkCMs, mustHaveAll=true) {
+  if (checkCMs === undefined || checkCMs.length == 0) {
+    // satisfy the condition by default if no CMs are required
+    return true;
+  }
+
   var elms = document.getElementsByClassName("recordedCM");
   var recordedCMs = [];
   for (var i = 0; i < elms.length; i++) {
@@ -729,6 +785,11 @@ function haveRecordedCMs(checkCMs, mustHaveAll=true) {
 }
 
 function haveNotRecordedCMs(checkCMs, mustHaveNone=true) {
+  if (checkCMs === undefined || checkCMs.length == 0) {
+    // satisfy the condition by default if no CMs are required
+    return true;
+  }
+
   var elms = document.getElementsByClassName("recordedCM");
   var recordedCMs = [];
   for (var i = 0; i < elms.length; i++) {
@@ -778,6 +839,51 @@ function initForm() {
     document.getElementById("select-form").style.display = "block";
   }
 
+}
+
+function scoreRallye() {
+  var score = {
+    'total_score': 0,
+    'critique_html': '<table><tr><th>Course Markers</th><th>Value</th><th>Explanation</th></tr>' 
+  };
+  scoreValues.forEach(function(rule) {
+    var includeCMs = rule["includeCMs"] || [];
+    var excludeCMs = rule["excludeCMs"] || [];
+
+    if (haveRecordedCMs(includeCMs) && haveNotRecordedCMs(excludeCMs)) {
+      score['total_score'] += rule['value'];
+
+      score['critique_html'] += '<tr><td>';
+
+      if (includeCMs.length > 0) {
+        score['critique_html'] += "Recorded: " + includeCMs.join(", ")
+        if (excludeCMs.length > 0) {
+          score['critique_html'] += '<br />'
+        }
+      }
+
+      if (excludeCMs.length > 0) {
+        score['critique_html'] += "Unrecorded: " + excludeCMs.join(", ")
+      }
+
+      score['critique_html'] += '</td><td>' + rule['value'] + '</td>';
+      score['critique_html'] += '<td>' + rule['reason'] + '</td></tr>';
+    }
+
+  });
+
+  score['critique_html'] += '</table>';
+
+  score['critique_html'] = '<h2>Total Score: ' + score['total_score'] + '</h2>' + score['critique_html']
+
+  document.getElementById('score-container').style.display = 'block';
+  document.getElementById('critique-html').innerHTML = score['critique_html'];
+
+  return score;
+}
+
+function closeScoreWindow() {
+  document.getElementById('score-container').style.display = 'none';
 }
 
 </script>

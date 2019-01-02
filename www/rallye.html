@@ -259,17 +259,22 @@ var east = 90;
 var startLoc, startHeading;
 var endLoc, endHeading;
 var courseMarkers, checkpoints, otherObjects;
+var currIconScale;
 var giURL, riURL, suppURL;
 var updateActions;
 var scoreValues;
 
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function classLoader() {
 
 class DirectionalMarker extends google.maps.Marker {
 
   // distance in meters, angle in degrees to one side
-  constructor(markerOpts, visibleHeading, visibleDistance=50, visibleAngle=60) {
+  constructor(markerOpts, visibleHeading, visibleDistance=65, visibleAngle=60) {
     super(markerOpts);
     this.visibleDistance = visibleDistance;
     this.visibleHeading = visibleHeading;
@@ -302,6 +307,13 @@ class DirectionalMarker extends google.maps.Marker {
 return DirectionalMarker;
 }
 
+function objectScale() {
+  // Want a CM object to be 1.1 x map height, so calculate ratio of map div to base CM image height (150px)
+  var elm = document.getElementsByClassName('widget-scene-canvas')[0];
+  var cmHeight = parseFloat(window.getComputedStyle(elm).height)*1.1;
+  return cmHeight / 150.0;
+}
+
 function placeObjects(map, iconScale=1.0) {
   DirectionalMarker = classLoader();
   
@@ -329,8 +341,8 @@ function placeCPs(map, iconScale=1.0) {
   DirectionalMarker = classLoader();
 
   // sign size to display (pixels)
-  var cpWidth = 30*iconScale;
-  var cpHeight = 45*iconScale;
+  var cpWidth = 27*iconScale;
+  var cpHeight = 41*iconScale;
   var cpIcon = {
     url: 'https://shaycrk.files.wordpress.com/2018/12/checkpoint.gif',
     scaledSize: new google.maps.Size(cpWidth, cpHeight)
@@ -415,12 +427,12 @@ function placeEnd(map, iconScale=1.0) {
     return marker;
 }
 
-function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
+function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f", infoWindowHTML=null) {
   // place an arrow over a map marker, rotated to point a certain direction (e.g., the
   // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
   // translation by `anchor` is done after rotating the coordinate system, so have
   // to rotate the coordinates of the translation as well. Finally, because rotations
-  // happen around the tip of the arrow, translate back (in the original coordinates) 
+  // happen around the tip of the arrow, translate back (in the original coordinates)
   // by the size of the arrow to have the center end up where we want it.
 
   // Two notes that add a little complexity:
@@ -429,7 +441,7 @@ function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
   //  2. rotations are taken clockwise from due north (the y-axis) as opposed to
   //     polar-coordinates that measure counter-clockwise from the x-axis
   var arrowCenter = new google.maps.Point(0, -2);
-  new google.maps.Marker({
+  var marker = new google.maps.Marker({
     position: {lat: lat, lng: lng},
     icon: {
       path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
@@ -444,6 +456,15 @@ function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
     title: title,
     map: map
   });
+  
+  // If infoWindowHTML was passed, create an infoWindow (only used for checkpoints currently)
+  if (infoWindowHTML) {
+    var infoWindowObject = new google.maps.InfoWindow;
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindowObject.setContent(infoWindowHTML);
+      infoWindowObject.open(map, marker);
+    });
+  }
 }
 
 function placeArrows(map) {
@@ -453,7 +474,7 @@ function placeArrows(map) {
   });
 
   checkpoints.forEach(function(cp) {
-    placeArrow(map, cp[0], cp[1], parseHeading(cp[3]) - 180, 9, cp[2]);
+    placeArrow(map, cp[0], cp[1], parseHeading(cp[3]) - 180, 9, cp[2], "#a0f", cp[4]);
   });
 
   otherObjects.forEach(function(obj) {
@@ -586,7 +607,7 @@ function loadFile() {
 
   function receivedText(e) {
     let lines = e.target.result;
-    var rallyeDict = JSON.parse(lines); 
+    var rallyeDict = JSON.parse(lines);
     document.getElementById("intro-window").style.display = "none";
     initFromDict(rallyeDict);
 
@@ -651,7 +672,7 @@ function initGoogleMap() {
 }
 
 // street view version: actually run the rallye
-function initStreetView() {
+async function initStreetView() {
   var map = new google.maps.StreetViewPanorama(
     document.getElementById('map'), {
     position: startLoc,
@@ -663,10 +684,19 @@ function initStreetView() {
   });
   panorama = map;
 
-  markers = placeCMs(map, 1.6);
-  markers = markers.concat(placeCPs(map, 1.6));
-  markers = markers.concat(placeObjects(map, 1.6));
-  markers.push(placeEnd(map, 1.6));
+  // calculate the desired object scale based on the height of the panorama
+  // (since the canvas might take a few seconds to set up, loop until it is)
+  var canvasElm = document.getElementsByClassName('widget-scene-canvas')[0];
+  while (!canvasElm) {
+    await sleep(1000);
+    canvasElm = document.getElementsByClassName('widget-scene-canvas')[0];
+  }
+  currIconScale = objectScale();
+
+  markers = placeCMs(map, currIconScale);
+  markers = markers.concat(placeCPs(map, currIconScale));
+  markers = markers.concat(placeObjects(map, currIconScale));
+  markers.push(placeEnd(map, currIconScale));
   
   var center = panorama.getPosition();
   var heading = panorama.getPov().heading;
@@ -689,6 +719,12 @@ function initStreetView() {
       function(marker) { marker.checkVisibility(center, heading); }
     );
   });
+  
+  // add listeners for full screen change to update icon sizes
+  document.onwebkitfullscreenchange = updateIconScale;
+  document.onmozfullscreenchange = updateIconScale;
+  document.onfullscreenchange = updateIconScale;
+  window.onresize = updateIconScale;
 
 }
 
@@ -713,19 +749,31 @@ function checkDistance(center, marker) {
 }
 
 function removeMarker(markerTitle) {
-  markers.forEach(function(m) { 
-    if ((m.title != null) && (m.title == markerTitle)) { 
-      m.setMap(null); 
-    } 
+  markers.forEach(function(m) {
+    if ((m.title != null) && (m.title == markerTitle)) {
+      m.setMap(null);
+    }
   });
 }
 
 function setVisibleAngle(markerTitle, newAngle) {
-  markers.forEach(function(m) { 
-    if ((m.title != null) && (m.title == markerTitle)) { 
+  markers.forEach(function(m) {
+    if ((m.title != null) && (m.title == markerTitle)) {
       m.visibleAngle = newAngle;
-    } 
+    }
   });
+}
+
+function updateIconScale() {
+  var newScale = objectScale();
+  markers.forEach(function(m) {
+    ic = m.getIcon();
+    var newSize = new google.maps.Size(ic.scaledSize.width*newScale/currIconScale, ic.scaledSize.height*newScale/currIconScale);
+    ic.scaledSize = newSize;
+    ic.size = newSize;
+    m.setIcon(ic);
+  });
+  currIconScale = newScale;
 }
 
 </script>
@@ -877,7 +925,7 @@ function initForm() {
 function scoreRallye() {
   var score = {
     'total_score': 0,
-    'critique_html': '<table><tr><th>Course Markers</th><th>Value</th><th>Explanation</th></tr>' 
+    'critique_html': '<table><tr><th>Course Markers</th><th>Value</th><th>Explanation</th></tr>'
   };
   scoreValues.forEach(function(rule) {
     var includeCMs = rule["includeCMs"] || [];

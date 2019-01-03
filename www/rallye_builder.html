@@ -20,7 +20,7 @@
       #content {
         background-color: #fff;
         padding: 2px;
-        height: 48%;
+        height: calc(50% - 30px);
         font-family: Helvetica;
         overflow: scroll;
       }
@@ -31,10 +31,14 @@
       }
 
       #errorMsg {
-        width: 100%;
-        color: #a00;
+        width: calc(100% - 10px);
+        height: 20px;
+        line-height: 20px;
+        color: red;
         font-family: Helvetica;
+        font-size: 16px;
         margin: 3px;
+        padding-left: 5px;
       }
 
       #objectEditor {
@@ -73,7 +77,7 @@
       #exportButton {
         font-size: 20px;
         font-weight: bold;
-        color: red;
+        color: #b00;
         display: inline-block;
         float: right;
       }
@@ -384,7 +388,7 @@ function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
   // direction a CM is facing, which is its visibleHeading - 180 deg). It looks like
   // translation by `anchor` is done after rotating the coordinate system, so have
   // to rotate the coordinates of the translation as well. Finally, because rotations
-  // happen around the tip of the arrow, translate back (in the original coordinates) 
+  // happen around the tip of the arrow, translate back (in the original coordinates)
   // by the size of the arrow to have the center end up where we want it.
 
   // Two notes that add a little complexity:
@@ -500,12 +504,12 @@ function initGoogleMap() {
   });
   mapObj = map;
   
-  map.addListener('click', function(e) { 
+  map.addListener('click', function(e) {
     if (openInfoWindow) {
       openInfoWindow.close();
       openInfoWindow = null;
     }
-    updateEditor(e.latLng.lat(), e.latLng.lng()); 
+    updateEditor(e.latLng.lat(), e.latLng.lng());
   });
 }
 
@@ -549,11 +553,11 @@ function gridOffset() {
   Object.keys(courseMarkers).forEach(function(key) {
     courseMarkers[key]['arrow_object'].setVisible(false);
     newArrow = placeArrow(
-      mapObj, 
-      courseMarkers[key]['lat'], 
-      courseMarkers[key]['lng'], 
-      parseHeading(courseMarkers[key]['rawHeading'])-180, 
-      13, 
+      mapObj,
+      courseMarkers[key]['lat'],
+      courseMarkers[key]['lng'],
+      parseHeading(courseMarkers[key]['rawHeading'])-180,
+      13,
       courseMarkers[key]['label']
     );
     courseMarkers[key]['arrow_object'] = newArrow;
@@ -563,11 +567,11 @@ function gridOffset() {
   Object.keys(checkpoints).forEach(function(key) {
     checkpoints[key]['arrow_object'].setVisible(false);
     newArrow = placeArrow(
-      mapObj, 
-      checkpoints[key]['lat'], 
-      checkpoints[key]['lng'], 
-      parseHeading(checkpoints[key]['rawHeading'])-180, 
-      9, 
+      mapObj,
+      checkpoints[key]['lat'],
+      checkpoints[key]['lng'],
+      parseHeading(checkpoints[key]['rawHeading'])-180,
+      9,
       checkpoints[key]['label']
     );
     checkpoints[key]['arrow_object'] = newArrow;
@@ -576,11 +580,11 @@ function gridOffset() {
   if (rallyeStart) {
     rallyeStart['arrow_object'].setVisible(false);
     newArrow = placeArrow(
-      mapObj, 
-      rallyeStart['lat'], 
-      rallyeStart['lng'], 
-      parseHeading(rallyeStart['rawHeading']), 
-      0, 
+      mapObj,
+      rallyeStart['lat'],
+      rallyeStart['lng'],
+      parseHeading(rallyeStart['rawHeading']),
+      0,
       'Rallye Start',
       "#006400"
     );
@@ -591,11 +595,11 @@ function gridOffset() {
   if (rallyeEnd) {
     rallyeEnd['arrow_object'].setVisible(false);
     newArrow = placeArrow(
-      mapObj, 
-      rallyeEnd['lat'], 
-      rallyeEnd['lng'], 
-      parseHeading(rallyeEnd['rawHeading'])-180, 
-      0, 
+      mapObj,
+      rallyeEnd['lat'],
+      rallyeEnd['lng'],
+      parseHeading(rallyeEnd['rawHeading'])-180,
+      0,
       'Rallye End',
       "#640000"
     );
@@ -844,7 +848,7 @@ function downloadRallye() {
 
     function receivedText(e) {
       let lines = e.target.result;
-      var rallyeDict = JSON.parse(lines); 
+      var rallyeDict = JSON.parse(lines);
       rallyeFromDict(rallyeDict);
 
     }

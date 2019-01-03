@@ -414,10 +414,11 @@ function placeArrow(map, lat, lng, angle, height, title=null, color="#a0f") {
   });
 }
 
-function arrowInfoWindow(map, marker, objType, title) {
+function arrowInfoWindow(map, marker, objType, title, infoHTML=null) {
   var infoWindowObject = new google.maps.InfoWindow;
 
-  var infoWindowHTML = title.replace("\n", "<br \>");
+  var infoWindowHTML = infoHTML || title
+  infoWindowHTML = infoWindowHTML.replace("\n", "<br \>");
   infoWindowHTML += '<hr><a href="#" onClick="editObj(\''+objType+'\', \''+title.replace("\n", "\\n")+'\');">Edit</a> | ';
   infoWindowHTML += '<a href="#" onClick="removeObj(\''+objType+'\', \''+title.replace("\n", "\\n")+'\');">Remove</a><br />';
 
@@ -575,6 +576,7 @@ function gridOffset() {
       checkpoints[key]['label']
     );
     checkpoints[key]['arrow_object'] = newArrow;
+    arrowInfoWindow(mapObj, newArrow, 'cp', checkpoints[key]['label'], '<b>SI:</b> ' + checkpoints[key]['checkpoint_si']);
   });
 
   if (rallyeStart) {
@@ -670,6 +672,7 @@ function handleObject(confirm=false) {
       } else {
         currMarker = placeCP(mapObj, lat, lng, heading, label, cpSI, 0.3);
         currArrow = placeArrow(mapObj, lat, lng, heading-180, 9, label);
+        arrowInfoWindow(mapObj, currArrow, 'cp', label, '<b>SI:</b> ' + cpSI);
         if (confirm) {
           checkpoints[label] = {
             'label': label,

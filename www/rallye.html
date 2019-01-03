@@ -246,7 +246,7 @@
 <script>
 var mapObj;
 var panorama;
-var markers;
+var markers;  // list of DirectionalMarker objects to manipulate (not just course markers despite the name!)
 
 // some variables for headings
 // Winters grid about -10 deg off true north,
@@ -256,12 +256,25 @@ var south = 180;
 var west = 270;
 var east = 90;
 
+// globals for the objects to appear on the map
 var startLoc, startHeading;
 var endLoc, endHeading;
 var courseMarkers, checkpoints, otherObjects;
-var currIconScale, initMapHeight, initMapWidth;
+
+// globals for scaling the marker images
+var currIconScale, initMapHeight, initMapWidth, cmHeight;
+// reference course marker height and map width for determining scale
+// (see objectScaleInit and objectScaleZoom comments for details)
+var refMapWidth = 1500.0;
+var refCMHeight = 410.0;
+
+// links to PDF files for rallye instructions
 var giURL, riURL, suppURL;
+
+// changes to make to the rallye objects after certain CMs have been recorded
 var updateActions;
+
+// list of values for recorded coursemarkers (populated at the end)
 var scoreValues;
 
 
@@ -316,17 +329,55 @@ function objectScale() {
 }
 */
 
-function objectScaleZoom() {
-  // Want a CM object to be 1.1 x map height at zoom level of 1.0, so calculate ratio of map div to base CM image height (150px)
-  // but note we also have to adjust for any scaling introduced by width changes to keep consisent with the street view imagery.
+
+function objectScaleInit() {
+  // Set the initial scale for the objects we'll be placing on the map
+  
+  // Because the view on initial load starts from a fixed angle for a field of view regardless of the window size, the scale of
+  // the initial image will vary just with the **width** of the window, but not its height. To see this, open two street view
+  // windows at the exact same location/POV, loaded into windows of the same height but very different widths (the window sizes
+  // must be set before loading street view as the behavior is different on resize). Note that the left and right edges of the
+  // two views are exactly the same but the top and bottom are clipped differently -- the entire image has been scaled by the
+  // factor between the widths of the two windows then cropped vertically to keep the field of view fixed! Try this again with
+  // two windows of the same width and different heights and you'll see that the left and right edges still line up as well.
+  
+  // What this means is that, on load, we need to adjust for the width of the street view panorama, relative to the size we
+  // want our objects to appear at some reference width (see above). Generally, the page should load with panorama.zoom=1,
+  // but in case that's not the case, should adjust for it here as well.
+
   // Note that the streetview zoom levels range from 0 to 5 and are log2 in scaling the field of view from 180 deg to 11.25 deg
   // (hence the exponentiation below). For more on street view zoom factors, see:
   // https://developers.google.com/maps/documentation/javascript/streetview
+  
+  //set the global `cmHeight` to use as a reference when the zoom/resize changes
+  cmHeight = refCMHeight * (initMapWidth/refMapWidth);
+  var zoomLevel = (2**panorama.zoom) / 2;
+
+  // calculate scale relative to base CM image height (150px)
+  return cmHeight * zoomLevel * (1/150.0);
+}
+
+function objectScaleZoom() {
+  // Adjust the scale for objects on the map if the zoom changes
+  // (which will happen either because the window was resized, the user entered/exited fullscreen mode, or they zoomed in or out)
+
+  // Because the google streetview concept of "zoom" is related to the angle of the field of view, changes in width of the window
+  // will change the "zoom" without actually changing the scale of objects in the images (just exposing a wider field of view), so
+  // we can't simply scale the objects by the zoom level. Instead, we have to factor out any contribution of changes to field
+  // of view from changes in the width of the panorama, and then can scale our images by this adjusted zoom level. Notice that
+  // this behavior (how width affects the field of view) is different when the window is resized from what we described above for
+  // when the street view panorama is first loaded.
+
+  // Note that the streetview zoom levels range from 0 to 5 and are log2 in scaling the field of view from 180 deg to 11.25 deg
+  // (hence the exponentiation below). For more on street view zoom factors, see:
+  // https://developers.google.com/maps/documentation/javascript/streetview
+
   var elm = document.getElementsByClassName('widget-scene-canvas')[0];
   var currWidth = parseFloat(window.getComputedStyle(elm).width);
 
-  var cmHeight = initMapHeight*1.1;
   var zoomLevel = (2**panorama.zoom) * (currWidth/initMapWidth);
+
+  // calculate scale relative to base CM image height (150px)
   return (zoomLevel / 2) * (cmHeight / 150.0);
 }
 
@@ -709,7 +760,7 @@ async function initStreetView() {
   }
   initMapHeight = parseFloat(window.getComputedStyle(canvasElm).height);
   initMapWidth = parseFloat(window.getComputedStyle(canvasElm).width);
-  currIconScale = objectScaleZoom();
+  currIconScale = objectScaleInit();
 
   markers = placeCMs(map, currIconScale);
   markers = markers.concat(placeCPs(map, currIconScale));

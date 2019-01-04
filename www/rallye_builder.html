@@ -90,6 +90,13 @@
       }
 
     </style>
+    <script src="//cdn.jsdelivr.net/npm/mobile-detect@1.4.3/mobile-detect.min.js"></script>
+    <script>
+      var md = new MobileDetect(window.navigator.userAgent);
+      if (md.mobile()) {
+        window.location.replace("mobile_message.html");
+      }
+    </script>
   </head>
   <body>
     <!--
@@ -521,6 +528,11 @@ function initGoogleMap() {
 function updateEditor(lat, lng) {
   document.getElementById("objectLat").innerHTML = lat;
   document.getElementById("objectLng").innerHTML = lng;
+  
+  // if you're currently previewing an object, update the location
+  if (currMarker || currArrow) {
+    handleObject();
+  }
 }
 
 function parseHeading(rawHeading) {
@@ -652,7 +664,9 @@ function handleObject(confirm=false) {
         currMarker = placeCM(mapObj, lat, lng, heading, label, 0.3);
         currArrow = placeArrow(mapObj, lat, lng, heading-180, 13, label);
         arrowInfoWindow(mapObj, currArrow, 'cm', label);
+        currMarker.setAnimation(google.maps.Animation.BOUNCE);
         if (confirm) {
+          currMarker.setAnimation(null);
           courseMarkers[label] = {
             'label': label,
             'lat': lat,
@@ -673,7 +687,9 @@ function handleObject(confirm=false) {
         currMarker = placeCP(mapObj, lat, lng, heading, label, cpSI, 0.3);
         currArrow = placeArrow(mapObj, lat, lng, heading-180, 9, label);
         arrowInfoWindow(mapObj, currArrow, 'cp', label, '<b>SI:</b> ' + cpSI);
+        currMarker.setAnimation(google.maps.Animation.BOUNCE);
         if (confirm) {
+          currMarker.setAnimation(null);
           checkpoints[label] = {
             'label': label,
             'lat': lat,
@@ -692,7 +708,9 @@ function handleObject(confirm=false) {
       } else {
         currArrow = placeArrow(mapObj, lat, lng, heading, 0, 'Rallye Start', "#006400");
         arrowInfoWindow(mapObj, currArrow, 'start', 'Rallye Start');
+        currArrow.setAnimation(google.maps.Animation.BOUNCE);
         if (confirm) {
+          currArrow.setAnimation(null);
           rallyeStart = {
             'lat': lat,
             'lng': lng,
@@ -708,7 +726,9 @@ function handleObject(confirm=false) {
       } else {
         currArrow = placeArrow(mapObj, lat, lng, heading-180, 0, 'Rallye End', "#640000");
         arrowInfoWindow(mapObj, currArrow, 'end', 'Rallye End');
+        currArrow.setAnimation(google.maps.Animation.BOUNCE);
         if (confirm) {
+          currArrow.setAnimation(null);
           rallyeEnd = {
             'lat': lat,
             'lng': lng,

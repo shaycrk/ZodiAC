@@ -189,6 +189,13 @@
       }
 
     </style>
+    <script src="//cdn.jsdelivr.net/npm/mobile-detect@1.4.3/mobile-detect.min.js"></script>
+    <script>
+      var md = new MobileDetect(window.navigator.userAgent);
+      if (md.mobile()) {
+        window.location.replace("mobile_message.html");
+      }
+    </script>
   </head>
   <body>
     <!--

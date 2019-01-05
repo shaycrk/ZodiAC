@@ -20,9 +20,8 @@
       #content {
         background-color: #fff;
         padding: 2px;
-        height: calc(50% - 30px);
+        height: calc(50% - 5px);
         font-family: Helvetica;
-        overflow: scroll;
       }
 
       h2 {
@@ -41,33 +40,52 @@
         padding-left: 5px;
       }
 
-      #objectEditor {
-        width: 31%;
+      #settings-container {
+        float: left;
+        height: calc(100% - 10px);
+        width: calc(100% - 356px);
+      }
+
+      .editor-pane {
+        height: calc(100% - 80px);
+        width: calc(100% - 20px);
         vertical-align: top;
         overflow: scroll;
         font-family: Helvetica;
-        display: inline-block;
-        padding-left: 15px;
+        padding: 2px;
+        margin-left: 15px;
       }
 
       #settings {
-        width: 40%;
-        vertical-align: top;
-        overflow: scroll;
-        font-family: Helvetica;
         display: inline-block;
-        padding: 2px;
-        margin-left: 15px;
-        border-right: 1px solid black;
       }
-
-      #settings h3 {
-        display: inline-block;
+      
+      #settings-info {
+        display: block;
+      }
+      
+      #objectEditor {
+        display: none;
+      }
+      
+      #objectEditor-info {
+        display: none;
+      }
+      
+      #critiqueEditor {
+        display: none;
+      }
+      
+      #critiqueEditor-info {
+        display: none;
       }
 
       #howto {
         display: inline-block;
-        width: 23%;
+        float: left;
+        width: 350px;
+        height: calc(100% - 10px);
+        overflow: scroll;
         font-family: Helvetica;
         padding: 2px;
         background-color: lightgrey;
@@ -75,11 +93,15 @@
       }
 
       #exportButton {
-        font-size: 20px;
+        font-size: 16px;
         font-weight: bold;
         color: #b00;
         display: inline-block;
         float: right;
+      }
+
+      #exportButton:hover {
+        cursor: pointer;
       }
 
       #loadJSON {
@@ -87,6 +109,48 @@
         padding-left: 20px;
         padding-top: 5px;
         margin-bottom: 15px;
+      }
+
+      #menu {
+        background-color: #000;
+        font-family: Helvetica;
+        font-size: 16px;
+      }
+      #menu > ul {
+        margin: 0;
+        padding: 0;
+        color: white;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
+      }
+      li {
+        float: left;
+      }
+
+      li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 17px 16px;
+        text-decoration: none;
+      }
+
+      /* Change the link color to #111 (black) on hover */
+      li a:hover {
+        background-color: #111;
+      }
+
+      li a.active {
+        background-color: #fff;
+        color: #000;
+      }
+
+      .exportRallye {
+        float: right;
+        padding: 13px 16px;
       }
 
     </style>
@@ -105,48 +169,66 @@
     </div>
     -->
     <div id="map"></div>
-    <div id="errorMsg"></div>
     <div id="content">
       <div id="howto">
-        <h3>Instructions</h3>
-        <p>Click on the map above to place a course marker, checkpoint, or the rallye starting point, then set the object information in the form to the right. Click <b>Preview</b> to see where it will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
-
-        <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or as a number of degrees clockwise from north).</p>
-      </div>
-      <div id="settings">
-        <h3>Settings</h3>
-        <input id="exportButton" type="button" value="Export Rallye" onclick="downloadRallye();"></input>
-        <br />
-        Rallye Name: <input id="rallyeName" type="text" size=50></input><br />
-        <div id="loadJSON">
-          [Optional] Load an existing saved rallye:<br />
-          <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' />
+        <div id="settings-info">
+          <h3>Instructions</h3>
+          <p>Click on the map above to place a course marker, checkpoint, or the rallye starting point, then set the object information in the form to the right. Click <b>Preview</b> to see where it will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
+  
+          <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or as a number of degrees clockwise from north).</p>
         </div>
-        Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10"></input><br />
-        <br />
-        General Instructions URL:<br />
-        <input id="giURL" type="text" size=60></input><br />
-        Route Instructions URL:<br />
-        <input id="riURL" type="text" size=60></input><br />
-        Supplemental Instructions URL:<br />
-        <input id="suppURL" type="text" size=60></input><br />
+        <div id="objectEditor-info"></div>
+        <div id="critiqueEditor-info"></div>
       </div>
-      <div id="objectEditor">
-        <h3>Object Editor</h3>
-        Latitude: <span id="objectLat"></span><br />
-        Longitude: <span id="objectLng"></span><br />
-        <br />
-        Type: <select id="objectType">
-        <option value="cm">Course Marker</option>
-        <option value="cp">Checkpoint</option>
-        <option value="start">Rallye Start</option>
-        <option value="end">Rallye End</option>
-        </select><br />
-        Heading: <input id="objectHeading" type="text" size=21></input><br />
-        Label: <input id="objectLabel" type="text" size=25></input><br />
-        Checkpoint SI:<br /><textarea id="cpSI" cols=30 rows=4></textarea><br />
-        <input type="button" value="Preview" onclick="handleObject();"></input>
-        <input type="button" value="Confirm" onclick="handleObject(confirm=true);"></input>
+      <div id="settings-container">
+
+        <div id="menu">
+          <ul>
+            <li><a href="#" class="active" id="menuSettings" onClick="showEditor('settings');">Rallye Settings</a></li>
+            <li><a href="#" id="generals" onClick="showEditor('critiqueEditor');">Score Values</a></li>
+            <li><a href="#" id="route" onClick="showEditor('objectEditor');">Object Editor</a></li>
+            <li class="exportRallye">
+              <input id="exportButton" type="button" value="Export Rallye" onclick="downloadRallye();" />
+            </li>
+          </ul>
+        </div>
+
+        <div id="errorMsg"></div>
+
+        <div id="settings" class="editor-pane">
+          Rallye Name: <input id="rallyeName" type="text" size=50 /><br />
+          <div id="loadJSON">
+            [Optional] Load an existing saved rallye:<br />
+            <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' />
+          </div>
+          Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10" /><br />
+          <br />
+          General Instructions URL:<br />
+          <input id="giURL" type="text" size=60 /><br />
+          Route Instructions URL:<br />
+          <input id="riURL" type="text" size=60 /><br />
+          Supplemental Instructions URL:<br />
+          <input id="suppURL" type="text" size=60 /><br />
+        </div>
+
+        <div id="critiqueEditor" class="editor-pane"></div>
+
+        <div id="objectEditor" class="editor-pane">
+          Object Location (Lat, Lng): (<span id="objectLat"></span>, <span id="objectLng"></span>)<br />
+          <br />
+          Type: <select id="objectType">
+          <option value="cm">Course Marker</option>
+          <option value="cp">Checkpoint</option>
+          <option value="start">Rallye Start</option>
+          <option value="end">Rallye End</option>
+          </select><br />
+          Heading: <input id="objectHeading" type="text" size=21 /><br />
+          Label: <input id="objectLabel" type="text" size=25 /><br />
+          Checkpoint SI:<br /><textarea id="cpSI" cols=30 rows=4></textarea><br />
+          <input type="button" value="Preview" onclick="handleObject();" />
+          <input type="button" value="Confirm" onclick="handleObject(confirm=true);" />
+        </div>
+
       </div>
     </div>
 

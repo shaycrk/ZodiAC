@@ -33,11 +33,21 @@
         width: calc(100% - 10px);
         height: 20px;
         line-height: 20px;
-        color: red;
         font-family: Helvetica;
         font-size: 16px;
         margin: 3px;
         padding-left: 5px;
+      }
+      
+      .errorStyle {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      
+      .nonErrorStyle {
+        background-color: white;
       }
 
       #settings-container {
@@ -104,7 +114,21 @@
         cursor: pointer;
       }
 
+      #importButton {
+        font-size: 16px;
+        font-weight: bold;
+        color: #00b;
+        display: inline-block;
+        float: right;
+        margin-right: 10px;
+      }
+
+      #importButton:hover {
+        cursor: pointer;
+      }
+
       #loadJSON {
+        display: none;
         font-size: 14px;
         padding-left: 20px;
         padding-top: 5px;
@@ -148,9 +172,18 @@
         color: #000;
       }
 
-      .exportRallye {
+      .exportRallye, .importRallye {
         float: right;
         padding: 13px 16px;
+      }
+      
+      #instUrlTable {
+        border: none;
+      }
+      
+      #instUrlTable td,th {
+        border: none;
+        padding: 3px;
       }
 
     </style>
@@ -172,23 +205,41 @@
     <div id="content">
       <div id="howto">
         <div id="settings-info">
-          <h3>Instructions</h3>
-          <p>Click on the map above to place a course marker, checkpoint, or the rallye starting point, then set the object information in the form to the right. Click <b>Preview</b> to see where it will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
-  
-          <p>The <b>Heading</b> is the direction the car must be traveling to see the object (either "north", "south", "east", "west", or as a number of degrees clockwise from north).</p>
+          <h3>Settings Instructions</h3>
+          <p>Use "Load Rallye" to continue working on a rallye you've saved previously (in JSON format). When you're finished editing, use "Export Rallye" to save your rallye to your computer. To export, a rallye must at least have a start, end, and name.</p>
+
+          <p>Click on the map above to place a course marker, checkpoint, or the rallye starting & ending points; or click on an existing object to edit or remove it from your rallye.</p>
+          
+          <p>Setting the <b>Grid Offset</b> allows you to specify if the grid of the city's streets is tilted relative to the true compass directions so specifying "north", "south", "east", "west" for a heading will align to the city grid.</p>
+          
+          <p>The URLs of the general, route, and supplemental instructions should point PDF files (these are not required to export a rallye json, but will be needed to run the rallye).</p>
         </div>
-        <div id="objectEditor-info"></div>
-        <div id="critiqueEditor-info"></div>
+        <div id="objectEditor-info">
+          <h3>Object Editor Instructions</h3>
+          <p>Click on the map above to indicate where you want to place an object, then choose the object type (coursemarker, checkpoint, rallye start, or rallye end) and set the object information in the form to the right.</p>
+  
+          <p>The <b>Heading</b> is the direction the car must be traveling to see the object (this may be either "north", "south", "east", "west", or as a number of degrees clockwise from north).</p>
+          
+          <p>The <b>Label</b> is required to identify coursemarkers and checkpoints (optionally, you can use "\n" to insert a new line, such as "E\n66").</p>
+          
+          <p>For a checkpoint, the <b>Checkpoint SI</b> is required to indicate a special instruction associated with the CP that will be displayed when clicking on it.</p>
+          
+          <p>Click <b>Preview</b> to see where your object will appear on the map and then <b>Confirm</b> to add it to your rallye.</p>
+        </div>
+        <div id="critiqueEditor-info">
+          <h3>Score Values Instructions</h3>
+        </div>
       </div>
       <div id="settings-container">
 
         <div id="menu">
           <ul>
-            <li><a href="#" class="active" id="menuSettings" onClick="showEditor('settings');">Rallye Settings</a></li>
-            <li><a href="#" id="generals" onClick="showEditor('critiqueEditor');">Score Values</a></li>
-            <li><a href="#" id="route" onClick="showEditor('objectEditor');">Object Editor</a></li>
+            <li><a href="#" class="active" id="menu-settings" onClick="showEditor('settings');">Rallye Settings</a></li>
+            <li><a href="#" id="menu-critiqueEditor" onClick="showEditor('critiqueEditor');">Score Values</a></li>
+            <li><a href="#" id="menu-objectEditor" onClick="showEditor('objectEditor');">Object Editor</a></li>
             <li class="exportRallye">
               <input id="exportButton" type="button" value="Export Rallye" onclick="downloadRallye();" />
+              <input id="importButton" type="button" value="Load Rallye" onclick="document.getElementById('fileinput').click();" />
             </li>
           </ul>
         </div>
@@ -196,37 +247,37 @@
         <div id="errorMsg"></div>
 
         <div id="settings" class="editor-pane">
-          Rallye Name: <input id="rallyeName" type="text" size=50 /><br />
           <div id="loadJSON">
             [Optional] Load an existing saved rallye:<br />
-            <input type='file' id='fileinput' /><input type='button' id='btnLoad' value='Load' onclick='loadFile();' />
+            <input type='file' id='fileinput' onchange='loadFile();' accept='.json,application/json,text/x-json' />
+            <!-- <input type='button' id='btnLoad' value='Load' onclick='loadFile();' />-->
           </div>
-          Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10" /><br />
-          <br />
-          General Instructions URL:<br />
-          <input id="giURL" type="text" size=60 /><br />
-          Route Instructions URL:<br />
-          <input id="riURL" type="text" size=60 /><br />
-          Supplemental Instructions URL:<br />
-          <input id="suppURL" type="text" size=60 /><br />
+          <p>Rallye Name: <input id="rallyeName" type="text" size=50 /></p>
+          <p>Grid offset (clockwise degrees from north): <input id="northOffset" oninput="gridOffset();" size=10 value="-10" /></p>
+          <table id="instUrlTable">
+            <tr><td>General Instructions URL:</td><td><input id="giURL" type="text" size=60 /></td></tr>
+            <tr><td>Route Instructions URL:</td><td><input id="riURL" type="text" size=60 /></td></tr>
+            <tr><td>Supplemental Instructions URL:</td><td><input id="suppURL" type="text" size=60 /></td></tr>
+          </table>
         </div>
 
-        <div id="critiqueEditor" class="editor-pane"></div>
+        <div id="critiqueEditor" class="editor-pane">Hello World!</div>
 
         <div id="objectEditor" class="editor-pane">
-          Object Location (Lat, Lng): (<span id="objectLat"></span>, <span id="objectLng"></span>)<br />
-          <br />
-          Type: <select id="objectType">
-          <option value="cm">Course Marker</option>
-          <option value="cp">Checkpoint</option>
-          <option value="start">Rallye Start</option>
-          <option value="end">Rallye End</option>
-          </select><br />
-          Heading: <input id="objectHeading" type="text" size=21 /><br />
-          Label: <input id="objectLabel" type="text" size=25 /><br />
-          Checkpoint SI:<br /><textarea id="cpSI" cols=30 rows=4></textarea><br />
-          <input type="button" value="Preview" onclick="handleObject();" />
-          <input type="button" value="Confirm" onclick="handleObject(confirm=true);" />
+          <p>Object Location (Lat, Lng): <span id="objectLocation"><span id="objectLat"></span><span id="objectLng"></span></span></p>
+          <p>Type: <select id="objectType">
+            <option value="cm">Course Marker</option>
+            <option value="cp">Checkpoint</option>
+            <option value="start">Rallye Start</option>
+            <option value="end">Rallye End</option>
+          </select></p>
+          <p>Heading: <input id="objectHeading" type="text" size=7 style='margin-right: 15px;' /> Label: <input id="objectLabel" type="text" size=10 /></p>
+          <p>Checkpoint SI:<br />
+          <textarea id="cpSI" cols=41 rows=4></textarea></p>
+          <p>
+            <input type="button" value="Preview" onclick="handleObject();" />
+            <input type="button" value="Confirm" onclick="handleObject(confirm=true);" />
+          </p>
         </div>
 
       </div>
@@ -293,6 +344,8 @@ return DirectionalMarker;
 }
 
 function editObj(objType, title) {
+  
+  showEditor('objectEditor');
 
   var lat, lng, selectIdx, heading, label, cpSI;
   title = title.replace("\\n", "\n");
@@ -333,8 +386,7 @@ function editObj(objType, title) {
   }
 
   document.getElementById("objectType").selectedIndex = selectIdx;
-  document.getElementById("objectLat").innerHTML = lat;
-  document.getElementById("objectLng").innerHTML = lng;
+  setLatLng(lat, lng);
   document.getElementById("objectHeading").value = heading;
   document.getElementById("objectLabel").value = label.replace("\n", "\\n");
   document.getElementById("cpSI").value = cpSI;
@@ -599,7 +651,7 @@ function initGoogleMap() {
       openInfoWindow.close();
       openInfoWindow = null;
     }
-    updateEditor(e.latLng.lat(), e.latLng.lng());
+    handleMapClick(e.latLng.lat(), e.latLng.lng());
   });
 }
 
@@ -607,14 +659,49 @@ function initGoogleMap() {
 
 <script>
 
-function updateEditor(lat, lng) {
-  document.getElementById("objectLat").innerHTML = lat;
-  document.getElementById("objectLng").innerHTML = lng;
+function showEditor(tabName) {
+  allEditors = ['settings', 'objectEditor', 'critiqueEditor'];
+  
+  [].forEach.call(allEditors, function(e) {
+    document.getElementById(e).style.display = 'none';
+    document.getElementById(e+'-info').style.display = 'none';
+  });
+  
+  document.getElementById(tabName).style.display = 'inline-block';
+  document.getElementById(tabName + '-info').style.display = 'block';
+  
+  // remove active class from any current menu item (using array prototype forEach)
+  var elms = document.getElementsByClassName("active");
+  [].forEach.call(elms, function(s) { s.classList.remove("active"); });
+
+  // add the active class to the clicked menu item
+  document.getElementById('menu-'+tabName).classList.add("active");
+  
+  if (tabName != 'objectEditor') {
+    clearObjectEditor();
+  }
+}
+
+function handleMapClick(lat, lng) {
+  
+  showEditor('objectEditor');
+  
+  setLatLng(lat, lng);
   
   // if you're currently previewing an object, update the location
   if (currMarker || currArrow) {
     handleObject();
   }
+}
+
+function setLatLng(lat, lng) {
+  if (lat) {
+    document.getElementById("objectLocation").innerHTML = '(<span id="objectLat"></span>, <span id="objectLng"></span>)';
+  } else {
+    document.getElementById("objectLocation").innerHTML = '<span id="objectLat"></span><span id="objectLng"></span>';
+  }
+  document.getElementById("objectLat").innerHTML = lat;
+  document.getElementById("objectLng").innerHTML = lng;
 }
 
 function parseHeading(rawHeading) {
@@ -707,6 +794,16 @@ function gridOffset() {
 
 function showError(errorText) {
   document.getElementById("errorMsg").innerHTML = errorText;
+  if (errorText) {
+    console.log('here');
+  }
+  if (errorText) {
+    document.getElementById("errorMsg").classList.remove("nonErrorStyle");
+    document.getElementById("errorMsg").classList.add("errorStyle");
+  } else {
+    document.getElementById("errorMsg").classList.remove("errorStyle");
+    document.getElementById("errorMsg").classList.add("nonErrorStyle");
+  }
 }
 
 function handleObject(confirm=false) {
@@ -829,8 +926,7 @@ function handleObject(confirm=false) {
 
     // reset the object editor form
     document.getElementById("objectType").selectedIndex = 0;
-    document.getElementById("objectLat").innerHTML = '';
-    document.getElementById("objectLng").innerHTML = '';
+    setLatLng('', '');
     document.getElementById("objectHeading").value = '';
     document.getElementById("objectLabel").value = '';
     document.getElementById("cpSI").value = '';
@@ -1016,11 +1112,22 @@ function downloadRallye() {
         break;
     }
     document.getElementById("objectType").selectedIndex = selectIdx;
-    document.getElementById("objectLat").innerHTML = lat;
-    document.getElementById("objectLng").innerHTML = lng;
+    setLatLng(lat, lng);
     document.getElementById("objectHeading").value = heading;
     document.getElementById("objectLabel").value = label.replace("\n", "\\n");
     document.getElementById("cpSI").value = cpSI;
+  }
+  
+  function clearObjectEditor() {
+    if (currMarker) {
+      currMarker.setMap(null);
+      currMarker = null;
+    }
+    if (currArrow) {
+      currArrow.setMap(null);
+      currArrow = null;
+    }
+    setEditorValues('', '', '', '', '', 'cm');
   }
 
 </script>

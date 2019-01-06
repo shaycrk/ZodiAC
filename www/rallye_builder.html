@@ -185,6 +185,56 @@
         border: none;
         padding: 3px;
       }
+      
+      .score-rule, .score-rule-template {
+        align-items: stretch;
+        background-color: lightgray;
+        margin-bottom: 15px;
+        padding: 4px;
+        font-size: 14px;
+      }
+      
+      .score-rule-template {
+        display: none;
+      }
+      
+      .score-rule {
+        display: flex;
+      }
+      
+      .score-rule-drag {
+        display: inline-block;
+        width: 25px;
+        background-color: darkgray;
+        cursor: grab;
+      }
+      
+      .score-rule-item {
+        display: inline-block;
+        padding-left: 5px;
+      }
+      
+      .score-rule-button-container {
+        display: flex;
+        align-items: center;
+      }
+      
+      .score-rule-button {
+        font-size: 16px;
+        margin: 2px;
+      }
+      
+      .score-rule-cms {
+        width: 275px;
+      }
+      
+      .score-rule-value {
+        width: 60px;
+      }
+      
+      .score-rule-reason {
+        width: 400px;
+      }
 
     </style>
     <script src="//cdn.jsdelivr.net/npm/mobile-detect@1.4.3/mobile-detect.min.js"></script>
@@ -261,7 +311,69 @@
           </table>
         </div>
 
-        <div id="critiqueEditor" class="editor-pane">Hello World!</div>
+        <div id="critiqueEditor" class="editor-pane">
+
+          <div class="score-rule-template">
+            <div class="score-rule-drag score-rule-item"></div>
+            <div class="score-rule-cms score-rule-item">
+              <div class="recorded-cms"><b>Recorded CMs:</b> <span class="rule-values"><input type="text" size=14 value="E66, A27" /></span></div>
+              <div class="non-recorded-cms"><b>Non-Recorded CMs:</b> <span class="rule-values"><input type="text" size=10 value="" /></span></div>
+            </div>
+            <div class="score-rule-value score-rule-item"><b>Value:</b><br /><span class="rule-values"><input type="text" size=2 value="30" /></span></div>
+            <div class="score-rule-reason score-rule-item"><b>Reason:</b><br /><span class="rule-values"><input type="text" size=45 value="Test score rule..." /></span></div>
+            <div class="edit-links score-rule-button-container" id="test-edit-links">
+              <input type="button" value="edit" class="score-rule-button" />
+              <input type="button" value="delete" class="score-rule-button" />
+            </div>
+            <div class="apply-buttons score-rule-button-container">
+              <input type="button" value="apply" class="score-rule-button" />
+              <input type="button" value="cancel" class="score-rule-button" />
+            </div>
+          </div>
+
+          <div id="score-rules-container">
+          
+          </div>
+
+          <input type="button" value="Add Score Rule" onclick="newScoreRule();" />
+<script>
+  function newScoreRule() {
+    var cloned = document.getElementsByClassName('score-rule-template')[0].cloneNode(true);
+    cloned.classList.remove('score-rule-template');
+    cloned.classList.add('score-rule');
+    document.getElementById('score-rules-container').appendChild(cloned);
+  }
+</script>
+          <!--
+          logic here:
+          - when edit is clicked:
+              - hide edit links on all score rules as well as "add score rule" button
+              - show apply buttons on this score rule
+              - save current state to some global variable
+              - iterate through elm.parentNode.parentNode.children to turn text into form inputs (where elm is the clicked node)
+              - on apply, turn forms back into text and undo button hiding/showing/etc; null out store old state
+              - on cancel, replace with stored old state and apply this
+              - on other menu click, apply any active changes (seems like safest option?)
+          - when remove is clicked
+              - hide edit links on all score rules as well as "add score rule" button
+              - turn score rule background red
+              - show apply/cancel buttons for this score rule
+              - on apply, remove the score-rule div
+              - on cancel, unset background, undo hide/show buttons
+              - on other menu click, cancel active delete
+          - when add score rule is clicked:
+              - append to end new score rule with blank form elements populated
+              - hide edit links on all score rules as well as "add score rule" button
+              - show apply buttons on new score rule
+              - on apply, turn form elements into text and undo button hiding/showing/etc
+              - on cancel, remove this score rule div (basically execute a remove apply)
+              - on other menu click, apply changes
+          
+          - also want to be able to drag to reorder score rules..
+              - https://jsfiddle.net/8b7zfr50/3/
+              - https://css-tricks.com/draggable-elements-push-others-way/.
+          -->
+        </div>
 
         <div id="objectEditor" class="editor-pane">
           <p>Object Location (Lat, Lng): <span id="objectLocation"><span id="objectLat"></span><span id="objectLng"></span></span></p>

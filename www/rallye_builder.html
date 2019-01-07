@@ -188,7 +188,6 @@
       
       .score-rule, .score-rule-template {
         align-items: stretch;
-        background-color: lightgray;
         margin-bottom: 15px;
         padding: 4px;
         font-size: 14px;
@@ -201,12 +200,28 @@
       .score-rule {
         display: flex;
       }
+
+      .current-score-rule, .pending-score-rule {
+        background-color: lightgray;
+      }
+      
+      .pending-rm-score-rule {
+        background-color: indianred;
+      }
       
       .score-rule-drag {
         display: inline-block;
         width: 25px;
-        background-color: darkgray;
         cursor: grab;
+      }
+      
+      .current-score-rule .score-rule-drag,
+      .pending-score-rule .score-rule-drag {
+        background-color: darkgray;
+      }
+      
+      .pending-rm-score-rule .score-rule-drag {
+        background-color: darkred;
       }
       
       .score-rule-item {
@@ -236,6 +251,15 @@
         width: 400px;
       }
 
+      .sortable-placeholder {
+        height: 40px;
+        width: calc(100% - 10px);
+        border: 2px dashed darkgrey;
+        margin: 0 0 0.75rem 0;
+        position: relative;
+        z-index: 6;
+      }
+
     </style>
     <script src="//cdn.jsdelivr.net/npm/mobile-detect@1.4.3/mobile-detect.min.js"></script>
     <script>
@@ -244,6 +268,16 @@
         window.location.replace("mobile_message.html");
       }
     </script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+    
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+      integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+      crossorigin="anonymous"></script>
   </head>
   <body>
     <!--
@@ -278,6 +312,15 @@
         </div>
         <div id="critiqueEditor-info">
           <h3>Score Values Instructions</h3>
+          <p>Score rules associate recorded coursemarkers with point values. Click on <b>Add Score Rule</b> to create a new rule and fill in the values. Drag the score rules to reorder them.</p>
+          
+          <p><b>Recorded CMs</b> is a list of coursemarkers <b>all</b> of which the participant must have recorded to receive the points. Enter coursemarkers as letter-number combinations without any spaces (e.g., "E66" not "E 66" or "E\n66") and separate multiple CMs with commas.</p>
+          
+          <p><b>Non-Recorded CMs</b> is a list of coursemarkers <b>none</b> of which the participant must have recorded to receive the points.</p>
+          
+          <p><b>Example:</b> To reward 20 points for recording markers A27 and H20 but <b>not</b> recording PP6, you would list "A27, H20" as "recorded CMs" and "PP6" as "non-recorded CMs".</p>
+          
+          <p>Every score rule must include a value, reason, and either recorded or non-recorded coursemarkers (or both).</p>
         </div>
       </div>
       <div id="settings-container">
@@ -313,21 +356,21 @@
 
         <div id="critiqueEditor" class="editor-pane">
 
-          <div class="score-rule-template">
+          <div class="score-rule-template current-score-rule">
             <div class="score-rule-drag score-rule-item"></div>
             <div class="score-rule-cms score-rule-item">
-              <div class="recorded-cms"><b>Recorded CMs:</b> <span class="rule-values"><input type="text" size=14 value="E66, A27" /></span></div>
-              <div class="non-recorded-cms"><b>Non-Recorded CMs:</b> <span class="rule-values"><input type="text" size=10 value="" /></span></div>
+              <div class="recorded-cms"><b>Recorded CMs:</b> <span class="rule-values"><input type="text" size=14 /></span></div>
+              <div class="non-recorded-cms"><b>Non-Recorded CMs:</b> <span class="rule-values"><input type="text" size=10 /></span></div>
             </div>
-            <div class="score-rule-value score-rule-item"><b>Value:</b><br /><span class="rule-values"><input type="text" size=2 value="30" /></span></div>
-            <div class="score-rule-reason score-rule-item"><b>Reason:</b><br /><span class="rule-values"><input type="text" size=45 value="Test score rule..." /></span></div>
+            <div class="score-rule-value score-rule-item"><b>Value:</b><br /><span class="rule-values"><input type="text" size=2 /></span></div>
+            <div class="score-rule-reason score-rule-item"><b>Reason:</b><br /><span class="rule-values"><input type="text" size=45 /></span></div>
             <div class="edit-links score-rule-button-container" id="test-edit-links">
-              <input type="button" value="edit" class="score-rule-button" onclick="scoreButtonEdit();" />
-              <input type="button" value="delete" class="score-rule-button" onclick="scoreButtonDelete();" />
+              <input type="button" value="edit" class="score-rule-button" onclick="scoreButtonEdit(this);" />
+              <input type="button" value="delete" class="score-rule-button" onclick="scoreButtonDelete(this);" />
             </div>
             <div class="apply-buttons score-rule-button-container">
               <input type="button" value="confirm" class="score-rule-button" onclick="scoreButtonConfirm(this);" />
-              <input type="button" value="cancel" class="score-rule-button" onclick="scoreButtonCancel();" />
+              <input type="button" value="cancel" class="score-rule-button" onclick="scoreButtonCancel(this);" />
             </div>
           </div>
 
@@ -340,21 +383,32 @@
   var scoreRuleMode = null;
   var scoreRuleRevert = null;
 
+  $(document).ready(function() {
+    $("#score-rules-container").sortable({
+      
+      axis: "y",
+      revert: true,
+      scroll: true,
+      scrollSensitivity: 20,
+      placeholder: "sortable-placeholder",
+      cursor: "move"
+    
+    });
+  });
+
+
   function newScoreRule(fillValues=null) {
 
     var cloned = document.getElementsByClassName('score-rule-template')[0].cloneNode(true);
     cloned.classList.remove('score-rule-template');
     cloned.classList.add('score-rule');
 
+    cloned.classList.remove('current-score-rule');
+    cloned.classList.add('pending-score-rule');
+
     if (fillValues) {
       // if values were passed, set form elements with them
-      cloned.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['includeCMs'] || []).join(', ');
-
-      cloned.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['excludeCMs'] || []).join(', ');
-
-      cloned.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['value'];
-
-      cloned.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['reason'];
+      setScoreInputValues(cloned, fillValues);
     }
 
     document.getElementById('score-rules-container').appendChild(cloned);
@@ -366,6 +420,39 @@
     }
   }
   
+  
+  function setScoreInputValues(scoreRuleDiv, fillValues) {
+    scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['includeCMs'] || []).join(', ').toUpperCase();
+  
+    scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['excludeCMs'] || []).join(', ').toUpperCase();
+  
+    scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['value'];
+  
+    scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['reason'];
+  }
+
+
+  function readScoreRuleValues(scoreRuleDiv) {
+    var fillValues = {};
+
+    var includeCMs = scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].textContent;
+    if (includeCMs) {
+      fillValues['includeCMs'] = includeCMs.split(',').map(function(elm) { return elm.trim().toUpperCase(); });
+    }
+
+    var excludeCMs = scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].textContent;
+    if (excludeCMs) {
+      fillValues['excludeCMs'] = excludeCMs.split(',').map(function(elm) { return elm.trim().toUpperCase(); });
+    }
+
+    fillValues['value'] = parseFloat(scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].textContent);
+
+    fillValues['reason'] = scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].textContent;
+    
+    return fillValues;
+  }
+
+
   function setScoreRuleMode(ruleMode, scoreRuleDiv) {
     scoreRuleMode = ruleMode;
 
@@ -394,34 +481,136 @@
     
     scoreRuleMode = ruleMode;
   }
-  
-  function scoreButtonConfirm(scoreRuleDiv=null) {
+
+
+  function scoreButtonConfirm(scoreRuleDiv) {
 
     if (['INPUT', 'BUTTON'].includes(scoreRuleDiv.tagName)) {
       // if called from a button click, step back out to containing score rule
       scoreRuleDiv = scoreRuleDiv.parentElement.parentElement;
     }
 
-    // TODO: check that at least include or exclude CMs, value, and reason are set
-    var recordedCMs = scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
-    var nonrecordedCMs = scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
-    var ruleValue = scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
-    var ruleReason = scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
-    if (!ruleValue || !ruleReason || (!recordedCMs && !nonrecordedCMs)) {
-      showError('Must set a value, reason, and either recorded or non-recorded CMs.');
-      return;
+    if (scoreRuleMode == 'remove_rule') {
+      
+      // if confirming a remove action, just remove the score rule div
+      scoreRuleDiv.remove();
+
+    } else {
+    
+      // Check that at least include or exclude CMs, value, and reason are set
+      var recordedCMs = scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+      var nonrecordedCMs = scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+      var ruleValue = scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+      var ruleReason = scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+      if (!ruleValue || !ruleReason || (!recordedCMs && !nonrecordedCMs)) {
+        showError('Must set a value, reason, and either recorded or non-recorded CMs.');
+        return;
+      }
+  
+      // turn form elements back into text
+      ruleValuesElms = scoreRuleDiv.getElementsByClassName('rule-values');
+      for (let rv of ruleValuesElms) {
+        rv.innerHTML = rv.getElementsByTagName('input')[0].value;
+        // ensure CMs are upper case so scoring will match up (unfortunately, this means no upper/lower gimmicks,
+        // but seems like the safer general case?)
+        if (rv.parentElement.parentElement.classList.contains('score-rule-cms')) {
+          rv.innerHTML = rv.textContent.toUpperCase();
+        }
+      }
+
+      // remove pending class and add current
+      scoreRuleDiv.classList.remove('pending-score-rule');
+      scoreRuleDiv.classList.add('current-score-rule');
+
     }
 
-    // turn form elements back into text
-    ruleValuesElms = scoreRuleDiv.getElementsByClassName('rule-values');
-    for (let rv of ruleValuesElms) {
-      rv.innerHTML = rv.getElementsByTagName('input')[0].value;
-    }
-    
-    showError('');
     // unset the rule mode
+    showError('');
+    scoreRuleRevert = null;
     setScoreRuleMode(null, scoreRuleDiv);
   }
+
+
+  function scoreButtonDelete(scoreRuleDiv) {
+
+    if (['INPUT', 'BUTTON'].includes(scoreRuleDiv.tagName)) {
+      // if called from a button click, step back out to containing score rule
+      scoreRuleDiv = scoreRuleDiv.parentElement.parentElement;
+    }
+    
+    scoreRuleDiv.classList.remove('current-score-rule');
+    scoreRuleDiv.classList.add('pending-rm-score-rule');
+
+    showError('');
+    setScoreRuleMode('remove_rule', scoreRuleDiv);
+ 
+  }
+  
+  
+  function scoreButtonCancel(scoreRuleDiv) {
+
+    if (['INPUT', 'BUTTON'].includes(scoreRuleDiv.tagName)) {
+      // if called from a button click, step back out to containing score rule
+      scoreRuleDiv = scoreRuleDiv.parentElement.parentElement;
+    }
+    
+    switch (scoreRuleMode) {
+      
+      case 'remove_rule':
+        // cancel remove rule => return to current class, unset score rule mode
+        scoreRuleDiv.classList.remove('pending-rm-score-rule');
+        scoreRuleDiv.classList.add('current-score-rule');
+
+        showError('');
+        setScoreRuleMode(null, scoreRuleDiv);
+
+        break;
+      
+      case 'new_rule':
+        // cancel rule creation => remove newly created rule
+        scoreRuleMode = 'remove_rule';
+        scoreButtonConfirm(scoreRuleDiv);
+        break;
+      
+      case 'edit_rule':
+        // cancel rule edit => replace with scored revert values
+        setScoreInputValues(scoreRuleDiv, scoreRuleRevert);
+        scoreButtonConfirm(scoreRuleDiv);
+        break;
+    }
+
+  }
+  
+  
+  function scoreButtonEdit(scoreRuleDiv) {
+
+    if (['INPUT', 'BUTTON'].includes(scoreRuleDiv.tagName)) {
+      // if called from a button click, step back out to containing score rule
+      scoreRuleDiv = scoreRuleDiv.parentElement.parentElement;
+    }
+
+    scoreRuleDiv.classList.remove('current-score-rule');
+    scoreRuleDiv.classList.add('pending-score-rule');
+
+    // read existing values from spans
+    var fillValues = readScoreRuleValues(scoreRuleDiv);
+
+    // create input fields
+    scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].innerHTML = '<input type="text" size=14 />';
+    scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].innerHTML = '<input type="text" size=10 />';
+    scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].innerHTML = '<input type="text" size=2 />';
+    scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].innerHTML = '<input type="text" size=45 />';
+
+    // fill out input fields with values
+    setScoreInputValues(scoreRuleDiv, fillValues);
+    
+    //store revert values to globals to allow for canceling
+    scoreRuleRevert = fillValues;
+
+    showError('');
+    setScoreRuleMode('edit_rule', scoreRuleDiv);
+  }
+
 
   
 </script>
@@ -453,6 +642,9 @@
           - also want to be able to drag to reorder score rules..
               - https://jsfiddle.net/8b7zfr50/3/
               - https://css-tricks.com/draggable-elements-push-others-way/.
+          
+          - methods to load from json
+          - methods to export to json
           -->
         </div>
 
@@ -988,9 +1180,6 @@ function gridOffset() {
 function showError(errorText) {
   document.getElementById("errorMsg").innerHTML = errorText;
   if (errorText) {
-    console.log('here');
-  }
-  if (errorText) {
     document.getElementById("errorMsg").classList.remove("nonErrorStyle");
     document.getElementById("errorMsg").classList.add("errorStyle");
   } else {
@@ -1028,6 +1217,7 @@ function handleObject(confirm=false) {
 
   switch (objType) {
     case 'cm':
+      label = label.toUpperCase();
       if (courseMarkers[label]) {
         showError('ERROR: Course marker '+label+' already exists!');
       } else if (!label) {
@@ -1132,6 +1322,11 @@ function rallyeToJSON() {
     showError('ERROR: Set a name, starting point, and ending point before exporting!');
     return 'ERROR';
   }
+  
+  if (currArrow || currMarker || scoreRuleMode) {
+    showError('ERROR: Confirm or cancel pending changes before exporting!');
+    return 'ERROR';
+  }
 
   var cms = [];
   Object.keys(courseMarkers).forEach(function(key) {
@@ -1153,6 +1348,12 @@ function rallyeToJSON() {
       '<b>SI:</b> ' + checkpoints[key]['checkpoint_si']
       ]);
   });
+  
+  var scoreRuleDivs = document.getElementById('score-rules-container').children;
+  var scoreRules = [];
+  for (let scoreRuleDiv of scoreRuleDivs) {
+    scoreRules.push(readScoreRuleValues(scoreRuleDiv));
+  }
 
   var d = {
     'rallyeName': rallyeName,
@@ -1171,10 +1372,12 @@ function rallyeToJSON() {
       heading: rallyeEnd['rawHeading']
     },
     'courseMarkers': cms,
-    'checkpoints': cps
+    'checkpoints': cps,
+    'score_values': scoreRules
   }
 
-  return JSON.stringify(d);
+  // json string with "pretty print" enabled
+  return JSON.stringify(d, null, 2);
 }
 
 // from: https://stackoverflow.com/questions/14964035/how-to-export-javascript-array-info-to-csv-on-client-side
@@ -1284,6 +1487,10 @@ function downloadRallye() {
     rallyeDict['checkpoints'].forEach(function(cp) {
       setEditorValues(cp[0], cp[1], cp[3], cp[2], cp[4].replace('<b>SI:</b> ', ''), 'cp');
       handleObject(confirm=true);
+    });
+    
+    rallyeDict['score_values'].forEach(function(sv) {
+      newScoreRule(sv);
     });
 
   }

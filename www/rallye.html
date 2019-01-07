@@ -903,7 +903,6 @@ function cleanInputCM(inputValue) {
 }
 
 function recordCM() {
-  // TODO: keep track in a list to allow for scoring? (ideally by sending data to a server so CM point values can remain hidden?)
   var newCM = cleanInputCM(document.getElementById("inputCM").value);
   if (document.getElementById('recordedCM-'+newCM) == null) {
     // only add if not already recorded
@@ -941,6 +940,9 @@ function haveRecordedCMs(checkCMs, mustHaveAll=true) {
     // satisfy the condition by default if no CMs are required
     return true;
   }
+  
+  // clean checkCMs as we do with recorded CMs
+  checkCMs = checkCMs.map(cleanInputCM);
 
   var elms = document.getElementsByClassName("recordedCM");
   var recordedCMs = [];
@@ -961,6 +963,9 @@ function haveNotRecordedCMs(checkCMs, mustHaveNone=true) {
     // satisfy the condition by default if no CMs are required
     return true;
   }
+
+  // clean checkCMs as we do with recorded CMs
+  checkCMs = checkCMs.map(cleanInputCM);
 
   var elms = document.getElementsByClassName("recordedCM");
   var recordedCMs = [];
@@ -1023,7 +1028,7 @@ function scoreRallye() {
     var excludeCMs = rule["excludeCMs"] || [];
 
     if (haveRecordedCMs(includeCMs) && haveNotRecordedCMs(excludeCMs)) {
-      score['total_score'] += rule['value'];
+      score['total_score'] += parseFloat(rule['value']);
 
       score['critique_html'] += '<tr><td>';
 

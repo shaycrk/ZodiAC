@@ -322,12 +322,12 @@
             <div class="score-rule-value score-rule-item"><b>Value:</b><br /><span class="rule-values"><input type="text" size=2 value="30" /></span></div>
             <div class="score-rule-reason score-rule-item"><b>Reason:</b><br /><span class="rule-values"><input type="text" size=45 value="Test score rule..." /></span></div>
             <div class="edit-links score-rule-button-container" id="test-edit-links">
-              <input type="button" value="edit" class="score-rule-button" />
-              <input type="button" value="delete" class="score-rule-button" />
+              <input type="button" value="edit" class="score-rule-button" onclick="scoreButtonEdit();" />
+              <input type="button" value="delete" class="score-rule-button" onclick="scoreButtonDelete();" />
             </div>
             <div class="apply-buttons score-rule-button-container">
-              <input type="button" value="apply" class="score-rule-button" />
-              <input type="button" value="cancel" class="score-rule-button" />
+              <input type="button" value="confirm" class="score-rule-button" onclick="scoreButtonConfirm(this);" />
+              <input type="button" value="cancel" class="score-rule-button" onclick="scoreButtonCancel();" />
             </div>
           </div>
 
@@ -335,14 +335,95 @@
           
           </div>
 
-          <input type="button" value="Add Score Rule" onclick="newScoreRule();" />
+          <input id="add-score-rule-button" type="button" value="Add Score Rule" onclick="newScoreRule();" />
 <script>
-  function newScoreRule() {
+  var scoreRuleMode = null;
+  var scoreRuleRevert = null;
+
+  function newScoreRule(fillValues=null) {
+
     var cloned = document.getElementsByClassName('score-rule-template')[0].cloneNode(true);
     cloned.classList.remove('score-rule-template');
     cloned.classList.add('score-rule');
+
+    if (fillValues) {
+      // if values were passed, set form elements with them
+      cloned.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['includeCMs'] || []).join(', ');
+
+      cloned.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = (fillValues['excludeCMs'] || []).join(', ');
+
+      cloned.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['value'];
+
+      cloned.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value = fillValues['reason'];
+    }
+
     document.getElementById('score-rules-container').appendChild(cloned);
+    setScoreRuleMode('new_rule', cloned);
+
+    if (fillValues) {
+      // if values were passed, confim them
+      scoreButtonConfirm(cloned);
+    }
   }
+  
+  function setScoreRuleMode(ruleMode, scoreRuleDiv) {
+    scoreRuleMode = ruleMode;
+
+    if (ruleMode) {
+
+      var buttonDivs = document.getElementById('score-rules-container').getElementsByClassName('edit-links');
+      for (let buttonDiv of buttonDivs) {
+        buttonDiv.style.display = 'none';
+      }
+      document.getElementById('add-score-rule-button').style.display = 'none';
+      scoreRuleDiv.getElementsByClassName('apply-buttons')[0].style.display = 'flex';
+
+    } else {
+
+      var buttonDivs = document.getElementById('score-rules-container').getElementsByClassName('edit-links');
+      for (let buttonDiv of buttonDivs) {
+        buttonDiv.style.display = 'flex';
+      }
+      buttonDivs = document.getElementById('score-rules-container').getElementsByClassName('apply-buttons');
+      for (let buttonDiv of buttonDivs) {
+        buttonDiv.style.display = 'none';
+      }
+      document.getElementById('add-score-rule-button').style.display = 'inline-block';
+
+    }
+    
+    scoreRuleMode = ruleMode;
+  }
+  
+  function scoreButtonConfirm(scoreRuleDiv=null) {
+
+    if (['INPUT', 'BUTTON'].includes(scoreRuleDiv.tagName)) {
+      // if called from a button click, step back out to containing score rule
+      scoreRuleDiv = scoreRuleDiv.parentElement.parentElement;
+    }
+
+    // TODO: check that at least include or exclude CMs, value, and reason are set
+    var recordedCMs = scoreRuleDiv.getElementsByClassName('recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+    var nonrecordedCMs = scoreRuleDiv.getElementsByClassName('non-recorded-cms')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+    var ruleValue = scoreRuleDiv.getElementsByClassName('score-rule-value')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+    var ruleReason = scoreRuleDiv.getElementsByClassName('score-rule-reason')[0].getElementsByClassName('rule-values')[0].getElementsByTagName('input')[0].value;
+    if (!ruleValue || !ruleReason || (!recordedCMs && !nonrecordedCMs)) {
+      showError('Must set a value, reason, and either recorded or non-recorded CMs.');
+      return;
+    }
+
+    // turn form elements back into text
+    ruleValuesElms = scoreRuleDiv.getElementsByClassName('rule-values');
+    for (let rv of ruleValuesElms) {
+      rv.innerHTML = rv.getElementsByTagName('input')[0].value;
+    }
+    
+    showError('');
+    // unset the rule mode
+    setScoreRuleMode(null, scoreRuleDiv);
+  }
+
+  
 </script>
           <!--
           logic here:

@@ -8,6 +8,7 @@ There are three main files of interest here:
 
 ## Future Work / Known Issues
 There are a few outstanding features that would be nice to have:
+- Pass through other objects when editing a json that contains them (even if these can't be edited/shown on the map, would be good not to lose them)
 
 - Currently you have to hover over coursemarkers to see their labels in a tooltip, but it would be nice to actually have these display on the pie plate itself. This might be do-able with a google.maps.Marker.label, but will take some experimentation (espeically to work with different zoom levels)
 

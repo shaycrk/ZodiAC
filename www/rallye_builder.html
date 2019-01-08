@@ -412,6 +412,11 @@ var rallyeStart, rallyeEnd;
 var courseMarkers = {};
 var checkpoints = {};
 
+// custom objects and update actions not currently handled by
+// the rallye builder but allowable in rallye jsons, so keep
+// track of them if you import a json that contains them...
+var otherObjects, updateActions;
+
 // some variables for headings
 // Winters grid about -10 deg off true north,
 // so traveling north is 350 and so on
@@ -1109,6 +1114,14 @@ function rallyeToJSON() {
     'checkpoints': cps,
     'score_values': scoreRules
   }
+  
+  if (otherObjects) {
+    d['other_objects'] = otherObjects;
+  }
+  
+  if (updateActions) {
+    d['update_actions'] = updateActions;
+  }
 
   // json string with "pretty print" enabled
   return JSON.stringify(d, null, 2);
@@ -1461,6 +1474,10 @@ function downloadRallye() {
     rallyeDict['score_values'].forEach(function(sv) {
       newScoreRule(sv);
     });
+    
+    // keep track of custom objects not handled by rallye builder to pass through to export
+    otherObjects = rallyeDict['other_objects'];
+    updateActions = rallyeDict['update_actions'];
 
   }
 

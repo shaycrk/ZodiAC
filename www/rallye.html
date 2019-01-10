@@ -250,6 +250,13 @@
       <div id="critique-html"></div>
     </div>
 
+    <!-- Container for CM image manipulations, not actually displayed -->
+    <div id="canvas-wrap" style="display: none;">
+       <canvas style="display:block" id="imageCanvas" width=400px height=400px>
+          <canvas id="canvasID"></canvas>
+      </canvas>
+    </div>
+
 <script>
 var mapObj;
 var panorama;
@@ -283,6 +290,24 @@ var updateActions;
 
 // list of values for recorded coursemarkers (populated at the end)
 var scoreValues;
+
+// global variable to toggle whether we should use generic CM image (map view or if overwriting errors out)
+var useGenericCM = false;
+
+// several parameters for custom CM images (TODO: maybe turn some of these into a json config?)
+var canvas = document.getElementById('imageCanvas');
+var ctx = canvas.getContext('2d');
+var img = new Image();
+img.crossOrigin="anonymous";
+
+var midX = 108;
+var midY = 343;
+var plateDiam = 45;
+
+var charCntrOffset = 15;
+// pixels from top:
+var fontLine1 = 324;
+var fontLine2 = 366;
 
 
 function sleep(ms) {
@@ -453,13 +478,21 @@ function placeCMs(map, iconScale=1.0) {
   // course marker size to display (pixels)
   var cmWidth = 35*iconScale
   var cmHeight = 150*iconScale
-  var cmIcon = {
-    url: 'https://shaycrk.files.wordpress.com/2018/12/cm_on_pole.gif',
-    scaledSize: new google.maps.Size(cmWidth, cmHeight)
-  };
 
   var cm_markers = [];
   courseMarkers.forEach(function(cm) {
+
+    if (useGenericCM) {
+      cmURL = 'cm_on_pole.gif';
+    } else {
+      // get DataURL for modified image with CM label
+      cmURL = customCMImage(cm[2]);
+    }
+    var cmIcon = {
+      url: cmURL,
+      scaledSize: new google.maps.Size(cmWidth, cmHeight)
+    };
+
     cm_markers.push(
       new DirectionalMarker({
         position: {lat: cm[0], lng: cm[1]},
@@ -474,6 +507,47 @@ function placeCMs(map, iconScale=1.0) {
   
   return cm_markers;
 }
+
+function splitCMText(cm) {
+  var scrubbed = cm.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  var matched = scrubbed.match(/^([A-Z]{1,3})([0-9]{1,3})$/);
+  if (matched) {
+    //console.log([matched[1], matched[2]]);
+    return [matched[1], matched[2]]
+  } else {
+    console.log('Oh no! Malformed CM '+cm+'\nShould be 1-3 letters followed by 1-3 numbers.');
+    //alert('Oh no! Malformed CM '+cm+'\nShould be 1-3 letters followed by 1-3 numbers.');
+  }
+}
+
+function customCMImage(cm) {
+
+  var cmText = splitCMText(cm);
+  canvas.width = img.width;
+  canvas.height = img.height;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  DrawOverlay(img);
+  DrawCMText(cmText);
+
+  return canvas.toDataURL('png');
+
+}
+
+function DrawOverlay(img) {
+    ctx.drawImage(img,0,0);
+    ctx.fillStyle = 'rgba(230, 230, 230, 1.0)';
+    ctx.arc(midX, midY, plateDiam, 0, Math.PI * 2, true);
+    ctx.fill();
+}
+
+function DrawCMText(cmText) {
+    ctx.fillStyle = "black";
+    ctx.textBaseline = 'middle';
+    ctx.font = "bold 50px 'Monospace'";
+    ctx.fillText(cmText[0], midX - charCntrOffset*cmText[0].length, fontLine1);
+    ctx.fillText(cmText[1], midX - charCntrOffset*cmText[1].length, fontLine2);
+}
+
 
 function placeEnd(map, iconScale=1.0) {
 
@@ -719,6 +793,8 @@ function initFromDict(rallyeDict) {
 function initMap() {
   rmView = getQueryVariable('rallyemaster-view') || 'false';
   if (rmView.toLowerCase() == 'true') {
+    // don't try to write CM labels in rallyemaster view (too small too bother!)
+    useGenericCM = true;
     initGoogleMap();
   } else {
     initStreetView();
@@ -1003,6 +1079,23 @@ function handleSelect() {
 
 }
 
+function initCMImage() {
+  // set useGenericCM flag depending on whether we're able to load the custom images
+  // then proceed with initForm() either way...
+  img.onerror = function(err) {
+    console.log("Encountered error with custom CM images, using generic instead.");
+    useGenericCM = true;
+    initForm();
+  };
+  img.onload = function() {
+    useGenericCM = false;
+    initForm();
+  };
+
+  img.src = 'cm_on_pole.gif';
+}
+
+
 function initForm() {
   // hide loading spinner
   document.getElementById("loading").style.display = "none";
@@ -1066,7 +1159,8 @@ function closeScoreWindow() {
 </script>
 
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3-5-mUDJ2dfNR3l-8u_g2_XCBOeNbJvU&libraries=geometry&callback=initForm">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3-5-mUDJ2dfNR3l-8u_g2_XCBOeNbJvU&libraries=geometry&callback=initCMImage">
     </script>
   </body>
 
+</html>

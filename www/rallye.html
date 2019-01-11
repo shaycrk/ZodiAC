@@ -791,6 +791,11 @@ function initFromDict(rallyeDict) {
 }
 
 function initMap() {
+  // show loading spinner while we set up the map
+  document.getElementById('select-form').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('intro-window').style.display = 'block';
+  
   rmView = getQueryVariable('rallyemaster-view') || 'false';
   if (rmView.toLowerCase() == 'true') {
     // don't try to write CM labels in rallyemaster view (too small too bother!)
@@ -799,6 +804,10 @@ function initMap() {
   } else {
     initStreetView();
   }
+
+  // hide spinner once we're ready to go!
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('intro-window').style.display = 'none';
 }
 
 // map version: view for the rallye master

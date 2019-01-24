@@ -543,7 +543,7 @@ function DrawOverlay(img) {
 function DrawCMText(cmText) {
     ctx.fillStyle = "black";
     ctx.textBaseline = 'middle';
-    ctx.font = "bold 50px 'Monospace'";
+    ctx.font = "bold 50px Monospace";
     ctx.fillText(cmText[0], midX - charCntrOffset*cmText[0].length, fontLine1);
     ctx.fillText(cmText[1], midX - charCntrOffset*cmText[1].length, fontLine2);
 }

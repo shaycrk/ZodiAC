@@ -554,6 +554,8 @@ function removeObj(objType, title) {
 
 function removeAll() {
 
+  showError('');
+
   Object.keys(courseMarkers).forEach(function(key) {
     removeObj('cm', key);
   });
@@ -569,6 +571,14 @@ function removeAll() {
   if (rallyeEnd) {
     removeObj('end', '');
   }
+
+  otherObjects = null;
+  updateActions = null;
+
+  // remove any existing score rules
+  document.getElementById('score-rules-container').innerHTML = '';
+  scoreRuleRevert = null
+  setScoreRuleMode(null, null);
 
 }
 
@@ -1423,6 +1433,8 @@ function downloadRallye() {
       fr = new FileReader();
       fr.onload = receivedText;
       fr.readAsText(file);
+      // clear input value to allow reloading file later
+      input.value = null;
     }
 
     function receivedText(e) {

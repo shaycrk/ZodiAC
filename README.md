@@ -1,10 +1,11 @@
 # ZodiAC
 A virtual car rallye interface via google maps streetview!
 
-There are three main files of interest here:
+There are four main files of interest here:
 - **rallye.html**: A tool for running car rallyes (specified in JSON format) using google streetview
 - **rallye_builder.html**: A tool for creating or editing these rallyes
 - **dad_route66_rallye.json**: Config file for the Route 66-themed rallye my mom wrote for my dad's 66th birthday
+- **shakespeare_rallye.json**: Config file for a Shakespeare-themed rallye my dad and I wrote as a fundraiser when I was in High School
 
 ## Future Work / Known Issues
 There are a few outstanding features that would be nice to have:

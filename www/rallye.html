@@ -934,6 +934,10 @@ function removeMarker(markerTitle) {
 }
 
 function setVisibleAngle(markerTitle, newAngle) {
+  if (markerTitle == 'Rallye End') {
+    // special case for rallye end
+    markerTitle = 'Submit your scoresheet to the Rallyemaster and have a slice of pizza!';
+  }
   markers.forEach(function(m) {
     if ((m.title != null) && (m.title == markerTitle)) {
       m.visibleAngle = newAngle;

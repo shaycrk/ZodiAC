@@ -1,0 +1,866 @@
+{
+  "rallyeName": "All The World's A Rallye",
+  "gridOffset": -10,
+  "generalsURL": "shakespeare_rallye/generals.pdf",
+  "routeURL": "shakespeare_rallye/route.pdf",
+  "suppsURL": "shakespeare_rallye/supps.pdf",
+  "rallye_start": {
+    "lat": 38.5259321311779,
+    "lng": -121.97105310123425,
+    "heading": "north"
+  },
+  "rallye_end": {
+    "lat": 38.520965800937454,
+    "lng": -121.97116682904067,
+    "heading": "west"
+  },
+  "courseMarkers": [
+    [
+      38.52649449019062,
+      -121.97094581287365,
+      "P\n1",
+      "north"
+    ],
+    [
+      38.52781397623113,
+      -121.97097799938183,
+      "QQ\n9",
+      "north"
+    ],
+    [
+      38.5283007820059,
+      -121.9728984610365,
+      "KK\n56",
+      "north"
+    ],
+    [
+      38.52905616375702,
+      -121.97378895442944,
+      "C\n18",
+      "north"
+    ],
+    [
+      38.52955974718569,
+      -121.97405339695194,
+      "H\n30",
+      "east"
+    ],
+    [
+      38.52954296112817,
+      -121.97262646175602,
+      "GG\n12",
+      "east"
+    ],
+    [
+      38.53028154395395,
+      -121.97328952680357,
+      "HH\n22",
+      "east"
+    ],
+    [
+      38.530273151009894,
+      -121.97195915113218,
+      "Q\n10",
+      "east"
+    ],
+    [
+      38.52996261139105,
+      -121.97464136014707,
+      "T\n8",
+      "north"
+    ],
+    [
+      38.52970242851637,
+      -121.97464136014707,
+      "NN\n38",
+      "south"
+    ],
+    [
+      38.53186779280519,
+      -121.97099355588682,
+      "G\n4",
+      "north"
+    ],
+    [
+      38.53097815489896,
+      -121.97269944082029,
+      "WW\n52",
+      "west"
+    ],
+    [
+      38.529355797474636,
+      -121.97118528742101,
+      "MM\n19",
+      "south"
+    ],
+    [
+      38.52724675555483,
+      -121.97837704241118,
+      "UU\n37",
+      "west"
+    ],
+    [
+      38.52728032873725,
+      -121.97674625933013,
+      "PP\n60",
+      "east"
+    ],
+    [
+      38.52801893478761,
+      -121.97745436251006,
+      "EEE\n3",
+      "south"
+    ],
+    [
+      38.52875753325675,
+      -121.97462194979033,
+      "VV\n14",
+      "east"
+    ],
+    [
+      38.53081939500197,
+      -121.97613428178244,
+      "CCC\n53",
+      "west"
+    ],
+    [
+      38.52997170904351,
+      -121.97885940614157,
+      "R\n20",
+      "north"
+    ],
+    [
+      38.531448858311705,
+      -121.97988937440329,
+      "DDD\n26",
+      "north"
+    ],
+    [
+      38.52941777024964,
+      -121.97959969582968,
+      "AAA\n24",
+      "west"
+    ],
+    [
+      38.52977867025097,
+      -121.97793672624044,
+      "OO\n16",
+      "north"
+    ],
+    [
+      38.53024867684123,
+      -121.97714279237204,
+      "FFF\n5",
+      "west"
+    ],
+    [
+      38.5301479614018,
+      -121.97990010323934,
+      "YY\n6",
+      "south"
+    ],
+    [
+      38.53083618076168,
+      -121.97585533204489,
+      "ZZ\n77",
+      "east"
+    ],
+    [
+      38.53081374715171,
+      -121.97500404324751,
+      "BBB\n99",
+      "east"
+    ],
+    [
+      38.529202295858575,
+      -121.97561339377876,
+      "GGG\n44",
+      "south"
+    ],
+    [
+      38.52876585492261,
+      -121.97653607367988,
+      "XX\n88",
+      "west"
+    ],
+    [
+      38.52298308969979,
+      -121.97376862135093,
+      "BB\n45",
+      "east"
+    ],
+    [
+      38.523016664871335,
+      -121.9749702509896,
+      "Y\n2",
+      "north"
+    ],
+    [
+      38.522555004889625,
+      -121.97628989782493,
+      "SS\n66",
+      "north"
+    ],
+    [
+      38.522387127798446,
+      -121.97537794675986,
+      "M\n7",
+      "east"
+    ],
+    [
+      38.52170722157477,
+      -121.97579637136619,
+      "CC\n33",
+      "south"
+    ],
+    [
+      38.5195561502841,
+      -121.97816122445676,
+      "U\n15",
+      "west"
+    ],
+    [
+      38.51815430615177,
+      -121.98065031442258,
+      "EE\n58",
+      "west"
+    ],
+    [
+      38.519069285356416,
+      -121.98166955384823,
+      "I\n39",
+      "north"
+    ],
+    [
+      38.52089081483595,
+      -121.97445663693264,
+      "J\n23",
+      "west"
+    ],
+    [
+      38.52141963734108,
+      -121.97385582211331,
+      "RR\n11",
+      "north"
+    ],
+    [
+      38.52214151575861,
+      -121.97249325993374,
+      "FF\n55",
+      "north"
+    ],
+    [
+      38.5226535414099,
+      -121.97117361309841,
+      "V\n13",
+      "north"
+    ],
+    [
+      38.52329146991187,
+      -121.96957501652554,
+      "X\n59",
+      "north"
+    ],
+    [
+      38.523014475335835,
+      -121.96853164791901,
+      "TT\n27",
+      "east"
+    ],
+    [
+      38.52287961435793,
+      -121.96894595997634,
+      "LL\n35",
+      "east"
+    ],
+    [
+      38.523316090993866,
+      -121.96737954991164,
+      "K\n61",
+      "west"
+    ],
+    [
+      38.52543967993287,
+      -121.96766922848525,
+      "II\n49",
+      "north"
+    ],
+    [
+      38.52575023907109,
+      -121.96432183163466,
+      "DD\n17",
+      "south"
+    ],
+    [
+      38.52754641968634,
+      -121.9614465035707,
+      "F\n43",
+      "east"
+    ],
+    [
+      38.52585096066593,
+      -121.96372101681533,
+      "JJ\n65",
+      "west"
+    ],
+    [
+      38.52454156893728,
+      -121.96182201283278,
+      "D\n29",
+      "south"
+    ],
+    [
+      38.5251878742424,
+      -121.9630665578157,
+      "AA\n51",
+      "west"
+    ],
+    [
+      38.523727383862976,
+      -121.9642574586183,
+      "O\n31",
+      "120"
+    ],
+    [
+      38.523081065441914,
+      -121.96566293614211,
+      "A\n21",
+      "west"
+    ],
+    [
+      38.523165003227135,
+      -121.96512649433913,
+      "KKK\n89",
+      "east"
+    ],
+    [
+      38.52068040334791,
+      -121.97231481449904,
+      "Z\n25",
+      "west"
+    ],
+    [
+      38.5210702524805,
+      -121.97186296040172,
+      "B\n41",
+      "south"
+    ]
+  ],
+  "checkpoints": [
+    [
+      38.526558501863335,
+      -121.97117799341521,
+      "Checkpoint 2",
+      "south",
+      "<b>SI:</b> Congratulations on finishing Stage Two!<br /><br />Exit this Checkpoint heading North on Railroad, then L at Anderson."
+    ],
+    [
+      38.53095368097014,
+      -121.97596262040548,
+      "Checkpoint 3",
+      "west",
+      "<b>SI:</b> On Course"
+    ],
+    [
+      38.52321536585128,
+      -121.96799109356704,
+      "Checkpoint 5",
+      "east",
+      "<b>SI:</b> CRI 19"
+    ],
+    [
+      38.53095368097014,
+      -121.97734664025717,
+      "Checkpoint 4",
+      "east",
+      "<b>SI:</b> Record 'CP4' on your scoresheet.<br />Exit the checkpoint heading east on Niemann (U from the direction you entered).<br />DRI 11 and CRI 12 (now in Stage Five)"
+    ],
+    [
+      38.52623429477578,
+      -121.97118184726696,
+      "Checkpoint 1",
+      "north",
+      "<b>SI:</b> Exit this CP heading north on Railroad to start the rallye (delete stage 1 in the GIs and enter Stage Two). Have fun!"
+    ]
+  ],
+  "update_actions": [
+    {
+      "after_cms": ["YY6"],
+      "actions": [
+        ["setVisibleAngle", ["Checkpoint 4", 180]]
+      ]
+    },
+    {
+      "after_cms": ["Z25"],
+      "actions": [
+        ["setVisibleAngle", ["Rallye End", 180]]
+      ]
+    }
+  ],
+  "score_values": [
+    {
+      "includeCMs": [
+        "P1"
+      ],
+      "value": 10,
+      "reason": "CM at start was good"
+    },
+    {
+      "includeCMs": [
+        "QQ9"
+      ],
+      "value": 10,
+      "reason": "'On' is not defined, thus you do not know how to do RI 2"
+    },
+    {
+      "includeCMs": [
+        "KK56"
+      ],
+      "value": 10,
+      "reason": "Doing Note A got you this CM"
+    },
+    {
+      "includeCMs": [
+        "C18"
+      ],
+      "value": 10,
+      "reason": "On course on RI 3 to help you find your way"
+    },
+    {
+      "includeCMs": [
+        "H30"
+      ],
+      "value": 10,
+      "reason": "Almeria changed names and you were onto so you had to U"
+    },
+    {
+      "includeCMs": [
+        "GG12"
+      ],
+      "value": 10,
+      "reason": "The supps for 30 were numbered. Supps have to have lettered parts, so go straight to this CM"
+    },
+    {
+      "includeCMs": [
+        "T8"
+      ],
+      "value": 10,
+      "reason": "On course CM on RI 4"
+    },
+    {
+      "includeCMs": [
+        "HH22"
+      ],
+      "value": 10,
+      "reason": "The Generals told you to go Right first chance when you saw CM 8. You just saw CM 8, so go Right."
+    },
+    {
+      "includeCMs": [
+        "Q10"
+      ],
+      "excludeCMs": [
+        "WW52"
+      ],
+      "value": 10,
+      "reason": "Almeria spelled incorrectly. The instruction and sign had to match. They didn't, so U at the T to get this CM."
+    },
+    {
+      "includeCMs": [
+        "NN38"
+      ],
+      "value": 10,
+      "reason": "Q10 changed rules for uninstructed Ts. Now the instruction is still bad so go L at the uninstructed T."
+    },
+    {
+      "includeCMs": [
+        "G4"
+      ],
+      "value": 10,
+      "reason": "RI 5 was bad. Railway in the instruction did not match Railroad on the sign."
+    },
+    {
+      "includeCMs": [
+        "WW52"
+      ],
+      "excludeCMs": [
+        "Q10"
+      ],
+      "value": 10,
+      "reason": "If you didn't see 10 earlier you would get this. Can't have both Q and WW."
+    },
+    {
+      "includeCMs": [
+        "WW52",
+        "Q10"
+      ],
+      "value": -10,
+      "reason": "Q10 changed the rule for uninstructed Ts, so should get G4 not WW52 here."
+    },
+    {
+      "includeCMs": [
+        "WW52",
+        "G4"
+      ],
+      "value": -50,
+      "reason": "CMs reflect following two different instructions at an uninstructed T, so cannot have both"
+    },
+    {
+      "includeCMs": [
+        "MM19"
+      ],
+      "value": 10,
+      "reason": "On course"
+    },
+    {
+      "includeCMs": [
+        "UU37"
+      ],
+      "value": 10,
+      "reason": "RI 6 was bad. Apricot was misspelled ApricoAt"
+    },
+    {
+      "includeCMs": [
+        "PP60"
+      ],
+      "value": 10,
+      "reason": "You can't do the L in the supps for UU37 because you are in Stage 3 where you only do the right thing."
+    },
+    {
+      "includeCMs": [
+        "EEE3"
+      ],
+      "value": 10,
+      "reason": "Apricot changed names so U to stay onto"
+    },
+    {
+      "includeCMs": [
+        "VV14"
+      ],
+      "value": 10,
+      "reason": "You can't do the L in RI 7 because you're in Stage 3, so go straight to this CM"
+    },
+    {
+      "includeCMs": [
+        "CCC53"
+      ],
+      "value": 10,
+      "reason": "On course"
+    },
+    {
+      "includeCMs": [
+        "DDD26"
+      ],
+      "value": 10,
+      "reason": "In Stage Four, swap right and left, so do RI 9 to the right to get this CM"
+    },
+    {
+      "includeCMs": [
+        "YY6"
+      ],
+      "value": 10,
+      "reason": "On Course"
+    },
+    {
+      "includeCMs": [
+        "R20"
+      ],
+      "value": 10,
+      "reason": "On course CM to help you on your way"
+    },
+    {
+      "includeCMs": [
+        "L20"
+      ],
+      "value": 20,
+      "reason": "R and L are switched in Stage 4, so record R20 as L20"
+    },
+    {
+      "includeCMs": [
+        "R20",
+        "L20"
+      ],
+      "value": -30,
+      "reason": "Can't record both R20 and L20"
+    },
+    {
+      "includeCMs": [
+        "AAA24"
+      ],
+      "value": 10,
+      "reason": "Doing the L in the pause to the R got you this CM"
+    },
+    {
+      "includeCMs": [
+        "OO16"
+      ],
+      "value": 10,
+      "reason": "Note B once"
+    },
+    {
+      "includeCMs": [
+        "FFF5"
+      ],
+      "value": 10,
+      "reason": "Note B second time as indicated in the generals"
+    },
+    {
+      "includeCMs": [
+        "CP4"
+      ],
+      "value": 20,
+      "reason": "Do RI 11 to L and you enter this CP to get you back on course"
+    },
+    {
+      "includeCMs": [
+        "ZZ77"
+      ],
+      "value": 10,
+      "reason": "On course to make sure you're on the right RI"
+    },
+    {
+      "includeCMs": [
+        "BBB99"
+      ],
+      "value": 10,
+      "reason": "You would get this CM by doing RI 11 to the R (should have been L in Stage 4) then doing RI 21 as 12 (since you're reversing numbers in Stage 5)"
+    },
+    {
+      "includeCMs": [
+        "XX88"
+      ],
+      "value": 20,
+      "reason": "Do RI 21 as RI 12 then RI 12 as RI 21"
+    },
+    {
+      "includeCMs": [
+        "GGG44"
+      ],
+      "value": 10,
+      "reason": "On course to show you that you were not lost."
+    },
+    {
+      "includeCMs": [
+        "BB45"
+      ],
+      "value": 10,
+      "reason": "Do RI 22 before doing RI 13, which is really RI 31 because the numbers are reversed."
+    },
+    {
+      "includeCMs": [
+        "BB54"
+      ],
+      "value": 20,
+      "reason": "Do RI 22 before doing RI 13, which is really RI 31 because the numbers are reversed, but also record BB45 as BB54 because the CM numbers are also reversed!"
+    },
+    {
+      "includeCMs": [
+        "BB45",
+        "BB54"
+      ],
+      "value": -50,
+      "reason": "Can't have recorded both versions of the BB CM"
+    },
+    {
+      "includeCMs": [
+        "Y2"
+      ],
+      "value": 10,
+      "reason": "Execute RI 13 after 22 because 31 is now the lowest numbered RI"
+    },
+    {
+      "includeCMs": [
+        "SS66"
+      ],
+      "value": 10,
+      "reason": "Execute RI 23 as RI 32 because the numbers are still reversed"
+    },
+    {
+      "includeCMs": [
+        "M7"
+      ],
+      "value": 10,
+      "reason": "Execute RI 14 as 41 after finding SS66 which tried to put you back on course"
+    },
+    {
+      "includeCMs": [
+        "CC33"
+      ],
+      "value": 10,
+      "reason": "On course CM to end Stage 5 and stop the reversal of numbers."
+    },
+    {
+      "includeCMs": [
+        "U15"
+      ],
+      "value": 10,
+      "reason": "On course"
+    },
+    {
+      "includeCMs": [
+        "EE58"
+      ],
+      "value": 10,
+      "reason": "You cannot execute RI 16 because it is even numbered. Go straight to get this CM."
+    },
+    {
+      "includeCMs": [
+        "I39"
+      ],
+      "value": 10,
+      "reason": "The supps in 58 were also even numbered so you can't do them. Go straight to this CM."
+    },
+    {
+      "includeCMs": [
+        "J23"
+      ],
+      "value": 20,
+      "reason": "If you skipped even-numbered RI 18 and completed Note C you find this CM"
+    },
+    {
+      "includeCMs": [
+        "RR11"
+      ],
+      "value": 10,
+      "reason": "Doing Note C again got you this"
+    },
+    {
+      "includeCMs": [
+        "FF55",
+        "RR11"
+      ],
+      "value": 20,
+      "reason": "Completing the hanging supps from RR11 after you did Note C again got you this CM"
+    },
+    {
+      "includeCMs": [
+        "FF55"
+      ],
+      "excludeCMs": [
+        "RR11"
+      ],
+      "value": 5,
+      "reason": "Doing Note C for the first time (later than you should have) would get you this CM"
+    },
+    {
+      "includeCMs": [
+        "B41"
+      ],
+      "value": 10,
+      "reason": "Supps are numbered instructions with lettered parts. The supps in 55 were numbered and so you couldn't do them, instead going straight to this CM."
+    },
+    {
+      "includeCMs": [
+        "V13"
+      ],
+      "value": 5,
+      "reason": "Doing Note C late the second time got you this."
+    },
+    {
+      "includeCMs": [
+        "X59"
+      ],
+      "value": 5,
+      "reason": "Doing Note C even later got you this. You can't have RR11 with V13 and X59."
+    },
+    {
+      "includeCMs": [
+        "RR11",
+        "V13",
+        "X59"
+      ],
+      "value": -40,
+      "reason": "If you got RR11 by completing Note C, you shouldn't have had an instruction to lead you to V13 or X59"
+    },
+    {
+      "includeCMs": [
+        "LL35"
+      ],
+      "value": 10,
+      "reason": "On course on RI 19"
+    },
+    {
+      "includeCMs": [
+        "TT27"
+      ],
+      "value": 10,
+      "reason": "We wanted you to know where Penmakers was because they donated the awards for this rallye. Penmakers was marked by this CM."
+    },
+    {
+      "includeCMs": [
+        "K61"
+      ],
+      "value": 10,
+      "reason": "You cannot turn onto East until RI 19 is deleted (because the word East does not exist), so you have to U to get this CM."
+    },
+    {
+      "includeCMs": [
+        "II49"
+      ],
+      "value": 10,
+      "reason": "You could not do RI 20 because it was even-numbered and you are still in the stage where you can only do odd things."
+    },
+    {
+      "includeCMs": [
+        "DD17"
+      ],
+      "value": 10,
+      "reason": "You've already done an RI 21, RI 22, and RI 32 (when you were reversing numbers in Stage 5), but not an RI 23. So, do this to the right at Morgan."
+    },
+    {
+      "includeCMs": [
+        "F43"
+      ],
+      "value": 10,
+      "reason": "When you were reversing numbers, 21 was done earlier. So, since it was completed, you can not do it again and pick up this CM instead."
+    },
+    {
+      "includeCMs": [
+        "JJ65"
+      ],
+      "value": 10,
+      "reason": "You have already completed RI 22, so you should just go straight."
+    },
+    {
+      "includeCMs": [
+        "D29"
+      ],
+      "value": 10,
+      "reason": "You should have done 23 earlier (at Morgan) to get DD17 and were really working on RI 24 at this point, so keep going straight."
+    },
+    {
+      "includeCMs": [
+        "AA51"
+      ],
+      "value": 10,
+      "reason": "CRI 24, an on course marker to help you along."
+    },
+    {
+      "includeCMs": [
+        "O31"
+      ],
+      "value": 10,
+      "reason": "On course marker on Caselli."
+    },
+    {
+      "includeCMs": [
+        "A21"
+      ],
+      "value": 10,
+      "reason": "On course CM near the end of the rallye."
+    },
+    {
+      "includeCMs": [
+        "KKK89"
+      ],
+      "value": 10,
+      "reason": "You were onto East Main and it changed to Main, so U to stay onto."
+    },
+    {
+      "includeCMs": [
+        "Z25"
+      ],
+      "value": 10,
+      "reason": "RI 25 tried to have you park but the Generals told you there was no commerce, so you had to go straight to pick up this CM."
+    }
+  ]
+}

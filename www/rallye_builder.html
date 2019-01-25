@@ -530,6 +530,19 @@ function removeObj(objType, title) {
     openInfoWindow = null;
   }
 
+  // remove any unconfirmed objects in edit mode (even if you click remove on
+  // a different object, this will exit edit mode without confirming the current
+  // object)
+  if (currMarker) {
+    currMarker.setVisible(false);
+    currMarker = null;
+  }
+
+  if (currArrow) {
+    currArrow.setVisible(false);
+    currArrow = null;
+  }
+
   switch (objType) {
     case 'cm':
       courseMarkers[title]['marker_object'].setVisible(false);
@@ -853,8 +866,23 @@ function parseHeading(rawHeading) {
     case 'west':
       heading = west;
       break;
+    case 'n':
+      heading = north;
+      break;
+    case 's':
+      heading = south;
+      break;
+    case 'e':
+      heading = east;
+      break;
+    case 'w':
+      heading = west;
+      break;
     default:
       heading = parseFloat(rawHeading);
+      if (isNaN(heading)) {
+        showError('ERROR: Invalid Heading Value!');
+      }
   }
   return heading;
 }

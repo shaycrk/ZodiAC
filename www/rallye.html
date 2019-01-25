@@ -691,6 +691,18 @@ function parseHeading(rawHeading) {
     case 'west':
       heading = west;
       break;
+    case 'n':
+      heading = north;
+      break;
+    case 's':
+      heading = south;
+      break;
+    case 'e':
+      heading = east;
+      break;
+    case 'w':
+      heading = west;
+      break;
     default:
       heading = parseFloat(rawHeading);
   }

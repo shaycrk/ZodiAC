@@ -1,0 +1,173 @@
+{
+  "rallyeName": "Rallye School",
+  "gridOffset": -30,
+  "generalsURL": "rallye_school/generals.pdf",
+  "routeURL": "rallye_school/route.pdf",
+  "suppsURL": "rallye_school/supps.pdf",
+  "rallye_start": {
+    "lat": 37.35883253953396,
+    "lng": -121.88806263591232,
+    "heading": "north"
+  },
+  "rallye_end": {
+    "lat": 37.357236097852216,
+    "lng": -121.89064580183879,
+    "heading": "south"
+  },
+  "courseMarkers": [
+    [
+      37.360717165004786,
+      -121.88941446925583,
+      "P\n31",
+      "north"
+    ],
+    [
+      37.359506234617,
+      -121.8886527218956,
+      "I\n4",
+      "south"
+    ],
+    [
+      37.36156139364502,
+      -121.88650695468368,
+      "Z\n15",
+      "west"
+    ],
+    [
+      37.367099373366656,
+      -121.88816965109953,
+      "O\n9",
+      "west"
+    ],
+    [
+      37.35687792076527,
+      -121.88925105315104,
+      "C\n3",
+      "south"
+    ],
+    [
+      37.35909518003306,
+      -121.89063507300273,
+      "U\n1",
+      "north"
+    ],
+    [
+      37.35800728504177,
+      -121.89133092972918,
+      "F\n13",
+      "north"
+    ],
+    [
+      37.36084214532877,
+      -121.8913515760417,
+      "D\n2",
+      "180"
+    ],
+    [
+      37.36008318546602,
+      -121.892306442451,
+      "II\n6",
+      "north"
+    ],
+    [
+      37.359340512979095,
+      -121.89286133567106,
+      "AA\n5",
+      "west"
+    ],
+    [
+      37.35757721729825,
+      -121.88979822379008,
+      "A\n10",
+      "south"
+    ]
+  ],
+  "checkpoints": [],
+  "score_values": [
+    {
+      "includeCMs": [
+        "P31"
+      ],
+      "value": 10,
+      "reason": "RI1 was misspelled: HeAding not Hedding"
+    },
+    {
+      "includeCMs": [
+        "I4"
+      ],
+      "value": 10,
+      "reason": "The supp for P31 told you to go 'L first op' but 'op' isn't defined"
+    },
+    {
+      "includeCMs": [
+        "Z15"
+      ],
+      "value": 10,
+      "reason": "U to stay onto Hedding when it changes names to Berryessa"
+    },
+    {
+      "includeCMs": [
+        "O9"
+      ],
+      "value": 10,
+      "reason": "On course"
+    },
+    {
+      "includeCMs": [
+        "D2"
+      ],
+      "value": 10,
+      "reason": "Essentially an on course marker but sets up the parallel signs gimmick"
+    },
+    {
+      "includeCMs": [
+        "II6"
+      ],
+      "value": 20,
+      "reason": "Execute the 'R at Madera' from the RI at the parallel sign"
+    },
+    {
+      "includeCMs": [
+        "AA5"
+      ],
+      "value": 10,
+      "reason": "On course (CRI 5)"
+    },
+    {
+      "includeCMs": [
+        "A10"
+      ],
+      "value": 10,
+      "reason": "Can't turn at Vestal because 'a' no longer exists on signs (so the sign reads 'Vestl' instead)"
+    },
+    {
+      "includeCMs": [
+        "C3"
+      ],
+      "value": 20,
+      "reason": "The letter 'A' also doesn't exist on the CM, so can't record A10 and pick this up instead"
+    },
+    {
+      "includeCMs": [
+        "A10",
+        "C3"
+      ],
+      "value": -40,
+      "reason": "Can't have both A10 and C3"
+    },
+    {
+      "includeCMs": [
+        "U1"
+      ],
+      "value": 20,
+      "reason": "C3 (or A10) told you to turn a Vestal, but the GI deleting 'a' from signs is still in effect"
+    },
+    {
+      "includeCMs": [
+        "F13"
+      ],
+      "value": -50,
+      "reason": "Fish"
+    }
+  ]
+}

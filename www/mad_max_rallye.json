@@ -1,0 +1,1061 @@
+{
+  "rallyeName": "Road Warriors",
+  "gridOffset": -10,
+  "generalsURL": "mad_max_rallye/generals.pdf",
+  "routeURL": "mad_max_rallye/route.pdf",
+  "suppsURL": "mad_max_rallye/supps.pdf",
+  "rallye_start": {
+    "lat": 38.52587788831897,
+    "lng": -121.97106564025876,
+    "heading": "north"
+  },
+  "rallye_end": {
+    "lat": 38.52102562878434,
+    "lng": -121.9711936809581,
+    "heading": "east"
+  },
+  "courseMarkers": [
+    [
+      38.52648221470152,
+      -121.9709476230621,
+      "NNN\n22",
+      "north"
+    ],
+    [
+      38.52781675081796,
+      -121.97121584396359,
+      "W\n2",
+      "north"
+    ],
+    [
+      38.527296368609406,
+      -121.9721170661926,
+      "AA\n6",
+      "west"
+    ],
+    [
+      38.52874839343681,
+      -121.97198832015988,
+      "KKK\n9",
+      "west"
+    ],
+    [
+      38.52811890650244,
+      -121.97281444053647,
+      "GG\n19",
+      "190"
+    ],
+    [
+      38.52832873609243,
+      -121.9710012672424,
+      "TTT\n10",
+      "south"
+    ],
+    [
+      38.52957930775811,
+      -121.97096908073422,
+      "PP\n51",
+      "north"
+    ],
+    [
+      38.530661999900936,
+      -121.9710012672424,
+      "NN\n15",
+      "north"
+    ],
+    [
+      38.52953734261843,
+      -121.97120511512753,
+      "M\n16",
+      "south"
+    ],
+    [
+      38.52906733138168,
+      -121.97120511512753,
+      "S\n17",
+      "south"
+    ],
+    [
+      38.53027592550188,
+      -121.97212779502865,
+      "Q\n12",
+      "west"
+    ],
+    [
+      38.53015003122819,
+      -121.97335088233945,
+      "YY\n21",
+      "east"
+    ],
+    [
+      38.529858781336685,
+      -121.97467166255916,
+      "SS\n18",
+      "north"
+    ],
+    [
+      38.529565025985775,
+      -121.97345930408443,
+      "C\n20",
+      "east"
+    ],
+    [
+      38.527785682228334,
+      -121.97377044033016,
+      "MM\n24",
+      "north"
+    ],
+    [
+      38.52909501492983,
+      -121.97379189800228,
+      "JJJ\n25",
+      "north"
+    ],
+    [
+      38.52683724045653,
+      -121.97655993770564,
+      "F\n28",
+      "south"
+    ],
+    [
+      38.52811301763726,
+      -121.97748261760677,
+      "FF\n29",
+      "south"
+    ],
+    [
+      38.530286822701086,
+      -121.97637754749263,
+      "XX\n30",
+      "south"
+    ],
+    [
+      38.530965486018395,
+      -121.98074637724966,
+      "Z\n31",
+      "west"
+    ],
+    [
+      38.52993315636519,
+      -121.97898684813589,
+      "FFF\n53",
+      "north"
+    ],
+    [
+      38.53000030020762,
+      -121.97808562590689,
+      "Y\n54",
+      "north"
+    ],
+    [
+      38.53080602142946,
+      -121.97478114440054,
+      "B\n55",
+      "east"
+    ],
+    [
+      38.53026245000008,
+      -121.97718440367788,
+      "CCC\n26",
+      "west"
+    ],
+    [
+      38.530270842945406,
+      -121.97990952803701,
+      "BBB\n14",
+      "south"
+    ],
+    [
+      38.52970012043359,
+      -121.9756305619639,
+      "DDD\n48",
+      "south"
+    ],
+    [
+      38.522960753066826,
+      -121.97495071749495,
+      "I\n1",
+      "south"
+    ],
+    [
+      38.52281805836872,
+      -121.97385637621687,
+      "O\n4",
+      "east"
+    ],
+    [
+      38.523581891397704,
+      -121.97335212092207,
+      "L\n7",
+      "north"
+    ],
+    [
+      38.522112974531346,
+      -121.97444646220015,
+      "E\n3",
+      "south"
+    ],
+    [
+      38.52446322712706,
+      -121.96921079020308,
+      "III\n444",
+      "east"
+    ],
+    [
+      38.52391239356104,
+      -121.97110979418562,
+      "LLL\n000",
+      "west"
+    ],
+    [
+      38.52412507730147,
+      -121.9675996168557,
+      "K\n56",
+      "west"
+    ],
+    [
+      38.52379772375237,
+      -121.96849011024864,
+      "U\n59",
+      "west"
+    ],
+    [
+      38.52394041650812,
+      -121.96681641182334,
+      "X\n60",
+      "south"
+    ],
+    [
+      38.525459657130334,
+      -121.96770690521629,
+      "RRR\n49",
+      "north"
+    ],
+    [
+      38.52678737044634,
+      -121.96367962504871,
+      "DD\n61",
+      "west"
+    ],
+    [
+      38.527374902627976,
+      -121.95950610782154,
+      "GGG\n58",
+      "east"
+    ],
+    [
+      38.52584165205008,
+      -121.96270533336371,
+      "P\n62",
+      "north"
+    ],
+    [
+      38.52340280852844,
+      -121.96649391218835,
+      "MMM\n13",
+      "north"
+    ],
+    [
+      38.52247067534131,
+      -121.96737421532089,
+      "ZZ\n45",
+      "west"
+    ],
+    [
+      38.52257140152611,
+      -121.96915520210678,
+      "G\n64",
+      "north"
+    ],
+    [
+      38.52101852384535,
+      -121.97008861084396,
+      "TT\n41",
+      "north"
+    ],
+    [
+      38.51967546748147,
+      -121.96987403412277,
+      "J\n46",
+      "245"
+    ],
+    [
+      38.51921378606853,
+      -121.97365058441574,
+      "T\n5",
+      "west"
+    ],
+    [
+      38.5185674271156,
+      -121.9755174018901,
+      "WW\n76",
+      "west"
+    ],
+    [
+      38.51988532169026,
+      -121.97173012276107,
+      "BB\n66",
+      "east"
+    ],
+    [
+      38.52080867294042,
+      -121.97370422859603,
+      "V\n65",
+      "north"
+    ],
+    [
+      38.523720102250174,
+      -121.97131615473376,
+      "EEE\n333",
+      "east"
+    ],
+    [
+      38.526602226403604,
+      -121.97447854351009,
+      "A\n32",
+      "west"
+    ],
+    [
+      38.52696273448788,
+      -121.97381222229001,
+      "JJ\n23",
+      "north"
+    ],
+    [
+      38.52373896782953,
+      -121.96871541580589,
+      "D\n50",
+      "east"
+    ],
+    [
+      38.527383295910106,
+      -121.96205957080372,
+      "N\n57",
+      "west"
+    ],
+    [
+      38.518240048288796,
+      -121.97650445480758,
+      "RR\n89",
+      "west"
+    ],
+    [
+      38.52725690649924,
+      -121.97830873798335,
+      "CC\n27",
+      "west"
+    ],
+    [
+      38.52290715445727,
+      -121.96799648781234,
+      "KK\n63",
+      "north"
+    ],
+    [
+      38.52387082140917,
+      -121.96549128767282,
+      "PPP\n42",
+      "315"
+    ],
+    [
+      38.5254303712639,
+      -121.96403216596872,
+      "VV\n52",
+      "north"
+    ]
+  ],
+  "checkpoints": [
+    [
+      38.52635631379033,
+      -121.97123730163571,
+      "Checkpoint 1",
+      "north",
+      "<b>SI:</b> Exit the checkpoint heading north on Railroad to start. Have fun!"
+    ],
+    [
+      38.53096745399401,
+      -121.97734689875824,
+      "Checkpoint 2",
+      "west",
+      "<b>SI:</b> on course"
+    ],
+    [
+      38.530992632580315,
+      -121.97754001780731,
+      "Checkpoint 3",
+      "east",
+      "<b>SI:</b> Record 'CP4' on your scoresheet. Delete the GI to turn L at Village Cir. U to exit the checkpoint, heading east on Niemann. End SI.<br />\n<b>SUPP 1:</b><br />\na. CRI 12"
+    ]
+  ],
+  "score_values": [
+    {
+      "includeCMs": [
+        "NNN22"
+      ],
+      "value": 10,
+      "reason": "CM at start is good"
+    },
+    {
+      "includeCMs": [
+        "W2"
+      ],
+      "value": 10,
+      "reason": "Anderson misspelled AndersEn"
+    },
+    {
+      "includeCMs": [
+        "AA6"
+      ],
+      "value": 10,
+      "reason": "on course"
+    },
+    {
+      "includeCMs": [
+        "KKK9"
+      ],
+      "value": 10,
+      "reason": "You were onto Carrion, so you had to U at the uninstructed T"
+    },
+    {
+      "includeCMs": [
+        "GG19"
+      ],
+      "value": 10,
+      "reason": "NLOBRN was undefined. You had to U again at the uninstructed T."
+    },
+    {
+      "includeCMs": [
+        "TTT10"
+      ],
+      "value": 10,
+      "reason": "'on' was not defined. Go R at uninstructed T."
+    },
+    {
+      "includeCMs": [
+        "PP51"
+      ],
+      "value": 10,
+      "reason": "on course"
+    },
+    {
+      "includeCMs": [
+        "NN15"
+      ],
+      "value": 10,
+      "reason": "M's didn't exist on signs, so you couldn't turn onto Martinez."
+    },
+    {
+      "includeCMs": [
+        "M16"
+      ],
+      "value": 10,
+      "reason": "You couldn't do the supps for NN15 because M's still didn't exist on signs."
+    },
+    {
+      "includeCMs": [
+        "S17"
+      ],
+      "value": 20,
+      "reason": "M16 didn't exist (because M's didn't exist), so you continued to this CM"
+    },
+    {
+      "includeCMs": [
+        "S17",
+        "M16"
+      ],
+      "value": -40,
+      "reason": "Can't have both M16 and S17 since you should only get S17 by realizing M16 doesn't exist"
+    },
+    {
+      "includeCMs": [
+        "Q12"
+      ],
+      "value": 10,
+      "reason": "CRI 5. This marker ended the M gimmick."
+    },
+    {
+      "includeCMs": [
+        "YY21"
+      ],
+      "value": 10,
+      "reason": "You were onto Artinez which changed names to Martinez, so you had to U to get YY21."
+    },
+    {
+      "includeCMs": [
+        "SS18"
+      ],
+      "value": 10,
+      "reason": "You were onto Almeria which changed names to Almeria Pl."
+    },
+    {
+      "includeCMs": [
+        "C20"
+      ],
+      "value": -30,
+      "reason": "Fish"
+    },
+    {
+      "includeCMs": [
+        "JJ23"
+      ],
+      "excludeCMs": [
+        "A32"
+      ],
+      "value": 20,
+      "reason": "RI 7 was bad (everything following at didn't appear on the sign) and you were onto Mermod Place, so U at the name change to Mermod to get this CM."
+    },
+    {
+      "includeCMs": [
+        "A32"
+      ],
+      "value": 5,
+      "reason": "RI 7 was bad (everything following at didn't appear on the sign) but you missed that Mermod Place changed name and you were onto, so you should have Ued to get JJ23 alone instead. This CM along with JJ23 is partial to JJ23 alone."
+    },
+    {
+      "includeCMs": [
+        "JJ23",
+        "A32"
+      ],
+      "value": 5,
+      "reason": "Partial to JJ23 alone."
+    },
+    {
+      "includeCMs": [
+        "MM24"
+      ],
+      "value": 10,
+      "reason": "Supps must be lettered, not numbered, so you couldn't complete supp number 2 for JJ23."
+    },
+    {
+      "includeCMs": [
+        "JJJ25"
+      ],
+      "value": 10,
+      "reason": "You should have done the supps for MM24 in alphabetical order"
+    },
+    {
+      "includeCMs": [
+        "F28"
+      ],
+      "value": 10,
+      "reason": "Follow note A to get this CM"
+    },
+    {
+      "includeCMs": [
+        "CC27"
+      ],
+      "value": 10,
+      "reason": "Apricot was misspelled ApricoAt"
+    },
+    {
+      "includeCMs": [
+        "FF29"
+      ],
+      "value": 10,
+      "reason": "You were onto Apricot, so you should have Ued at the name change."
+    },
+    {
+      "includeCMs": [
+        "XX30"
+      ],
+      "value": 10,
+      "reason": "The GIs told you to go L at Village Circle"
+    },
+    {
+      "includeCMs": [
+        "Z31"
+      ],
+      "value": 10,
+      "reason": "You got this CM if you realized that there wasn't a second ch to go L (because of the Village Cir GI), but you actually should have executed the GI again rather than picking this up."
+    },
+    {
+      "includeCMs": [
+        "BBB14"
+      ],
+      "value": 10,
+      "reason": "on course"
+    },
+    {
+      "includeCMs": [
+        "FFF53"
+      ],
+      "value": 20,
+      "reason": "Execute the GI again (full credit, 31 is partial)"
+    },
+    {
+      "includeCMs": [
+        "Y54"
+      ],
+      "value": 10,
+      "reason": "And execute the GI yet again..."
+    },
+    {
+      "includeCMs": [
+        "CP4"
+      ],
+      "value": 10,
+      "reason": "The supps for 54 told you to go L first ch, but when you turned L at Village Circle, you were executing the GI again. In fact, when you turned L at Niemann, you were actually executing the GI instead of the remaining supps. If you did this correctly, you never executed the supps for 54 whether or not you even knew it."
+    },
+    {
+      "includeCMs": [
+        "B55"
+      ],
+      "value": 30,
+      "reason": "At the CP, you were given an SI that told you to DG and U, and supps that told you to CRI 12, but you sill had the supps for 54 in effect that told you to go L first ch, so you continued straight to get this CM."
+    },
+    {
+      "includeCMs": [
+        "CCC26"
+      ],
+      "value": 10,
+      "reason": "You did RIs 12 and 13 but forgot that the supps for 54 were still in effect. This CM was partial with B55."
+    },
+    {
+      "includeCMs": [
+        "DDD48"
+      ],
+      "value": 10,
+      "reason": "CRI 14"
+    },
+    {
+      "includeCMs": [
+        "I1"
+      ],
+      "value": 10,
+      "reason": "on course. This CM set up the double vision gimmick."
+    },
+    {
+      "includeCMs": [
+        "HH00",
+        "H0"
+      ],
+      "excludeCMs": [
+        "O4",
+        "OO44"
+      ],
+      "value": 50,
+      "reason": "This is the correct combination of recorded markers: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "O4"
+      ],
+      "excludeCMs": [
+        "HH00",
+        "H0",
+        "OO44"
+      ],
+      "value": 10,
+      "reason": "O4 was a good CM, but the correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "H0"
+      ],
+      "excludeCMs": [
+        "HH00",
+        "O4",
+        "OO44"
+      ],
+      "value": 20,
+      "reason": "You correctly flipped O4 but missed the doubling gimmick and didn't catch the marker the second time through. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "OO44"
+      ],
+      "excludeCMs": [
+        "HH00",
+        "H0",
+        "O4"
+      ],
+      "value": 20,
+      "reason": "You correctly doubled O4 but missed the flipping gimmick and didn't catch the marker the second time through. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "HH00"
+      ],
+      "excludeCMs": [
+        "H0",
+        "O4",
+        "OO44"
+      ],
+      "value": 30,
+      "reason": "You correctly flipped and doubled O4 but didn't catch the marker the second time through. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "H0",
+        "O4"
+      ],
+      "excludeCMs": [
+        "HH00",
+        "OO44"
+      ],
+      "value": 25,
+      "reason": "You saw and recorded the marker twice, but missed the doubling gimmick entirely and only flipped once. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "OO44",
+        "O4"
+      ],
+      "excludeCMs": [
+        "H0",
+        "HH00"
+      ],
+      "value": 30,
+      "reason": "You saw and recorded O4 twice, only doubling the first time, but missed the flipping gimmick entirely. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "HH00",
+        "O4"
+      ],
+      "excludeCMs": [
+        "H0",
+        "OO44"
+      ],
+      "value": 40,
+      "reason": "You saw and recorded O4 twice, correctly doubling and flipping the first time, but missed the flipping gimmick was still in effect the second time. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "OO44",
+        "H0"
+      ],
+      "excludeCMs": [
+        "O4",
+        "HH00"
+      ],
+      "value": 25,
+      "reason": "You saw and recorded O4 twice, only doubling the first time, but only caught the flipping gimmick once. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "HH00",
+        "OO44"
+      ],
+      "excludeCMs": [
+        "H0",
+        "O4"
+      ],
+      "value": 25,
+      "reason": "You saw and recorded O4 twice, but ended the wrong gimmick (flipping rather than doubling) the second time through. The correct combination should have recorded HH00 and H0: You saw O4 once with both the doubling and flipping gimmicks in place (thus recoding hh-00)  then again after recording E-3 (or EE-33) which ended the doubling gimmick, hence recording h-0 the second time."
+    },
+    {
+      "includeCMs": [
+        "L7"
+      ],
+      "value": 10,
+      "reason": "Executed Note B a second time to pick up this marker, but missed the doubling gimmick."
+    },
+    {
+      "includeCMs": [
+        "LL77"
+      ],
+      "value": 20,
+      "reason": "Executed Note B a second time, flip the marker, and double the numbers and letters - now you're thinking! Full credit."
+    },
+    {
+      "includeCMs": [
+        "II11"
+      ],
+      "value": 10,
+      "reason": "You already saw I1. Now double it."
+    },
+    {
+      "includeCMs": [
+        "E3"
+      ],
+      "value": 10,
+      "reason": "II11 deleted the last supp from LL77 (or L7), so go straight to get this marker, which tells you to stop doubling. You can't have E-3 and E-33."
+    },
+    {
+      "includeCMs": [
+        "EE33"
+      ],
+      "value": 10,
+      "reason": "Recording E-3 as E-33 was just as good. II11 deleted the last supp from LL77 (or L7), so go straight to get this marker, which tells you to stop doubling. You can't have E-3 and E-33."
+    },
+    {
+      "includeCMs": [
+        "E3",
+        "EE33"
+      ],
+      "value": -10,
+      "reason": "You should only have seen and recorded E-3 once, either doubled or not (both are equivalent)"
+    },
+    {
+      "includeCMs": [
+        "EEE333"
+      ],
+      "value": 10,
+      "reason": "If you didn't get E-3 or EE-33, this on course marker ended the doubling gimmick."
+    },
+    {
+      "includeCMs": [
+        "EEEEEE333333"
+      ],
+      "value": 10,
+      "reason": "Recording EEE-333 as EEEEEE-333333 was just as good. If you didn't get E-3 or EE-33, this on course marker ended the doubling gimmick."
+    },
+    {
+      "includeCMs": [
+        "III444"
+      ],
+      "value": 10,
+      "reason": "Railroad was misspelled RailToad, but you should have flipped the marker to record hhh-111 instead."
+    },
+    {
+      "includeCMs": [
+        "HHH111"
+      ],
+      "value": 20,
+      "reason": "Railroad was misspelled RailToad and flipped III-444 upside down. Full credit."
+    },
+    {
+      "includeCMs": [
+        "LLL000"
+      ],
+      "value": 20,
+      "reason": "hhh-111 (or III-444, as you may have recorded it) told you to delete RI 16 and turn L first op, but you couldn't turn L because 'op' was not defined. You should have recorded this one right-side-up (because you deleted RI 16)."
+    },
+    {
+      "includeCMs": [
+        "OOO777"
+      ],
+      "value": 10,
+      "reason": "hhh-111 (or III-444, as you may have recorded it) told you to delete RI 16 and turn L first op, but you couldn't turn L because 'op' was not defined. You should have recorded this one right-side-up (because you deleted RI 16), so this was partial to LLL-000."
+    },
+    {
+      "includeCMs": [
+        "D50"
+      ],
+      "value": 10,
+      "reason": "on course"
+    },
+    {
+      "includeCMs": [
+        "K56"
+      ],
+      "value": 10,
+      "reason": "East did not exist on signs, so you had to U to get this CM"
+    },
+    {
+      "includeCMs": [
+        "U59"
+      ],
+      "excludeCMs": [
+        "X60"
+      ],
+      "value": 20,
+      "reason": "East still didn't exist on signs, so you had to U again. Full credit (can't have U59 and X60)"
+    },
+    {
+      "includeCMs": [
+        "X60"
+      ],
+      "excludeCMs": [
+        "U59"
+      ],
+      "value": 10,
+      "reason": "This CM was partial to U59. You realized there was a gimmick on the word East and turned R at the T, but missed that you were onto Edwards so should have Ued at the uninstructed T."
+    },
+    {
+      "includeCMs": [
+        "X60",
+        "U59"
+      ],
+      "value": -20,
+      "reason": "Can't have both X60 and U59"
+    },
+    {
+      "includeCMs": [
+        "RRR49"
+      ],
+      "value": 10,
+      "reason": "You couldn't turn onto Baker, because the street was named East Baker"
+    },
+    {
+      "includeCMs": [
+        "DD61"
+      ],
+      "value": 10,
+      "reason": "East Baker changed names to E Baker. U to stay onto."
+    },
+    {
+      "includeCMs": [
+        "GGG58"
+      ],
+      "value": 10,
+      "reason": "Main Street did not exist, so you should have continued to this CM."
+    },
+    {
+      "includeCMs": [
+        "N57"
+      ],
+      "value": 20,
+      "reason": "Main Street still didn't exist, so you should have gone to this CM, which deleted the general."
+    },
+    {
+      "includeCMs": [
+        "P62"
+      ],
+      "value": 10,
+      "reason": "Note C told you to turn R at East. When you saw the sign for East Main, you should have turned R (everything following at appeared on the sign)"
+    },
+    {
+      "includeCMs": [
+        "VV52"
+      ],
+      "value": 10,
+      "reason": "You completed Note C for a second time when you turned back onto East Main, so you still had a hanging supp from P62 (R first ch) that you should have executed to get this CM even though the sign was E Main not East Main (so you're not executing the note again here)"
+    },
+    {
+      "includeCMs": [
+        "PPP42"
+      ],
+      "value": 10,
+      "reason": "You executed Note C twice at Toyon, so execute it the third time to pick up this CM."
+    },
+    {
+      "includeCMs": [
+        "PPP42",
+        "VV52",
+        "P62"
+      ],
+      "excludeCMs": [
+        "MMM13"
+      ],
+      "value": 10,
+      "reason": "Recording P62, VV52, and PPP42 together without MMM13 means you executed Note C three times and the hanging supp once, realizing you shouldn't actually turn on East itself. Full credit."
+    },
+    {
+      "includeCMs": [
+        "MMM13"
+      ],
+      "value": 5,
+      "reason": "This CM was partial. If you thought you should have executed Note C at East, you were wrong as you should have already executed it earlier on East Main."
+    },
+    {
+      "includeCMs": [
+        "PPP42",
+        "VV52",
+        "P62",
+        "MMM13"
+      ],
+      "value": -30,
+      "reason": "If you recorded P62, VV52, and PPP42, you should have no reason to turn at East and record MMM13, so must have been fishing."
+    },
+    {
+      "includeCMs": [
+        "ZZ45"
+      ],
+      "value": 10,
+      "reason": "CRI 21"
+    },
+    {
+      "includeCMs": [
+        "KK63"
+      ],
+      "value": 10,
+      "reason": "The GIs told you to go R at Elliot."
+    },
+    {
+      "includeCMs": [
+        "G64"
+      ],
+      "value": 10,
+      "reason": "The supps for H63 told you to go R first ch, but you actually turned R at Elliot again (following the GI). Executing the R first ch at Railroad got you this CM."
+    },
+    {
+      "includeCMs": [
+        "TT41"
+      ],
+      "value": 20,
+      "reason": "Russell was misspelled Ru_sell, and you were onto. You should have Ued to get this CM."
+    },
+    {
+      "includeCMs": [
+        "J46"
+      ],
+      "value": 10,
+      "reason": "This CM was partial to TT41. You caught the misspelling of Russell as Ru_sell but didn't realize you were onto First."
+    },
+    {
+      "includeCMs": [
+        "J46",
+        "TT41"
+      ],
+      "value": -30,
+      "reason": "Can't have both TT41 and J46"
+    },
+    {
+      "includeCMs": [
+        "T5"
+      ],
+      "value": 10,
+      "reason": "The numbers and words 1-5 and first through fifth didn't exist. Even though you may have realized that Third St didn't exist, so you couldn't turn on it, you may not have noticed that this marker didn't exist either. This CM was partial."
+    },
+    {
+      "includeCMs": [
+        "WW76"
+      ],
+      "value": 20,
+      "reason": "The numbers and words 1-5 and first through fifth didn't exist, so Third St didn't exist and you couldn't turn on it, but neither did T5, so you continued on to record this CM instead. Full credit."
+    },
+    {
+      "includeCMs": [
+        "T5",
+        "WW76"
+      ],
+      "value": -50,
+      "reason": "Can't have both T5 and WW76"
+    },
+    {
+      "includeCMs": [
+        "BB66"
+      ],
+      "value": 10,
+      "reason": "The supps from WW76 (or T5) told you to turn L at third, but you couldn't do this because Third St still didn't exist."
+    },
+    {
+      "includeCMs": [
+        "RR89"
+      ],
+      "value": -10,
+      "reason": "If you thought you still couldn't turn at Third, you were wrong. BB66 deleted the RI, and the gimmick. This CM was bad."
+    },
+    {
+      "includeCMs": [
+        "V65"
+      ],
+      "value": -10,
+      "reason": "You got this bad CM if you thought Main St still didn't exist. Maybe you missed the gimmick earlier..."
+    }
+  ],
+  "update_actions": [
+    {
+      "after_cms": [
+        "BBB14"
+      ],
+      "actions": [
+        [
+          "remove_object",
+          [
+            "Checkpoint 2"
+          ]
+        ],
+        [
+          "setVisibleAngle",
+          [
+            "Checkpoint 3",
+            180
+          ]
+        ]
+      ]
+    }
+  ]
+}

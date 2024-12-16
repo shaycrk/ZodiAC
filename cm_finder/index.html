@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CM Finder</title>
+</head>
+<body>
+
+<script src="cm_finder.js"></script>
+
+<div id="start-button">
+  <button type="button" onclick="test_rallye()" style="font-size: x-large;">Run a test rallye!</button>
+  <br />
+  <br />
+  <button type="button" onclick="watchLocation()" style="font-size: x-large;">Try location tracking</button>
+</div>
+
+<div id="searching" style="display: none;">
+  <h2>Searching for Coursemarkers...</h2>
+  <br />
+  <img src="https://media1.tenor.com/m/8Juj0k-1L4AAAAAd/radar-love-search.gif" width="75%">
+  <div id="lastcm">
+    Last CM Seen:
+  </div>
+  <div id="search-pos">
+    Current Position
+  </div>
+</div>
+
+<div id="demo" style="display: none;">
+  Initializing...
+</div>
+
+<div id="log-button" style="display: none;">
+  <br />
+  <br />
+  <br />
+  <button type="button" onclick="show_log()" style="font-size: x-large;">Show tracking log</button>
+</div>
+
+<div id="tracking-log" style="display: none;"></div>
+
+<audio preload="auto" id="chime-audio">
+  <source src="chime.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>

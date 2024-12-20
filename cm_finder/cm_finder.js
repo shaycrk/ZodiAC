@@ -105,7 +105,7 @@ function bearing(startLat, startLng, destLat, destLng){
 
 const CM_DIST = 150; // meters
 const CM_HEADING = 20; // degrees
-const CM_LAT_DIST = 20; // meters
+const CM_LAT_DIST = 25; // meters
 
 var tracking_log = [];
 const MAX_LOG = 10000; // maximum number of tracked locations to log
@@ -178,6 +178,11 @@ var prev_hdng = 65;
 
 //const x = document.getElementById("demo");
 
+// new
+const HDNG_BOXCAR_WINDOW = 5;
+var hdng_boxcar_num = [];
+var hdng_boxcar_denom = [];
+var calculated_headings = [];
 
 function update_heading(new_loc) {
   var hdng = null;
@@ -190,7 +195,23 @@ function update_heading(new_loc) {
   // also assumes every device will return heading -- might need some check if
   // this is persistently null to fall back to the other logic?
   if ('heading' in new_loc.coords) {
-    hdng = new_loc.coords.heading ?? prev_hdng;
+    //hdng = new_loc.coords.heading ?? prev_hdng;
+
+    // new (also uncomment above)
+    if (new_loc.coords.heading != null) {
+      hdng_boxcar_num.push(Math.sin(deg2rad(new_loc.coords.heading)));
+      hdng_boxcar_denom.push(Math.cos(deg2rad(new_loc.coords.heading)));
+      if (hdng_boxcar_num.length > HDNG_BOXCAR_WINDOW) {
+          hdng_boxcar_num = hdng_boxcar_num.slice(hdng_boxcar_num.length - HDNG_BOXCAR_WINDOW, hdng_boxcar_num.length);
+          hdng_boxcar_denom = hdng_boxcar_denom.slice(hdng_boxcar_denom.length - HDNG_BOXCAR_WINDOW, hdng_boxcar_denom.length);
+      }
+      num = hdng_boxcar_num.reduce((a,b) => a+b, 0);
+      denom = hdng_boxcar_denom.reduce((a,b) => a+b, 0);
+      hdng = (rad2deg(Math.atan2(num, denom)) + 360) % 360;
+    } else {
+      hdng = prev_hdng;
+    }
+
     prev_loc = new_loc; // update the location regardless of whether heading is available?
     prev_hdng = hdng;
   }
@@ -205,6 +226,7 @@ function update_heading(new_loc) {
   else {
   	hdng = prev_hdng;
   }
+  calculated_headings.push(hdng); //new
   return [hdng, dist_to_last];
 }
 
@@ -331,6 +353,28 @@ function test_rallye() {
       //var hdng0 = google.maps.geometry.spherical.computeHeading(ltln, cm_loc);
       update_dom(ltln);
     }, 0+3000*i);
+  }
+}
+
+
+function test_log_rallye() {
+  document.getElementById("start-button").setAttribute("style", "display: none;");
+  document.getElementById("log-button").setAttribute("style", "display: block;");
+  document.getElementById("searching").setAttribute("style", "display: block;");
+
+  prev_loc = log_locs[0];
+  prev_hdng = 135;
+
+  for (let i = 0; i < log_locs.length; i++) {
+  	setTimeout(function() {
+      var ltln = log_locs[i];
+      var old_view = document.getElementById("searching").style.display == 'block' ? 'search' : 'cm';
+      update_dom(ltln);
+      var new_view = document.getElementById("searching").style.display == 'block' ? 'search' : 'cm';
+      if (old_view != new_view) {
+        console.log("" + i + ": " + old_view + " => " + new_view);
+      }
+    }, 0+250*i);
   }
 }
 

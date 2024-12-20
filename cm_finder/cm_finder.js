@@ -102,7 +102,10 @@ function bearing(startLat, startLng, destLat, destLng){
 }
 
 
-
+// tightening down the CM_DIST parameter might help a lot with noisiness (40 seemed quite good with
+// logged data from walking in Redwood City), but need to get some test data from driving to have
+// a better sense of the right values here since the speed (and thus distance between samples)
+// will be higher...
 const CM_DIST = 150; // meters
 const CM_HEADING = 20; // degrees
 const CM_LAT_DIST = 25; // meters

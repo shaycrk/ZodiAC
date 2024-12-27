@@ -354,6 +354,10 @@ function test_rallye() {
   document.getElementById("log-button").setAttribute("style", "display: block;");
   document.getElementById("searching").setAttribute("style", "display: block;");
 
+  document.getElementById('chime-audio').play(); 
+  document.getElementById('chime-audio').pause(); 
+  document.getElementById('chime-audio').currentTime = 0;
+
   for (let i = 0; i < locs.length; i++) {
   	setTimeout(function() {
       var ltln = {coords: {latitude: locs[i][0], longitude: locs[i][1]}};
@@ -369,6 +373,10 @@ function test_log_rallye() {
   document.getElementById("start-button").setAttribute("style", "display: none;");
   document.getElementById("log-button").setAttribute("style", "display: block;");
   document.getElementById("searching").setAttribute("style", "display: block;");
+
+  document.getElementById('chime-audio').play(); 
+  document.getElementById('chime-audio').pause(); 
+  document.getElementById('chime-audio').currentTime = 0;
 
   prev_loc = log_locs[0];
   prev_hdng = 135;

@@ -106,7 +106,7 @@ function bearing(startLat, startLng, destLat, destLng){
 // logged data from walking in Redwood City), but need to get some test data from driving to have
 // a better sense of the right values here since the speed (and thus distance between samples)
 // will be higher...
-const CM_DIST = 150; // meters
+const CM_DIST = 50; // meters
 const CM_HEADING = 20; // degrees
 const CM_LAT_DIST = 25; // meters
 
@@ -186,6 +186,8 @@ var prev_hdng = 250;
 
 //const x = document.getElementById("demo");
 
+const USE_API_HEADING = false;
+
 // new
 const HDNG_BOXCAR_WINDOW = 5;
 var hdng_boxcar_num = [];
@@ -202,7 +204,7 @@ function update_heading(new_loc) {
   // (seems more stable generally but to have a little trouble with U-turns?)
   // also assumes every device will return heading -- might need some check if
   // this is persistently null to fall back to the other logic?
-  if ('heading' in new_loc.coords) {
+  if ((USE_API_HEADING) && ('heading' in new_loc.coords)) {
     //hdng = new_loc.coords.heading ?? prev_hdng;
 
     // new (also uncomment above)
@@ -224,10 +226,21 @@ function update_heading(new_loc) {
     prev_hdng = hdng;
   }
   else if (dist_to_last > 6) {
-  	hdng = bearing(
+  	var new_hdng = bearing(
         prev_loc.coords.latitude, prev_loc.coords.longitude, 
         new_loc.coords.latitude, new_loc.coords.longitude
     );
+
+    hdng_boxcar_num.push(Math.sin(deg2rad(new_hdng)));
+    hdng_boxcar_denom.push(Math.cos(deg2rad(new_hdng)));
+    if (hdng_boxcar_num.length > HDNG_BOXCAR_WINDOW) {
+        hdng_boxcar_num = hdng_boxcar_num.slice(hdng_boxcar_num.length - HDNG_BOXCAR_WINDOW, hdng_boxcar_num.length);
+        hdng_boxcar_denom = hdng_boxcar_denom.slice(hdng_boxcar_denom.length - HDNG_BOXCAR_WINDOW, hdng_boxcar_denom.length);
+    }
+    num = hdng_boxcar_num.reduce((a,b) => a+b, 0);
+    denom = hdng_boxcar_denom.reduce((a,b) => a+b, 0);
+    hdng = (rad2deg(Math.atan2(num, denom)) + 360) % 360;
+
     prev_loc = new_loc;
     prev_hdng = hdng;
   }
@@ -325,14 +338,18 @@ function update_dom(location) {
         "<br />CM Found: " + nearest_cm['cm'][2];
         */
 
+        var new_last_cm = "Last CM Seen: " + nearest_cm['cm'][2];
         if (document.getElementById("demo").style.display == 'none') {
             document.getElementById("searching").setAttribute("style", "display: none;");
             document.getElementById("demo").setAttribute("style", "display: block;");
             //playSound();
             document.getElementById('chime-audio').play();
+        } else if (document.getElementById("lastcm").innerHTML != new_last_cm) {
+            // play chime if we've seen a new CM even if already on the CM page
+            document.getElementById('chime-audio').play();
         }
 
-        document.getElementById("lastcm").innerHTML = "Last CM Seen: " + nearest_cm['cm'][2];
+        document.getElementById("lastcm").innerHTML = new_last_cm;
 
     } else {
         document.getElementById("search-pos").innerHTML = "<br />Current Location: (" +

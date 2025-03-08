@@ -1,5 +1,6 @@
 
 var watchID;
+var staleIntID;
 
 function watchLocation() {
     document.getElementById("start-button").setAttribute("style", "display: none;");
@@ -15,6 +16,7 @@ function watchLocation() {
       document.getElementById('chime-audio').play(); 
       document.getElementById('chime-audio').pause(); 
       document.getElementById('chime-audio').currentTime = 0;
+    staleIntID = setInterval(stale_check, 5000);
 	  return watchID;
 	} else {
       var x = document.getElementById("demo");
@@ -102,6 +104,13 @@ const CM_LAT_DIST = 25; // meters
 
 var tracking_log = [];
 const MAX_LOG = 10000; // maximum number of tracked locations to log
+
+const ACCURACY_THRESH = 20; // meters; threshold beyond which to trigger low accuracy warning
+const ACCURACY_NUM_THRESH = 5; // number of consecutive low-accuracy readings before triggering the warning
+const STALE_THRESH = 7; // seconds; warn if location hasn't been updated in this amount of time
+var update_count = 0; // counter of number of update cycles
+var low_acc_count = 0; // counter of number of consecutive low-accuracy readings
+var last_update_ts; // unix timestamp of last update
 
 // less than 150 m, heading within 20 degrees
 
@@ -315,6 +324,28 @@ function find_cms(ltln, hdng) {
 //var play_count = 0;
 
 function update_dom(location) {
+    update_count++;
+    if ('timestamp' in location) {
+      last_update_ts = location.timestamp;
+    } else {
+      last_update_ts = Date.now();
+    }
+
+    if ((update_count > 10) && ('accuracy' in location.coords)) {
+      // it may take a while for location accuracy to stabilize, so wait for a few updates before checking
+      if (location.coords.accuracy >= ACCURACY_THRESH) {
+        // with a low-accuracy reading, increment counter and show warning if we've seen too many
+        low_acc_count++;
+        if (low_acc_count >= ACCURACY_NUM_THRESH) {
+          document.getElementById('warn-accuracy').style.display = 'block';
+        }
+      } else {
+        // with a high-accuracy reading, reset counter and assure warning is suppressed.
+        low_acc_count = 0;
+        document.getElementById('warn-accuracy').style.display = 'none';
+      }
+    }
+
     var x = document.getElementById("demo");
     var [hdng, dist_to_last] = update_heading(location);
 
@@ -379,6 +410,23 @@ function update_dom(location) {
 }
 
 
+function stale_check(logged=false) {
+  if (update_count > 10) {
+    // might take a little time for location data to stabilize, so wait a few cycles before checking for staleness
+    var curr_ts = Date.now();
+    if (logged && update_count < log_locs.length) {
+      curr_ts = log_locs[update_count+1].timestamp; // for logged runs, use timestamp of next location for check
+    }
+    var staleness = Math.round((curr_ts - last_update_ts) / 1000); // round to whole seconds
+    if (staleness > STALE_THRESH) {
+      document.getElementById('update-time').innerHTML = staleness;
+      document.getElementById('warn-stale').style.display = 'block';
+    } else {
+      document.getElementById('warn-stale').style.display = 'none';
+    }
+  }
+}
+
 function test_rallye() {
   document.getElementById("start-button").setAttribute("style", "display: none;");
   document.getElementById("log-button").setAttribute("style", "display: block;");
@@ -410,6 +458,8 @@ function test_log_rallye() {
 
   prev_loc = log_locs[0];
   prev_hdng = 135;
+
+  staleIntID = setInterval(function() {stale_check(logged=true);}, 5000);
 
   for (let i = 0; i < log_locs.length; i++) {
   	setTimeout(function() {
@@ -444,6 +494,9 @@ function add_to_log_div(location) {
 function show_log() {
     if (watchID != null) {
         navigator.geolocation.clearWatch(watchID);
+    }
+    if (staleIntID != null) {
+      clearInterval(staleIntID);
     }
     //const newText = document.createTextNode(JSON.stringify(tracking_log));
     //document.getElementById("searching").innerHTML = "";

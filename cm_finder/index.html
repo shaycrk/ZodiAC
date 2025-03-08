@@ -7,6 +7,16 @@
 
 <script src="cm_finder.js"></script>
 
+<div id="warn-stale" style="display: none; background-color: firebrick; color: white; padding-left: 5px; padding-right: 5px;">
+  <h2>Warning: Stale location data!</h2>
+  <h3>Location data has not been updated in more than <span id="update-time">7</span> seconds. If the data does not update soon, consider reloading and ensure you allowed access to location data.</h3>
+</div>
+
+<div id="warn-accuracy" style="display: none; background-color: goldenrod; color: white; padding-left: 5px; padding-right: 5px;">
+  <h2>Warning: Degraded location accuracy!</h2>
+  <h3>You may want to wait a few seconds for accuracy to improve and revisit the current section of the route.</h3>
+</div>
+
 <div id="start-button">
   <button type="button" onclick="test_rallye()" style="font-size: x-large;">Run a test rallye!</button>
   <br />

@@ -373,8 +373,8 @@ function update_dom(location) {
 
     if  ('cm' in nearest_cm) {
         var cm_dist_ft = Math.round(nearest_cm['dist'] * 3.28);
-        x.innerHTML = "<CENTER><H1>Coursemarker Found!<br /><br />" +
-        nearest_cm['cm'][2].replace('\n', '<br />') + "</H1>" +
+        x.innerHTML = "<CENTER><H1>Coursemarker Found!</H1>" +
+        "<H1 id=\"marker-text\">" + nearest_cm['cm'][2].replace('\n', '<br />') + "</H1>" +
         "<H2><br /><br /> About " + cm_dist_ft + " feet ahead</H2></CENTER>";
         /*
         x.innerHTML += "<br />Distance to CM: " + nearest_cm['dist'] + 
@@ -400,7 +400,7 @@ function update_dom(location) {
             location.coords.latitude.toFixed(6) + ", " + location.coords.longitude.toFixed(6) +")" +
             "<br />Heading: " + hdng.toFixed(1) + " degrees";
         if ('accuracy' in location.coords) {
-            document.getElementById("search-pos").innerHTML += "<br />Accuracy (m): " + location.coords.accuracy +
+            document.getElementById("search-pos").innerHTML += "<br />Accuracy: " + location.coords.accuracy.toFixed(1) + " meters" +
             "<br />Heading (geolocation): " + location.coords.heading +
             "<br />Updated: " + (new Date(location.timestamp).toLocaleString());
         }

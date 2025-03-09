@@ -2,8 +2,23 @@
 <html>
 <head>
     <title>CM Finder</title>
+    <style>
+      #marker-text {
+        border-color: lightblue;
+        border-width: medium;
+        border-style: solid;
+        color: navy;
+        background-color: deepskyblue;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-left: 25px;
+        margin-right: 25px;
+        border-radius: 20px;
+        font-size: 4em;
+      }
+    </style>
 </head>
-<body>
+<body style="background-color: black; color: deepskyblue;">
 
 <script src="cm_finder.js"></script>
 
@@ -12,24 +27,25 @@
   <h3>Location data has not been updated in more than <span id="update-time">7</span> seconds. If the data does not update soon, consider reloading and ensure you allowed access to location data.</h3>
 </div>
 
-<div id="warn-accuracy" style="display: none; background-color: goldenrod; color: white; padding-left: 5px; padding-right: 5px;">
+<div id="warn-accuracy" style="display: none; background-color: goldenrod; color: black; padding-left: 5px; padding-right: 5px;">
   <h2>Warning: Degraded location accuracy!</h2>
   <h3>You may want to wait a few seconds for accuracy to improve and revisit the current section of the route.</h3>
 </div>
 
 <div id="start-button">
-  <button type="button" onclick="test_rallye()" style="font-size: x-large;">Run a test rallye!</button>
+  <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button>
   <br />
   <br />
   <br />
-  <button type="button" onclick="watchLocation()" style="font-size: x-large;">Try location tracking</button>
+  <button type="button" onclick="watchLocation()" style="font-size: 3em;">Try location tracking</button>
 </div>
 
 <div id="searching" style="display: none;">
-  <h2>Searching for Coursemarkers...</h2>
+  <h1 style="text-align: center;">Searching for Coursemarkers...</h1>
   <br />
-  <img src="https://media1.tenor.com/m/8Juj0k-1L4AAAAAd/radar-love-search.gif" width="75%">
-  <div id="lastcm">
+  <!-- <img src="https://media1.tenor.com/m/8Juj0k-1L4AAAAAd/radar-love-search.gif" width="75%"> -->
+  <img src="https://cdn.dribbble.com/users/568/screenshots/2937224/browserpreview_tmp.gif" width="100%">
+  <div id="lastcm" style="font-size: x-large;">
     Last CM Seen:
   </div>
   <div id="search-pos">

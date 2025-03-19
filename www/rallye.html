@@ -516,13 +516,15 @@ function placeCMs(map, iconScale=1.0) {
 }
 
 function splitCMText(cm) {
-  var scrubbed = cm.toUpperCase().replace(/[^A-Z0-9]/g, '');
-  var matched = scrubbed.match(/^([A-Z]{1,3})([0-9]{1,3})$/);
+  //var scrubbed = cm.toUpperCase().replace(/[^A-Z0-9]/g, '');
+  //var matched = scrubbed.match(/^([A-Z]{1,3})([0-9]{1,3})$/);
+  var scrubbed = cm.toUpperCase().replace(/[^A-Z0-9]/g, ' ');
+  var matched = scrubbed.match(/^([A-Z0-9]{1,5})\s+([A-Z0-9]{1,5})$/);
   if (matched) {
     //console.log([matched[1], matched[2]]);
     return [matched[1], matched[2]]
   } else {
-    console.log('Oh no! Malformed CM '+cm+'\nShould be 1-3 letters followed by 1-3 numbers.');
+    console.log('Oh no! Malformed CM '+cm+'\nShould be 1-5 letters/numbers followed by 1-5 numbers/letters.');
     //alert('Oh no! Malformed CM '+cm+'\nShould be 1-3 letters followed by 1-3 numbers.');
   }
 }

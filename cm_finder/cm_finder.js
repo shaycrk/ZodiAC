@@ -373,9 +373,9 @@ function update_dom(location) {
 
     if  ('cm' in nearest_cm) {
         var cm_dist_ft = Math.round(nearest_cm['dist'] * 3.28);
-        x.innerHTML = "<CENTER><H1 style=\"font-size: 3em;\">Coursemarker Found!</H1>" +
+        x.innerHTML = "<CENTER><H1 style=\"font-size: 3.5em;\">Coursemarker Found!</H1>" +
         "<H1 id=\"marker-text\">" + nearest_cm['cm'][2].replace('\n', '<br />') + "</H1>" +
-        "<H2 style=\"font-size: 2.5em; margin-top: 1.5em;\">About " + cm_dist_ft + " feet ahead</H2></CENTER>";
+        "<H2 style=\"font-size: 3.25em; margin-top: 1.5em;\">About " + cm_dist_ft + " feet ahead</H2></CENTER>";
         /*
         x.innerHTML += "<br />Distance to CM: " + nearest_cm['dist'] + 
         "<br />Heading to CM: " + nearest_cm['cm_hdng'] +

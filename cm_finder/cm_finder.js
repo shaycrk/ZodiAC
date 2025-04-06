@@ -272,6 +272,11 @@ function update_dom(location) {
         // with a low-accuracy reading, increment counter and show warning if we've seen too many
         low_acc_count++;
         if (low_acc_count >= ACCURACY_NUM_THRESH) {
+          if (document.getElementById('warn-accuracy').style.display == 'none') {
+            document.getElementById('warn-audio').play();
+            // document.getElementById('chime-audio').playbackRate = 7.0; 
+            // document.getElementById('chime-audio').play();
+          }
           document.getElementById('warn-accuracy').style.display = 'block';
         }
       } else {
@@ -322,9 +327,11 @@ function update_dom(location) {
             document.getElementById("searching").setAttribute("style", "display: none;");
             document.getElementById("demo").setAttribute("style", "display: block;");
             
+            //document.getElementById('chime-audio').playbackRate = 1.0;
             document.getElementById('chime-audio').play();
         } else if (document.getElementById("lastcm").innerHTML != new_last_cm) {
             // play chime if we've seen a new CM even if already on the CM page
+            //document.getElementById('chime-audio').playbackRate = 1.0;
             document.getElementById('chime-audio').play();
         }
 
@@ -355,6 +362,9 @@ function stale_check(logged=false) {
     var staleness = Math.round((curr_ts - last_update_ts) / 1000); // round to whole seconds
     if (staleness > STALE_THRESH) {
       document.getElementById('update-time').innerHTML = staleness;
+      if (document.getElementById('warn-stale').style.display == 'none') {
+        document.getElementById('warn-audio').play();
+      }
       document.getElementById('warn-stale').style.display = 'block';
     } else {
       document.getElementById('warn-stale').style.display = 'none';
@@ -390,6 +400,11 @@ function test_log_rallye() {
   document.getElementById('chime-audio').play(); 
   document.getElementById('chime-audio').pause(); 
   document.getElementById('chime-audio').currentTime = 0;
+
+  document.getElementById('warn-audio').play(); 
+  document.getElementById('warn-audio').pause(); 
+  document.getElementById('warn-audio').currentTime = 0;
+  // document.getElementById('warn-audio').load();
 
   prev_loc = log_locs[0];
   prev_hdng = 135;

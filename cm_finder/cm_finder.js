@@ -13,9 +13,15 @@ function watchLocation() {
 		timeout: 27000,
 	  };
 	  watchID = navigator.geolocation.watchPosition(update_dom, showError, options);
+    // preload "CM found" audio
       document.getElementById('chime-audio').play(); 
       document.getElementById('chime-audio').pause(); 
       document.getElementById('chime-audio').currentTime = 0;
+    // preload error audio
+    document.getElementById('warn-audio').play(); 
+    document.getElementById('warn-audio').pause(); 
+    document.getElementById('warn-audio').currentTime = 0;
+    // check for stale data every 5 seconds
     staleIntID = setInterval(stale_check, 5000);
 	  return watchID;
 	} else {
@@ -380,6 +386,10 @@ function test_rallye() {
   document.getElementById('chime-audio').play(); 
   document.getElementById('chime-audio').pause(); 
   document.getElementById('chime-audio').currentTime = 0;
+
+  document.getElementById('warn-audio').play(); 
+  document.getElementById('warn-audio').pause(); 
+  document.getElementById('warn-audio').currentTime = 0;
 
   for (let i = 0; i < locs.length; i++) {
   	setTimeout(function() {

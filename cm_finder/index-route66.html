@@ -22,6 +22,14 @@
       .warning h3 {
         font-size: 2.5em;
       }
+      #start-button button {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        padding: 7px;
+        background-color: deepskyblue;
+      }
     </style>
   </head>
 <body style="background-color: black; color: deepskyblue;">
@@ -41,15 +49,17 @@
 </div>
 
 <div id="start-button">
-  <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button>
+  <!-- <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button> -->
+  <h1 style="text-align: center; font-size: 3em;">GPS Coursemarker Tracking (Winters)</h1>
+  <h2 style="text-align: left; font-size: 1.9em;">When you're ready to leave the parking lot, click the button below to begin searching for CMs:</h2>
   <br />
   <br />
   <br />
-  <button type="button" onclick="watchLocation()" style="font-size: 3em;">Try location tracking</button>
+  <button type="button" onclick="watchLocation()" style="font-size: 3em;">Start the Rallye</button>
   <br />
   <br />
   <br />
-  <button type="button" onclick="test_log_rallye()" style="font-size: 3em;">Run a logged test!</button>
+  <button type="button" onclick="test_log_rallye()" style="margin-top: 100px; font-size: 3em;">Run a logged test!</button>
 </div>
 
 <div id="searching" style="display: none;">

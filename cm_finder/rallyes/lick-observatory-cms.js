@@ -500,5 +500,5 @@ var prev_loc = {coords: {latitude: 37.373407, longitude:  -122.082302}};
 var prev_hdng = 5;
 
 window.onload = function() {
-  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-05-21";
+  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-06-08";
 }

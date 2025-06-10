@@ -25,8 +25,8 @@ function watchLocation() {
     staleIntID = setInterval(stale_check, 5000);
 	  return watchID;
 	} else {
-      var x = document.getElementById("demo");
-	  x.innerHTML = "Geolocation is not supported by this browser.";
+    var x = document.getElementById("demo");
+	  x.innerHTML = "<CENTER><H1 style=\"font-size: 3.5em;\">Geolocation is not supported by this browser.</H1></CENTER>";
 	  return null;
 	}
 }
@@ -41,20 +41,22 @@ function watchLocation() {
   
   function showError(error) {
     var x = document.getElementById("demo");
-	switch(error.code) {
-	  case error.PERMISSION_DENIED:
-		x.innerHTML = "User denied the request for Geolocation."
-		break;
-	  case error.POSITION_UNAVAILABLE:
-		x.innerHTML = "Location information is unavailable."
-		break;
-	  case error.TIMEOUT:
-		x.innerHTML = "The request to get user location timed out."
-		break;
-	  case error.UNKNOWN_ERROR:
-		x.innerHTML = "An unknown error occurred."
-		break;
-	}
+    var err_msg = "An unknown error occurred."
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        err_msg = "User denied the request for Geolocation."
+      break;
+      case error.POSITION_UNAVAILABLE:
+        err_msg = "Location information is unavailable."
+      break;
+      case error.TIMEOUT:
+        err_msg = "The request to get user location timed out."
+      break;
+      case error.UNKNOWN_ERROR:
+        err_msg = "An unknown error occurred."
+      break;
+    }
+    x.innerHTML = "<CENTER><H1 style=\"font-size: 3.5em;\">" + err_msg + "</H1></CENTER>"
   }
 
 

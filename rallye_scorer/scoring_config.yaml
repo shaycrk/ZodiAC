@@ -1,0 +1,201 @@
+
+Initial On Course:
+  - {points: 10, all: {cm_R: 66}}
+Lane Doesn't Exist on Signs:
+  - {points: 10, all: {cm_GG: 18}}
+Bad SUPP 18:
+  - {points: 10, all: {cm_V: 43}}
+Tee Not Defined:
+  - {points: 10, all: {cm_NN: 20}}
+DR I Undefined:
+  - {points: 10, all: {cm_G: 37}}
+Hanging SUPP 20:
+  - {points: 0, all: {cm_CCC: 9, cm_JJ: 36}}
+  - {points: 20, all: {cm_CCC: 9}}
+  - {points: 10, all: {cm_JJ: 36}}
+Physical CM:
+  - {points: 10, all: {cm_L: 14}}
+First CP:
+  - {points: 60, all: {CP_1: True}}
+Correctly Entered First CP:
+  - {points: 10, all: {CP_2: True}}
+No RIs Executed Yet:
+  - {points: 10, all: {CP_4: True}}
+Executed On Course:
+  - {points: 10, all: {CP_5: True}}
+Chocolate:
+  - {points: 10, all: {CP_6: True}}
+Second On Course:
+  - {points: 10, all: {cm_F: 2}}
+Op not defined:
+  - {points: 10, all: {cm_CC: 48}}
+Speed Bumps:
+  - {points: 10, all: {cm_P: 23}}
+Bad RI 'place of worship':
+  - {points: 10, all: {cm_HHH: 47}}
+Skipping Church:
+  - {points: 10, all: {cm_GM: 35}}
+Flipped CM:
+  - {points: 20, all: {cm_WW: 38}}
+  - {points: 10, all: {cm_MM: 38}}
+Flipped VIEW not a word:
+  - {points: 0, multi: {cm_B: 8, cm_EE: 3, cm_I: 88}}
+  - {points: 20, all: {cm_B: 8}}
+  - {points: 10, all: {cm_EE: 3}}
+  - {points: 5, all: {cm_I: 88}}
+Onto HObE:
+  - {points: 10, all: {cm_BB: 33}}
+41st US President:
+  - {points: 10, all: {cm_II: 30}}
+Weight Limit:
+  - {points: 10, all: {cm_O: 40}}
+Anza On Course (Unscored):
+  - {points: 0, all: {cm_XX: 39}}
+Skipping Church (again):
+  - {points: 0, multi: {cm_RR: 45, cm_PP: 16}}
+  - {points: 10, any: {cm_RR: 45, cm_PP: 16}}
+Taking no chances:
+  - {points: 10, all: {cm_AAA: 10}}
+DG After chance:
+  - {points: 20, all: {cm_T: 15}}
+Reaching the Summit (on course):
+  - {points: 10, all: {cm_FT: 4265}}
+Centre Misspelled:
+  - {points: 10, all: {cm_CA: 12}}
+Celebrate:
+  - {points: 10, all: {cm_UU: 24}}
+Teapot Asterism (on course):
+  - {points: 10, all: {cm_GC: 25100}}
+Moon (Beam):
+  - {points: 20, all: {cm_Y: "", cm_Z: 1969, Zodiac_1969: True}}
+  - {points: 10, all: {cm_Y: "", cm_Z: 1969, Zodiac_1969: False}}
+  - {points: 15, all: {cm_Y: 11, cm_Z: 1969, Zodiac_1969: True}}
+  - {points: 10, all: {cm_Y: 11, cm_Z: 1969, Zodiac_1969: False}}
+  - {points: 5, all: {cm_Y: 11, cm_Z: "", Zodiac_1969: False}}
+Starlite and Hanging RI (Center):
+  - {points: 0, all: {cm_C: 27, cm_OO: 52}}
+  - {points: 0, all: {cm_NV: 49, cm_OO: 52}}
+  - {points: 20, all: {cm_C: 27, cm_NV: 49}}
+  - {points: 10, any: {cm_C: 27, cm_NV: 49}}
+  - {points: 5, all: {cm_OO: 52}}
+Onto San (Starlite):
+  - {points: -30, all: {cm_III: 26, cm_EEE: 42}}
+  - {points: -30, all: {cm_III: 26, cm_MMM: 34}}
+  - {points: 10, all: {cm_III: 26}}
+  - {points: 20, all: {cm_EEE: 42, cm_MMM: 34}}
+  - {points: 30, all: {cm_EEE: 42}}
+  - {points: 15, all: {cm_MMM: 34}}
+On Course (San Lucas):
+  - {points: 10, all: {cm_J: 32}}
+San Becomes San Lucas:
+  - {points: -50, all: {cm_UUU: 56, cm_MMM: 34}}
+  - {points: -50, all: {cm_UUU: 56, cm_III: 26}}
+  - {points: -50, all: {cm_SSS: 51, cm_MMM: 34}}
+  - {points: -50, all: {cm_SSS: 51, cm_III: 26}}
+  - {points: 0, all: {cm_UUU: 56, cm_SSS: 51}}
+  - {points: 20, all: {cm_UUU: 56}}
+  - {points: 10, all: {cm_SSS: 51}}
+On Not Defined:
+  - {points: 10, all: {cm_PPP: 50}}
+Unlettered SUPP 50:
+  - {points: 10, all: {cm_TTT: 57}}
+Gemini On Course:
+  - {points: 20, all: {cm_QQ: 55}}
+  - {points: 10, all: {cm_Q: 5}}
+Everything Following at (also, Gemini):
+  - {points: 10, all: {cm_KK: 44}}
+  - {points: 5, all: {cm_K: 4}}
+Completed vs Executed (Gemini):
+  - {points: 10, all: {cm_DD: 77}}
+  - {points: 0, all: {cm_D: 7}}
+Gemini Over (On Course):
+  - {points: 10, all: {cm_H: 54}}
+  - {points: 0, all: {cm_HH: 5454}}
+At Symbol and Polaris:
+  - {points: -20, all: {cm_N: 72, cm_BBB: 63}}
+  - {points: 5, all: {cm_N: 72, cm_W: 60}}
+  - {points: 10, all: {cm_BBB: 63, cm_W: 60}}
+  - {points: 15, all: {cm_BBB: 63}}
+  - {points: 20, all: {cm_N: 72}}
+Onto at FT:
+  - {points: 0, all: {cm_AA: 28, cm_A: 41}}
+  - {points: 10, all: {cm_AA: 28}}
+  - {points: 5, all: {cm_A: 41}}
+Second CP:
+  - {points: 60, all: {CP_8: True}}
+Last Executed RI Not 29:
+  - {points: 10, all: {CP_9: True}}
+Asked for Tea at CP:
+  - {points: 10, all: {CP_12: True}}
+Asked for Horoscope at CP:
+  - {points: 10, all: {CP_13: True}}
+FISH - Asked for Ladel at CP:
+  - {points: -50, all: {CP_14: True}}
+R at Clark:
+  - {points: 10, all: {cm_QQQ: 62}}
+Hanging SUPP from Clark:
+  - {points: 5, all: {cm_LL: 29}}
+On Course (M 87):
+  - {points: 10, all: {cm_M: 87}}
+U after M 87:
+  - {points: 10, all: {cm_NNN: 53}}
+No DZ in SUPP 53:
+  - {points: 10, all: {cm_IL: 64}}
+S Not on Signs:
+  - {points: 10, all: {cm_GGG: 65}}
+Intersection Definition (Polaris):
+  - {points: 10, all: {cm_WWW: 68}}
+R at Clark (Again):
+  - {points: 5, all: {cm_JJJ: 70}}
+Stardust:
+  - {points: 0, all: {cm_XU: 61}}
+  - {points: 10, all: {cm_X: 6, cm_U: 1}}
+  - {points: 5, any: {cm_X: 6, cm_U: 1}}
+R at Clark (Yet Again):
+  - {points: 5, all: {cm_SS: 19}}
+R at Clark (One Last Time):
+  - {points: 5, all: {cm_OOO: 67}}
+The End of Clark:
+  - {points: 0, multi: {cm_TT: 17, cm_VV: 22, cm_FFF: 75, cm_LLL: 69, cm_VVV: 31}}
+  - {points: 30, all: {cm_TT: 17}}
+  - {points: 20, all: {cm_FFF: 75}}
+  - {points: 15, all: {cm_VV: 22}}
+  - {points: 10, all: {cm_VVV: 31}}
+  - {points: 5, all: {cm_LLL: 69}}
+You Found Extraterrestrial Intelligence (ET 73):
+  - {points: 10, all: {cm_ET: 73}}
+Scoresheet Date is 1886:
+  - {points: 10, all: {Date_1886: True}}
+Captain Floyd on Your Passenger List:
+  - {points: 10, all: {Passenger_Floyd: True}}
+James Lick Joins the Ride:
+  - {points: 10, all: {Passenger_Lick: True, CP_7: True}}
+  - {points: 5, all: {Passenger_Lick: True, CP_7: False}}
+Sunshine (Happy Face Next to Driver):
+  - {points: 10, all: {Sunshine: True}}
+Finishing the Rallye:
+  - {points: 160, all: {Finished: True}}
+FISH - E 74:
+  - {points: -20, all: {cm_E: 74}}
+FISH - AB 80:
+  - {points: -20, all: {cm_AB: 80}}
+FISH - S 78 (WAY Off Course):
+  - {points: -50, all: {cm_S: 78}}
+FISH - FF 21:
+  - {points: -20, all: {cm_FF: 21}}
+FISH - MT 25:
+  - {points: -20, all: {cm_MT: 25}}
+  - {points: -20, all: {cm_MTMT: 2525}}
+FISH - RRR 58 (WAY Off Course):
+  - {points: -50, all: {cm_RRR: 58}}
+FISH - DDD 777 (Betelgeuse):
+  - {points: -50, all: {cm_DDD: 777}}
+FISH - HR 2061 (ZodiAC Catalog):
+  - {points: -50, all: {cm_HR: 2061}}
+FISH - M 13 (ZodiAC Catalog):
+  - {points: -50, all: {cm_M: 13}}
+FISH - GC 15185 (ZodiAC Catalog):
+  - {points: -50, all: {cm_GC: 15185}}
+
+
+

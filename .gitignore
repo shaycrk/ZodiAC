@@ -1,2 +1,3 @@
 .DS_Store
 rallye_scorer/rallye_results/*
+rallye_scorer/*.png

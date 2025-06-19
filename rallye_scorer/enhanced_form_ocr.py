@@ -435,7 +435,7 @@ def collect_other_fields():
     for i in signed_cps:
         other_fields[i] = True
 
-    other_fields['Zodiac_1969'] = input("Is 1969 Written next to the Z in? (y/n): ") == 'y'
+    other_fields['Zodiac_1969'] = input("Is 1969 Written next to the Z in ZodiAC? (y/n): ") == 'y'
     other_fields['Date_1886'] = input("Is the date December 27, 1886? (y/n): ") == 'y'
     other_fields['Passenger_Floyd'] = input("Is Richard Floyd on the passenger list? (y/n): ") == 'y'
     other_fields['Passenger_Lick'] = input("Is James Lick on the passenger list? (y/n): ") == 'y'

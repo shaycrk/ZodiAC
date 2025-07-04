@@ -68,4 +68,5 @@ const CMs = [
 
 var prev_loc = {coords: {latitude: 38.527018, longitude:  -121.962852}};
 var prev_hdng = 245;
+const LOGGING = true;
 

@@ -299,7 +299,7 @@ function update_dom(location) {
 
     var nearest_cm = find_cms(location, hdng);
 
-    if (tracking_log.length < MAX_LOG) { 
+    if ((LOGGING) && (tracking_log.length < MAX_LOG)) { 
         tracking_log.push(location);
         // JSON.stringify of the tracked locations giving empty elements on the iphone,
         // so try just dumping directly to the DOM...

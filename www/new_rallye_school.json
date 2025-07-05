@@ -1,0 +1,173 @@
+{
+  "rallyeName": "Rallye School",
+  "gridOffset": 0,
+  "generalsURL": "new_rallye_school/generals.pdf",
+  "routeURL": "new_rallye_school/route.pdf",
+  "suppsURL": "new_rallye_school/supps.pdf",
+  "rallye_start": {
+    "lat": 37.373442423726964,
+    "lng": -122.08229391512857,
+    "heading": "0"
+  },
+  "rallye_end": {
+    "lat": 37.37414246424056,
+    "lng": -122.09404781062536,
+    "heading": "270"
+  },
+  "courseMarkers": [
+    [
+      37.37394423252047,
+      -122.0914097034193,
+      "O\n9",
+      "0"
+    ],
+    [
+      37.37405080877918,
+      -122.08869731131898,
+      "P\n31",
+      "90"
+    ],
+    [
+      37.37415099032429,
+      -122.09081625644075,
+      "I\n4",
+      "270"
+    ],
+    [
+      37.374700920678116,
+      -122.0891742368453,
+      "Z\n15",
+      "90"
+    ],
+    [
+      37.37583274139241,
+      -122.09037318427495,
+      "D\n2",
+      "0"
+    ],
+    [
+      37.37578371749686,
+      -122.09132805068425,
+      "II\n6",
+      "180"
+    ],
+    [
+      37.37652546692577,
+      -122.09470226962499,
+      "A\n10",
+      "270"
+    ],
+    [
+      37.37546825861997,
+      -122.09518506724767,
+      "C\n3",
+      "180"
+    ],
+    [
+      37.37641463127037,
+      -122.09243312079839,
+      "U\n1",
+      "90"
+    ],
+    [
+      37.37706014340464,
+      -122.09119999851283,
+      "F\n13",
+      "0"
+    ],
+    [
+      37.376504152389366,
+      -122.09217026431493,
+      "QQ\n5",
+      "270"
+    ]
+  ],
+  "checkpoints": [],
+  "score_values": [
+    {
+      "includeCMs": [
+        "O9"
+      ],
+      "value": 10,
+      "reason": "On course"
+    },
+    {
+      "includeCMs": [
+        "P31"
+      ],
+      "value": 10,
+      "reason": "RI2 was misspelled: DukeS not Duke"
+    },
+    {
+      "includeCMs": [
+        "I4"
+      ],
+      "value": 10,
+      "reason": "The supp for P31 told you to go 'L @ Duke' but '@' isn't defined"
+    },
+    {
+      "includeCMs": [
+        "Z15"
+      ],
+      "value": 10,
+      "reason": "U to stay onto Jefferson when it changes names to Lee"
+    },
+    {
+      "includeCMs": [
+        "D2"
+      ],
+      "value": 10,
+      "reason": "Essentially an on course marker but sets up the parallel signs gimmick"
+    },
+    {
+      "includeCMs": [
+        "II6"
+      ],
+      "value": 20,
+      "reason": "Execute the 'L at Tulane' from the RI at the parallel sign"
+    },
+    {
+      "includeCMs": [
+        "QQ5"
+      ],
+      "value": 10,
+      "reason": "On course (CRI 5)"
+    },
+    {
+      "includeCMs": [
+        "A10"
+      ],
+      "value": 10,
+      "reason": "Can't turn at Yale because 'a' no longer exists on signs (so the sign reads 'Yle' instead)"
+    },
+    {
+      "includeCMs": [
+        "C3"
+      ],
+      "value": 20,
+      "reason": "The letter 'A' also doesn't exist on the CM, so can't record A10 and pick this up instead"
+    },
+    {
+      "includeCMs": [
+        "A10",
+        "C3"
+      ],
+      "value": -40,
+      "reason": "Can't have both A10 and C3"
+    },
+    {
+      "includeCMs": [
+        "U1"
+      ],
+      "value": 20,
+      "reason": "C3 (or A10) told you to turn at Yale, but the GI deleting 'a' from signs is still in effect"
+    },
+    {
+      "includeCMs": [
+        "F13"
+      ],
+      "value": -50,
+      "reason": "Fish"
+    }
+  ]
+}

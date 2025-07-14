@@ -95,7 +95,7 @@ San Becomes San Lucas:
   - {points: 0, all: {cm_UUU: 56, cm_SSS: 51}}
   - {points: 20, all: {cm_UUU: 56}}
   - {points: 10, all: {cm_SSS: 51}}
-On Not Defined:
+San Simeon Misspelled:
   - {points: 10, all: {cm_PPP: 50}}
 Unlettered SUPP 50:
   - {points: 10, all: {cm_TTT: 57}}

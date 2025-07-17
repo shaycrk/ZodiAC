@@ -102,12 +102,15 @@ Unlettered SUPP 50:
 Gemini On Course:
   - {points: 20, all: {cm_QQ: 55}}
   - {points: 10, all: {cm_Q: 5}}
+  - {points: 12, any: {cm_Q: 55, cm_QQ: 5}}
 Everything Following at (also, Gemini):
   - {points: 10, all: {cm_KK: 44}}
   - {points: 5, all: {cm_K: 4}}
+  - {points: 7, any: {cm_K: 44, cm_KK: 4}} 
 Completed vs Executed (Gemini):
   - {points: 10, all: {cm_DD: 77}}
   - {points: 0, all: {cm_D: 7}}
+  - {points: 5, any: {cm_D: 77, cm_DD: 7}}
 Gemini Over (On Course):
   - {points: 10, all: {cm_H: 54}}
   - {points: 0, all: {cm_HH: 5454}}

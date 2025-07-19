@@ -205,10 +205,10 @@ const CMs = [
       90
     ],
     [
-      37.40265489552621,
-      -122.08120418030352,
+      37.402336034852404,
+      -122.08017171007428,
       "BBB\n63",
-      90
+      115
     ],
     [
       37.406321461186785,
@@ -403,10 +403,10 @@ const CMs = [
       285
     ],
     [
-      37.401010609235165,
-      -122.08732389058201,
+      37.4012556459265,
+      -122.0883231573998,
       "MT\n25",
-      285
+      290
     ],
     [
       37.405734279695196,
@@ -501,5 +501,5 @@ var prev_hdng = 5;
 const LOGGING = false;
 
 window.onload = function() {
-  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-07-03";
+  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-07-19";
 }

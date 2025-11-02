@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CM Finder</title>
+    <style>
+      #marker-text {
+        border-color: lightblue;
+        border-width: medium;
+        border-style: solid;
+        color: navy;
+        background-color: deepskyblue;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        margin-left: 25px;
+        margin-right: 25px;
+        border-radius: 20px;
+        font-size: 5.75em;
+      }
+      .warning h2 {
+        font-size: 3.5em;
+      }
+      .warning h3 {
+        font-size: 3em;
+      }
+      #start-button button {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        padding: 7px;
+        background-color: deepskyblue;
+        color: black;
+      }
+    </style>
+</head>
+<body style="background-color: black; color: deepskyblue;">
+
+<script src="rallyes/wicked-cms.js?ver=20251101"></script>
+<script src="cm_finder.js?ver=20251101"></script>
+
+<div id="warn-stale" class="warning" style="display: none; background-color: firebrick; color: white; padding-left: 5px; padding-right: 5px;">
+  <h2>Warning: Stale location data!</h2>
+  <h3>Location data has not been updated in more than <span id="update-time">7</span> seconds. If the data does not update soon, consider reloading and ensure you allowed access to location data.</h3>
+</div>
+
+<div id="warn-accuracy" class="warning" style="display: none; background-color: goldenrod; color: black; padding-left: 5px; padding-right: 5px;">
+  <h2>Warning: Degraded location accuracy!</h2>
+  <h3>You may want to wait a few seconds for accuracy to improve and revisit the current section of the route.</h3>
+</div>
+
+<div id="start-button">
+  <!-- <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button> -->
+  <h1 style="text-align: center; font-size: 3.5em;">GPS Coursemarker Tracking (Cris Testing!)</h1>
+  <h2 style="text-align: left; font-size: 2.3em;">When you're ready to leave the parking lot, click the button below to begin searching for CMs:</h2>
+  <br />
+  <br />
+  <br />
+  <button type="button" onclick="watchLocation()" style="font-size: 3.5em;">Start the Rallye</button>
+  <div style="text-align: left; font-size: 1.5em; margin-top: 10em;" id="cms-ver">.</div>
+</div>
+
+<div id="searching" style="display: none;">
+  <h1 style="text-align: center; font-size: 3.5em;">Searching for Coursemarkers...</h1>
+  <br />
+  <!-- <img src="https://media1.tenor.com/m/8Juj0k-1L4AAAAAd/radar-love-search.gif" width="75%"> -->
+  <!-- <img src="https://cdn.dribbble.com/users/568/screenshots/2937224/browserpreview_tmp.gif" width="100%"> -->
+  <img src="radar_sweep.gif" width="100%">
+  <div id="lastcm" style="font-size: 4.5em;">
+    Last CM Seen:
+  </div>
+  <div id="search-pos" style="font-size: 2em;">
+    Current Position
+  </div>
+</div>
+
+<div id="demo" style="display: none;">
+  Initializing...
+</div>
+
+<div id="log-button" style="display: none;">
+  <br />
+  <br />
+  <br />
+  <!-- <button type="button" onclick="show_log()" style="font-size: x-large;">Show tracking log</button>  -->
+</div>
+
+<div id="tracking-log" style="display: none;"></div>
+
+<audio preload="auto" id="chime-audio">
+  <source src="chime.mp3" type="audio/mpeg">
+</audio>
+
+<audio preload="auto" id="warn-audio">
+  <source src="beeps3.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>

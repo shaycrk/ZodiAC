@@ -356,5 +356,5 @@ var prev_hdng = 5;
 const LOGGING = false;
 
 window.onload = function() {
-  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-11-05";
+  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-11-09";
 }

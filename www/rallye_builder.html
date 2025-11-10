@@ -982,6 +982,12 @@ function handleObject(confirm=false) {
     return false;
   }
 
+  // aside from newline, other special characters are not allowed in labels
+  if (label.match(/[^a-zA-Z0-9\n]/)) {
+    showError('ERROR: Labels can only contain letters, numbers, and newlines!');
+    return false;
+  }
+
   if (currMarker) {
     currMarker.setVisible(false);
     currMarker = null;

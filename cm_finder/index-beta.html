@@ -39,6 +39,12 @@
   const urlParams = new URLSearchParams(window.location.search);
   const rallyeID = urlParams.get('rallye');
   const cacheBust = '?ver=20251109';
+  const rallyeDict = {
+    'wicked': {'script': 'wicked-cms.js', 'name': 'Wicked Rallye (Cris Testing!)'},
+    'route-66': {'script': 'route66-cms.js', 'name': 'Get Your Kicks on Route 66 (Nov 2018)'},
+    'lick-observatory': {'script': 'lick-observatory-cms.js', 'name': 'The Search for Terrestrial Intelligence (Aug 2025)'}
+  }
+  const defaultRallye = 'wicked';
 
   function loadScript(src) {
     const script = document.createElement('script');
@@ -49,23 +55,23 @@
     document.body.appendChild(script); 
   }
 
-  // Load the appropriate javascript file based on the rallye ID
-  switch (rallyeID) {
-    case 'wicked':
-      loadScript('rallyes/wicked-cms.js' + cacheBust);
-      break;
-    case 'route-66':
-      loadScript('rallyes/route66-cms.js' + cacheBust);
-      break;
-    case 'lick-observatory':
-      loadScript('rallyes/lick-observatory-cms.js' + cacheBust);
-      break;
-    default:
+  function setRallye() {
+    // Load the appropriate javascript file based on the rallye ID
+    if (rallyeID === null) {
+      rallyeID = defaultRallye;
+    }
+    if (rallyeID in rallyeDict) {
+      loadScript('rallyes/' + rallyeDict[rallyeID].script + cacheBust);
+      document.getElementById('rallye-name').innerHTML = rallyeDict[rallyeID].name;
+    } else {
+      // If the rallye ID is invalid, show an error message
       alert('Invalid rallye ID: ' + rallyeID);
-      window.onload = function() {
-        document.getElementById('start-button').innerHTML = '<h1 style="text-align: center; font-size: 3.5em;">Invalid rallye ID: ' + rallyeID + '</h1>';
-      }
-      break;
+      document.getElementById('start-button').innerHTML = '<h1 style="text-align: center; font-size: 3.5em;">Invalid rallye ID: ' + rallyeID + '</h1>';
+    }
+  }
+
+  window.onload = function() {
+    setRallye();
   }
 </script>
 <script src="cm_finder_beta.js?ver=20251109"></script>
@@ -82,7 +88,8 @@
 
 <div id="start-button">
   <!-- <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button> -->
-  <h1 style="text-align: center; font-size: 3.5em;">GPS Coursemarker Tracking (Cris Testing!)</h1>
+  <h1 style="text-align: center; font-size: 3.5em;">GPS Coursemarker Tracking</h1>
+  <h2 style="text-align: center; font-size: 2.3em;">Rallye: <span id="rallye-name"></span></h2>
   <h2 style="text-align: left; font-size: 2.3em;">When you're ready to leave the parking lot, click the button below to begin searching for CMs:</h2>
   <br />
   <br />

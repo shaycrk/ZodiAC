@@ -982,9 +982,9 @@ function handleObject(confirm=false) {
     return false;
   }
 
-  // aside from newline, other special characters are not allowed in labels
-  if (label.match(/[^a-zA-Z0-9\n]/)) {
-    showError('ERROR: Labels can only contain letters, numbers, and newlines!');
+  // aside from newline and space, other special characters are not allowed in labels
+  if (label.match(/[^a-zA-Z0-9\n ]/)) {
+    showError('ERROR: Labels can only contain letters, numbers, newlines, and spaces!');
     return false;
   }
 
@@ -1002,7 +1002,7 @@ function handleObject(confirm=false) {
     case 'cm':
       label = label.toUpperCase();
       if (courseMarkers[label]) {
-        showError('ERROR: Course marker '+label+' already exists!');
+        showError('ERROR: CM '+label+' already exists! (hint: consider adding a space in the name)');
       } else if (!label) {
         showError('ERROR: Must specify a label for the course marker');
       } else {

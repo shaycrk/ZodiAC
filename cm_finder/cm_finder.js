@@ -1,8 +1,9 @@
 
 var watchID;
 var staleIntID;
+let wakeLock = null;
 
-function watchLocation() {
+async function watchLocation() {
     document.getElementById("start-button").setAttribute("style", "display: none;");
     document.getElementById("log-button").setAttribute("style", "display: block;");
     document.getElementById("demo").setAttribute("style", "display: block;");
@@ -23,6 +24,11 @@ function watchLocation() {
     document.getElementById('warn-audio').currentTime = 0;
     // check for stale data every 5 seconds
     staleIntID = setInterval(stale_check, 5000);
+    try {
+      wakeLock = await navigator.wakeLock.request('screen');
+    } catch (err) {
+      console.error(`${err.name}, ${err.message}`);
+    }
 	  return watchID;
 	} else {
     var x = document.getElementById("demo");
@@ -30,6 +36,20 @@ function watchLocation() {
 	  return null;
 	}
 }
+
+function releaseWakeLock() {
+  if (wakeLock !== null) {
+    wakeLock.release();
+    wakeLock = null;
+  }
+}
+
+// Reacquire wake lock if released due to visibility change
+document.addEventListener('visibilitychange', async () => {
+  if (wakeLock !== null && document.visibilityState === 'visible') {
+    await navigator.wakeLock.request('screen');
+  }
+});
 
 function testSound() {
   document.getElementById('chime-audio').play();

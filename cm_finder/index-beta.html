@@ -31,18 +31,36 @@
         background-color: deepskyblue;
         color: black;
       }
+      #start-button select {
+        font-size: 2.9em;
+        padding: 7px;
+        margin-top: 3.5em;
+        margin-left: 25px;
+        margin-right: 25px;
+        background-color: deepskyblue;
+        border-color: white;
+        border-width: medium;
+        color: black;
+      }
+      #cms-ver {
+        text-align: left;
+        font-size: 1.5em;
+        margin-top: 10em;
+        border-bottom: 2px solid skyblue;
+        padding-bottom: 7px;
+      }
     </style>
 </head>
 <body style="background-color: black; color: deepskyblue;">
 
 <script>
   const urlParams = new URLSearchParams(window.location.search);
-  const rallyeID = urlParams.get('rallye');
+  let rallyeID = urlParams.get('rallye');
   const cacheBust = '?ver=20251109';
   const rallyeDict = {
-    'wicked': {'script': 'wicked-cms.js', 'name': 'Wicked Rallye (Cris Testing!)'},
-    'route-66': {'script': 'route66-cms.js', 'name': 'Get Your Kicks on Route 66 (Nov 2018)'},
-    'lick-observatory': {'script': 'lick-observatory-cms.js', 'name': 'The Search for Terrestrial Intelligence (Aug 2025)'}
+    'wicked': {'script': 'wicked-cms.js', 'name': 'Wicked Rallye (Cris Testing!)', 'short_name': 'Wicked'},
+    'route-66': {'script': 'route66-cms.js', 'name': 'Get Your Kicks on Route 66 (Nov 2018)', 'short_name': 'Route 66 (Nov 2018)'},
+    'lick-observatory': {'script': 'lick-observatory-cms.js', 'name': 'The Search for Terrestrial Intelligence (Aug 2025)', 'short_name': 'Lick Observatory (Aug 2025)'}
   }
   const defaultRallye = 'wicked';
 
@@ -70,8 +88,26 @@
     }
   }
 
+  function doReload() {
+    const url = new URL(window.location.href);
+    url.searchParams.set('rallye', document.getElementById('rallye-select').value);
+    window.location.href = url.href;
+  }
+
+  // Populate the rallye select with the rallye IDs
+  function populateRallyeSelect() {
+    const rallyeSelect = document.getElementById('rallye-select');
+    for (const rallyeID in rallyeDict) {
+      const option = document.createElement('option');
+      option.value = rallyeID;
+      option.innerHTML = rallyeDict[rallyeID].short_name;
+      rallyeSelect.appendChild(option); 
+    }
+  }
+
   window.onload = function() {
     setRallye();
+    populateRallyeSelect();
   }
 </script>
 <script src="cm_finder_beta.js?ver=20251109"></script>
@@ -89,16 +125,20 @@
 <div id="start-button">
   <!-- <button type="button" onclick="test_rallye()" style="font-size: 3em;">Run a test rallye!</button> -->
   <h1 style="text-align: center; font-size: 3.5em;">GPS Coursemarker Tracking</h1>
-  <h2 style="text-align: center; font-size: 2.3em;">Rallye: <span id="rallye-name"></span></h2>
+  <h2 style="text-align: center; font-size: 2.3em; color: white;">Rallye: <span id="rallye-name"></span></h2>
   <h2 style="text-align: left; font-size: 2.3em;">When you're ready to leave the parking lot, click the button below to begin searching for CMs:</h2>
   <br />
   <br />
   <br />
   <button type="button" onclick="watchLocation()" style="font-size: 3.5em;">Start the Rallye</button>
-  <div style="text-align: left; font-size: 1.5em; margin-top: 10em;" id="cms-ver">.</div>
+  <div id="cms-ver">.</div>
   <br />
   <br />
-  <button type="button" onclick="testSound()" style="font-size: 3.5em;">Test Sound</button>
+  <button type="button" onclick="testSound()" style="font-size: 3.5em; margin-top: 0.2em;">Test Sound</button>
+  <br />
+  <select id="rallye-select" onchange="doReload()">
+    <option value="default" disabled selected>Looking for a different rallye?</option>
+  </select>
 </div>
 
 <div id="searching" style="display: none;">

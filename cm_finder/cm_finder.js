@@ -30,7 +30,11 @@ function watchLocation() {
 	  return null;
 	}
 }
-  
+
+function testSound() {
+  document.getElementById('chime-audio').play();
+}
+
 function showPosition(position) {
   var x = document.getElementById("demo");
   x.innerHTML = "Latitude: " + position.coords.latitude +

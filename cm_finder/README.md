@@ -11,6 +11,10 @@ Note that the geolocation feature may require HTTPS hosting (which S3 provides) 
 https://cdn.pixabay.com/download/audio/2022/03/24/audio_d1caf45e80.mp3?filename=subway-station-chime-100558.mp3)
 - [Warning Alert](https://freesound.org/people/azumarill/sounds/395213/?
 https://cdn.freesound.org/sounds/395/395213-deb4277f-6af2-4cb7-a4e6-5c4723b606de?filename=395213__azumarill__door-chime.wav)
-- [Meep Meep](https://freesound.org/people/Benboncan/sounds/82481/?
-https://cdn.freesound.org/sounds/82/82481-a065a9f9-e0a8-4946-bd41-26b18be9949b?filename=82481__benboncan__meeb-meeb.wav)
 - [Radar Image](https://cdn.dribbble.com/users/568/screenshots/2937224/browserpreview_tmp.gif)
+- [Meep Meep](https://freesound.org/people/Benboncan/sounds/82481/)
+- [Vintage Bike Horn](https://freesound.org/people/egomassive/sounds/536804/)
+- [Ahooga](https://freesound.org/people/Timbre/sounds/483639/)
+- [Frog](https://freesound.org/people/egomassive/sounds/536759/)
+- [Owl](https://freesound.org/people/Gerent/sounds/558396/)
+

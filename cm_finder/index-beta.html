@@ -136,7 +136,13 @@
   <br />
   <button type="button" onclick="testSound()" style="font-size: 3.5em; margin-top: 0.2em;">Test Sound</button>
   <br />
-  <select id="rallye-select" onchange="doReload()">
+  <select id="alert-select" onchange="updateAlert()">
+    <option value="default" disabled selected>Want a different alert sound?</option>
+    <option value="chime-audio">Ding-Dong</option>
+    <option value="meep-audio">Meep Meep</option>
+  </select>
+  <br />
+  <select id="rallye-select" style="margin-top: 2.0em" onchange="doReload()">
     <option value="default" disabled selected>Looking for a different rallye?</option>
   </select>
 </div>
@@ -174,6 +180,10 @@
 
 <audio preload="auto" id="warn-audio">
   <source src="beeps3.mp3" type="audio/mpeg">
+</audio>
+
+<audio preload="auto" id="meep-audio">
+  <source src="meepmeep.mp3" type="audio/mpeg">
 </audio>
 
 </body>

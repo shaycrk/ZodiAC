@@ -96,12 +96,6 @@ const CMs = [
       10
     ],
     [
-      37.373036239313166,
-      -122.08245016045849,
-      "OZ\n31",
-      280
-    ],
-    [
       37.416857878386665,
       -122.09819984304636,
       "EE\n62",
@@ -210,18 +204,6 @@ const CMs = [
       300
     ],
     [
-      37.40322559283612,
-      -122.08518475432855,
-      "W\n99",
-      100
-    ],
-    [
-      37.402839319276566,
-      -122.08432108302576,
-      "K\n38",
-      280
-    ],
-    [
       37.40260600668047,
       -122.0820948495434,
       "C\n57",
@@ -285,6 +267,24 @@ const CMs = [
       37.41234813792263,
       -122.08757803113616,
       "LL\n61",
+      280
+    ],
+    [
+      37.402839319276566,
+      -122.08432108302576,
+      "K\n38",
+      280
+    ],
+    [
+      37.40322559283612,
+      -122.08518475432855,
+      "W\n99",
+      140
+    ],
+    [
+      37.3730619335441,
+      -122.08243295997949,
+      "OZ\n31",
       280
     ],
     // Additional CMs for testing the app (Mountain View):
@@ -355,6 +355,15 @@ var prev_loc = {coords: {latitude: 37.373407, longitude:  -122.082302}};
 var prev_hdng = 5;
 const LOGGING = false;
 
-window.onload = function() {
-  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-11-09";
+// Because this script may be loaded dynamically, we need to either set the cms-ver
+// text if it already exists, or wait for the page to finish loading (just doing the
+// onload doesn't work if the script is loaded after the page has finished loading)
+var cms_ver = document.getElementById("cms-ver");
+const cms_ver_text = "CMs Updated 2025-12-20";
+if (cms_ver) {
+  cms_ver.innerHTML = cms_ver_text;
+} else {
+  window.onload = function() {
+    document.getElementById("cms-ver").innerHTML = cms_ver_text;
+  }
 }

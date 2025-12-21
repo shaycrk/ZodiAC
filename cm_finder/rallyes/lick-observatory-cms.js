@@ -500,6 +500,15 @@ var prev_loc = {coords: {latitude: 37.373407, longitude:  -122.082302}};
 var prev_hdng = 5;
 const LOGGING = false;
 
-window.onload = function() {
-  document.getElementById("cms-ver").innerHTML = "CMs Updated 2025-07-19";
+// Because this script may be loaded dynamically, we need to either set the cms-ver
+// text if it already exists, or wait for the page to finish loading (just doing the
+// onload doesn't work if the script is loaded after the page has finished loading)
+var cms_ver = document.getElementById("cms-ver");
+const cms_ver_text = "CMs Updated 2025-07-19";
+if (cms_ver) {
+  cms_ver.innerHTML = cms_ver_text;
+} else {
+  window.onload = function() {
+    document.getElementById("cms-ver").innerHTML = cms_ver_text;
+  }
 }

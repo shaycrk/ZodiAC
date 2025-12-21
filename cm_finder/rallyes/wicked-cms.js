@@ -359,7 +359,7 @@ const LOGGING = false;
 // text if it already exists, or wait for the page to finish loading (just doing the
 // onload doesn't work if the script is loaded after the page has finished loading)
 var cms_ver = document.getElementById("cms-ver");
-const cms_ver_text = "CMs Updated 2025-11-09";
+const cms_ver_text = "CMs Updated 2025-12-20";
 if (cms_ver) {
   cms_ver.innerHTML = cms_ver_text;
 } else {

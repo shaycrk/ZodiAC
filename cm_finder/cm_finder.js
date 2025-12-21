@@ -3,6 +3,9 @@ var watchID;
 var staleIntID;
 let wakeLock = null;
 
+// Allow for choice of alert sound
+var alertDIV = 'chime-audio';
+
 async function watchLocation() {
     document.getElementById("start-button").setAttribute("style", "display: none;");
     document.getElementById("log-button").setAttribute("style", "display: block;");
@@ -15,9 +18,9 @@ async function watchLocation() {
 	  };
 	  watchID = navigator.geolocation.watchPosition(update_dom, showError, options);
     // preload "CM found" audio
-      document.getElementById('chime-audio').play(); 
-      document.getElementById('chime-audio').pause(); 
-      document.getElementById('chime-audio').currentTime = 0;
+      document.getElementById(alertDIV).play(); 
+      document.getElementById(alertDIV).pause(); 
+      document.getElementById(alertDIV).currentTime = 0;
     // preload error audio
     document.getElementById('warn-audio').play(); 
     document.getElementById('warn-audio').pause(); 
@@ -52,7 +55,15 @@ document.addEventListener('visibilitychange', async () => {
 });
 
 function testSound() {
-  document.getElementById('chime-audio').play();
+  document.getElementById(alertDIV).play();
+}
+
+function updateAlert() {
+  alertDIV = document.getElementById('alert-select').value;
+  if (alertDIV == 'default') {
+    alertDIV = 'chime-audio';
+  }
+  document.getElementById(alertDIV).play();
 }
 
 function showPosition(position) {
@@ -306,8 +317,8 @@ function update_dom(location) {
         if (low_acc_count >= ACCURACY_NUM_THRESH) {
           if (document.getElementById('warn-accuracy').style.display == 'none') {
             document.getElementById('warn-audio').play();
-            // document.getElementById('chime-audio').playbackRate = 7.0; 
-            // document.getElementById('chime-audio').play();
+            // document.getElementById(alertDIV).playbackRate = 7.0; 
+            // document.getElementById(alertDIV).play();
           }
           document.getElementById('warn-accuracy').style.display = 'block';
         }
@@ -337,7 +348,7 @@ function update_dom(location) {
     /*
     // Testing async sound trigger...
     if (('accuracy' in location.coords) && (play_count < 30) && (play_count % 10 == 0)) {
-        document.getElementById('chime-audio').play();
+        document.getElementById(alertDIV).play();
     }
     document.getElementById("play-cnt").innerHTML = "Play Count: " + play_count;
     play_count++;
@@ -359,12 +370,12 @@ function update_dom(location) {
             document.getElementById("searching").setAttribute("style", "display: none;");
             document.getElementById("demo").setAttribute("style", "display: block;");
             
-            //document.getElementById('chime-audio').playbackRate = 1.0;
-            document.getElementById('chime-audio').play();
+            //document.getElementById(alertDIV).playbackRate = 1.0;
+            document.getElementById(alertDIV).play();
         } else if (document.getElementById("lastcm").innerHTML != new_last_cm) {
             // play chime if we've seen a new CM even if already on the CM page
-            //document.getElementById('chime-audio').playbackRate = 1.0;
-            document.getElementById('chime-audio').play();
+            //document.getElementById(alertDIV).playbackRate = 1.0;
+            document.getElementById(alertDIV).play();
         }
 
         document.getElementById("lastcm").innerHTML = new_last_cm;
@@ -409,9 +420,9 @@ function test_rallye() {
   document.getElementById("log-button").setAttribute("style", "display: block;");
   document.getElementById("searching").setAttribute("style", "display: block;");
 
-  document.getElementById('chime-audio').play(); 
-  document.getElementById('chime-audio').pause(); 
-  document.getElementById('chime-audio').currentTime = 0;
+  document.getElementById(alertDIV).play(); 
+  document.getElementById(alertDIV).pause(); 
+  document.getElementById(alertDIV).currentTime = 0;
 
   document.getElementById('warn-audio').play(); 
   document.getElementById('warn-audio').pause(); 
@@ -433,9 +444,9 @@ function test_log_rallye() {
   document.getElementById("log-button").setAttribute("style", "display: block;");
   document.getElementById("searching").setAttribute("style", "display: block;");
 
-  document.getElementById('chime-audio').play(); 
-  document.getElementById('chime-audio').pause(); 
-  document.getElementById('chime-audio').currentTime = 0;
+  document.getElementById(alertDIV).play(); 
+  document.getElementById(alertDIV).pause(); 
+  document.getElementById(alertDIV).currentTime = 0;
 
   document.getElementById('warn-audio').play(); 
   document.getElementById('warn-audio').pause(); 

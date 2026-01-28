@@ -90,12 +90,6 @@ const CMs = [
       300
     ],
     [
-      37.40702292659582,
-      -122.08941664217619,
-      "II\n65",
-      110
-    ],
-    [
       37.40632089510253,
       -122.08653791784484,
       "CC\n42",
@@ -210,12 +204,6 @@ const CMs = [
       190
     ],
     [
-      37.413131129909424,
-      -122.08416550989521,
-      "SS\n54",
-      190
-    ],
-    [
       37.40365093148635,
       -122.08545600889836,
       "J\n40",
@@ -293,6 +281,18 @@ const CMs = [
       "G\n40",
       280
     ],
+    [
+      37.40702292659582,
+      -122.08941664217619,
+      "II\n66",
+      110
+    ],
+    [
+      37.41312563307654,
+      -122.0841636914372,
+      "SS\n54",
+      190
+    ],
     // Additional CMs for testing the app (Mountain View):
     [
       37.374062646348754,
@@ -365,7 +365,7 @@ const LOGGING = false;
 // text if it already exists, or wait for the page to finish loading (just doing the
 // onload doesn't work if the script is loaded after the page has finished loading)
 var cms_ver = document.getElementById("cms-ver");
-const cms_ver_text = "CMs Updated 2026-01-21";
+const cms_ver_text = "CMs Updated 2026-01-27";
 if (cms_ver) {
   cms_ver.innerHTML = cms_ver_text;
 } else {

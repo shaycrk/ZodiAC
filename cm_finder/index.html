@@ -56,13 +56,14 @@
 <script>
   const urlParams = new URLSearchParams(window.location.search);
   let rallyeID = urlParams.get('rallye');
-  const cacheBust = '?ver=20251220';
+  const cacheBust = '?ver=20260302';
   const rallyeDict = {
+    'winchester': {'script': 'winchester-cms.js', 'name': 'The Afterlife and Times of Sarah Winchester (Jun 2026)', 'short_name': 'Sarah Winchester (Jun 2026)'},
     'wicked': {'script': 'wicked-cms.js', 'name': 'Wicked: Rallye for Good (Feb 2026)', 'short_name': 'Wicked Rallye (Feb 2026)'},
     'route-66': {'script': 'route66-cms.js', 'name': 'Get Your Kicks on Route 66 (Nov 2018)', 'short_name': 'Route 66 (Nov 2018)'},
     'lick-observatory': {'script': 'lick-observatory-cms.js', 'name': 'The Search for Terrestrial Intelligence (Aug 2025)', 'short_name': 'Lick Observatory (Aug 2025)'}
   }
-  const defaultRallye = 'wicked';
+  const defaultRallye = 'winchester';
 
   function loadScript(src) {
     const script = document.createElement('script');

@@ -134,7 +134,7 @@ const CMs = [
     [
       37.39597144118088,
       -122.02418611413542,
-      "YY\n71",
+      "NV\n71",
       195
     ],
     [
@@ -278,7 +278,7 @@ const CMs = [
     [
       37.3732173789782,
       -122.0435385427103,
-      "ZZ\n34",
+      "MT\n34",
       195
     ],
     [
@@ -515,7 +515,7 @@ const LOGGING = false;
 // text if it already exists, or wait for the page to finish loading (just doing the
 // onload doesn't work if the script is loaded after the page has finished loading)
 var cms_ver = document.getElementById("cms-ver");
-const cms_ver_text = "CMs Updated 2026-03-21";
+const cms_ver_text = "CMs Updated 2026-03-28";
 if (cms_ver) {
   cms_ver.innerHTML = cms_ver_text;
 } else {

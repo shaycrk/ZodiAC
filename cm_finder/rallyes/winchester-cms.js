@@ -42,12 +42,6 @@ const CMs = [
       265
     ],
     [
-      37.40459219913713,
-      -122.0647751795548,
-      "JJJ\n7",
-      195
-    ],
-    [
       37.403657245236055,
       -122.06510574718136,
       "V\n46",
@@ -58,12 +52,6 @@ const CMs = [
       -122.06576509519951,
       "TTT\n25",
       135
-    ],
-    [
-      37.40493123416569,
-      -122.06548078104393,
-      "XX\n17",
-      45
     ],
     [
       37.40385098893905,
@@ -130,12 +118,6 @@ const CMs = [
       -122.02434881977067,
       "OOO\n22",
       280
-    ],
-    [
-      37.39597144118088,
-      -122.02418611413542,
-      "NV\n71",
-      195
     ],
     [
       37.396023648227334,
@@ -274,12 +256,6 @@ const CMs = [
       -122.04262659164523,
       "F\n1",
       105
-    ],
-    [
-      37.3732173789782,
-      -122.0435385427103,
-      "MT\n34",
-      195
     ],
     [
       37.37473076232475,
@@ -443,6 +419,30 @@ const CMs = [
       "H\n50",
       15
     ],
+    [
+      37.3732173789782,
+      -122.0435385427103,
+      "MT\n34",
+      195
+    ],
+    [
+      37.39597144118088,
+      -122.02418611413542,
+      "NV\n71",
+      195
+    ],
+    [
+      37.40459219913713,
+      -122.0647751795548,
+      "JJJ\n7",
+      195
+    ],
+    [
+      37.39467086849896,
+      -122.02166283685314,
+      "XX\n17",
+      195
+    ],
     // Additional CMs for testing the app (Mountain View):
     [
       37.374062646348754,
@@ -515,7 +515,7 @@ const LOGGING = false;
 // text if it already exists, or wait for the page to finish loading (just doing the
 // onload doesn't work if the script is loaded after the page has finished loading)
 var cms_ver = document.getElementById("cms-ver");
-const cms_ver_text = "CMs Updated 2026-03-28";
+const cms_ver_text = "CMs Updated 2026-04-12";
 if (cms_ver) {
   cms_ver.innerHTML = cms_ver_text;
 } else {

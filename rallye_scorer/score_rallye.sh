@@ -1,1 +1,1 @@
-python scoring.py -s rallye_results/car_$1/ocr_output_$1.json -o rallye_results/car_$1/scored_$1.txt
+python scoring.py -s rallyes/$1/results/car_$2/ocr_output_$2.json -o rallyes/$1/results/car_$2/scored_$2.txt

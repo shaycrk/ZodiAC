@@ -1,0 +1,1 @@
+python enhanced_form_ocr.py -i rallye_results/car_$1/scoresheet_filled_$1.png -t scoresheet.png -c all_cms_rois_config.json --annotate rallye_results/car_$1/updated_annotated_scoresheet_$1.png -f rallye_results/car_$1/ocr_output_$1.json

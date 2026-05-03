@@ -15,14 +15,14 @@
         119
       ],
       "poss_values": [
-        "41"
+        "68"
       ],
       "filter_keywords": [
         "A"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=14",
-        "easyocr_allowlist": "14"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=68",
+        "easyocr_allowlist": "68"
       }
     },
     {
@@ -34,14 +34,14 @@
         119
       ],
       "poss_values": [
-        "8"
+        "18"
       ],
       "filter_keywords": [
         "B"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=8",
-        "easyocr_allowlist": "8"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=18",
+        "easyocr_allowlist": "18"
       }
     },
     {
@@ -53,14 +53,14 @@
         119
       ],
       "poss_values": [
-        "27"
+        "13"
       ],
       "filter_keywords": [
         "C"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=27",
-        "easyocr_allowlist": "27"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=13",
+        "easyocr_allowlist": "13"
       }
     },
     {
@@ -72,14 +72,14 @@
         119
       ],
       "poss_values": [
-        "7"
+        "31"
       ],
       "filter_keywords": [
         "D"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=7",
-        "easyocr_allowlist": "7"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=13",
+        "easyocr_allowlist": "13"
       }
     },
     {
@@ -91,14 +91,14 @@
         119
       ],
       "poss_values": [
-        "74"
+        "999"
       ],
       "filter_keywords": [
         "E"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=47",
-        "easyocr_allowlist": "47"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -110,14 +110,14 @@
         119
       ],
       "poss_values": [
-        "2"
+        "1"
       ],
       "filter_keywords": [
         "F"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=2",
-        "easyocr_allowlist": "2"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=1",
+        "easyocr_allowlist": "1"
       }
     },
     {
@@ -129,14 +129,14 @@
         119
       ],
       "poss_values": [
-        "37"
+        "38"
       ],
       "filter_keywords": [
         "G"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=73",
-        "easyocr_allowlist": "73"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=38",
+        "easyocr_allowlist": "38"
       }
     },
     {
@@ -148,14 +148,14 @@
         119
       ],
       "poss_values": [
-        "54"
+        "50"
       ],
       "filter_keywords": [
         "H"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=54",
-        "easyocr_allowlist": "54"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=05",
+        "easyocr_allowlist": "05"
       }
     },
     {
@@ -167,14 +167,14 @@
         119
       ],
       "poss_values": [
-        "88"
+        "45"
       ],
       "filter_keywords": [
         "I"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=8",
-        "easyocr_allowlist": "8"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=45",
+        "easyocr_allowlist": "45"
       }
     },
     {
@@ -186,14 +186,14 @@
         119
       ],
       "poss_values": [
-        "32"
+        "66"
       ],
       "filter_keywords": [
         "J"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=23",
-        "easyocr_allowlist": "23"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=6",
+        "easyocr_allowlist": "6"
       }
     },
     {
@@ -205,14 +205,14 @@
         119
       ],
       "poss_values": [
-        "4"
+        "9"
       ],
       "filter_keywords": [
         "K"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=4",
-        "easyocr_allowlist": "4"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -224,14 +224,14 @@
         119
       ],
       "poss_values": [
-        "14"
+        "78"
       ],
       "filter_keywords": [
         "L"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=14",
-        "easyocr_allowlist": "14"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=78",
+        "easyocr_allowlist": "78"
       }
     },
     {
@@ -243,15 +243,14 @@
         119
       ],
       "poss_values": [
-        "87",
-        "13"
+        "43"
       ],
       "filter_keywords": [
         "M"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=8173",
-        "easyocr_allowlist": "8173"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=43",
+        "easyocr_allowlist": "43"
       }
     },
     {
@@ -263,14 +262,14 @@
         119
       ],
       "poss_values": [
-        "72"
+        "75"
       ],
       "filter_keywords": [
         "N"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=27",
-        "easyocr_allowlist": "27"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=57",
+        "easyocr_allowlist": "57"
       }
     },
     {
@@ -282,14 +281,14 @@
         119
       ],
       "poss_values": [
-        "40"
+        "70"
       ],
       "filter_keywords": [
         "O"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=40",
-        "easyocr_allowlist": "40"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=70",
+        "easyocr_allowlist": "70"
       }
     },
     {
@@ -301,14 +300,14 @@
         119
       ],
       "poss_values": [
-        "23"
+        "20"
       ],
       "filter_keywords": [
         "P"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=23",
-        "easyocr_allowlist": "23"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=20",
+        "easyocr_allowlist": "20"
       }
     },
     {
@@ -320,14 +319,14 @@
         119
       ],
       "poss_values": [
-        "5"
+        "11"
       ],
       "filter_keywords": [
         "Q"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=5",
-        "easyocr_allowlist": "5"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=1",
+        "easyocr_allowlist": "1"
       }
     },
     {
@@ -339,14 +338,14 @@
         119
       ],
       "poss_values": [
-        "66"
+        "78"
       ],
       "filter_keywords": [
         "R"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=6",
-        "easyocr_allowlist": "6"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=78",
+        "easyocr_allowlist": "78"
       }
     },
     {
@@ -358,14 +357,14 @@
         119
       ],
       "poss_values": [
-        "78"
+        "36"
       ],
       "filter_keywords": [
         "S"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=87",
-        "easyocr_allowlist": "87"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=36",
+        "easyocr_allowlist": "36"
       }
     },
     {
@@ -377,14 +376,14 @@
         119
       ],
       "poss_values": [
-        "15"
+        "26"
       ],
       "filter_keywords": [
         "T"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=15",
-        "easyocr_allowlist": "15"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=26",
+        "easyocr_allowlist": "26"
       }
     },
     {
@@ -396,14 +395,14 @@
         119
       ],
       "poss_values": [
-        "1"
+        "14"
       ],
       "filter_keywords": [
         "U"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=1",
-        "easyocr_allowlist": "1"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=14",
+        "easyocr_allowlist": "14"
       }
     },
     {
@@ -415,14 +414,14 @@
         119
       ],
       "poss_values": [
-        "43"
+        "46"
       ],
       "filter_keywords": [
         "V"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=43",
-        "easyocr_allowlist": "43"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=46",
+        "easyocr_allowlist": "46"
       }
     },
     {
@@ -434,14 +433,14 @@
         119
       ],
       "poss_values": [
-        "60"
+        "8"
       ],
       "filter_keywords": [
         "W"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=06",
-        "easyocr_allowlist": "06"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=8",
+        "easyocr_allowlist": "8"
       }
     },
     {
@@ -453,14 +452,14 @@
         119
       ],
       "poss_values": [
-        "6"
+        "30"
       ],
       "filter_keywords": [
         "X"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=6",
-        "easyocr_allowlist": "6"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=03",
+        "easyocr_allowlist": "03"
       }
     },
     {
@@ -472,14 +471,14 @@
         119
       ],
       "poss_values": [
-        "11"
+        "12"
       ],
       "filter_keywords": [
         "Y"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=1",
-        "easyocr_allowlist": "1"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=12",
+        "easyocr_allowlist": "12"
       }
     },
     {
@@ -491,14 +490,14 @@
         119
       ],
       "poss_values": [
-        "1969"
+        "19"
       ],
       "filter_keywords": [
         "Z"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=916",
-        "easyocr_allowlist": "916"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=19",
+        "easyocr_allowlist": "19"
       }
     },
     {
@@ -510,14 +509,14 @@
         119
       ],
       "poss_values": [
-        "28"
+        "16"
       ],
       "filter_keywords": [
         "AA"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=82",
-        "easyocr_allowlist": "82"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=16",
+        "easyocr_allowlist": "16"
       }
     },
     {
@@ -529,14 +528,14 @@
         119
       ],
       "poss_values": [
-        "33"
+        "37"
       ],
       "filter_keywords": [
         "BB"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=3",
-        "easyocr_allowlist": "3"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=37",
+        "easyocr_allowlist": "37"
       }
     },
     {
@@ -548,14 +547,14 @@
         119
       ],
       "poss_values": [
-        "48"
+        "55"
       ],
       "filter_keywords": [
         "CC"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=84",
-        "easyocr_allowlist": "84"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=5",
+        "easyocr_allowlist": "5"
       }
     },
     {
@@ -567,14 +566,14 @@
         119
       ],
       "poss_values": [
-        "77"
+        "24"
       ],
       "filter_keywords": [
         "DD"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=7",
-        "easyocr_allowlist": "7"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=24",
+        "easyocr_allowlist": "24"
       }
     },
     {
@@ -586,14 +585,14 @@
         119
       ],
       "poss_values": [
-        "3"
+        "73"
       ],
       "filter_keywords": [
         "EE"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=3",
-        "easyocr_allowlist": "3"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=73",
+        "easyocr_allowlist": "73"
       }
     },
     {
@@ -605,14 +604,14 @@
         119
       ],
       "poss_values": [
-        "21"
+        "3"
       ],
       "filter_keywords": [
         "FF"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=12",
-        "easyocr_allowlist": "12"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=3",
+        "easyocr_allowlist": "3"
       }
     },
     {
@@ -624,14 +623,14 @@
         119
       ],
       "poss_values": [
-        "18"
+        "52"
       ],
       "filter_keywords": [
         "GG"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=81",
-        "easyocr_allowlist": "81"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=52",
+        "easyocr_allowlist": "52"
       }
     },
     {
@@ -643,14 +642,14 @@
         119
       ],
       "poss_values": [
-        "5454"
+        "35"
       ],
       "filter_keywords": [
         "HH"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=54",
-        "easyocr_allowlist": "54"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=35",
+        "easyocr_allowlist": "35"
       }
     },
     {
@@ -662,14 +661,14 @@
         119
       ],
       "poss_values": [
-        "30"
+        "23"
       ],
       "filter_keywords": [
         "II"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=03",
-        "easyocr_allowlist": "03"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=23",
+        "easyocr_allowlist": "23"
       }
     },
     {
@@ -681,14 +680,14 @@
         119
       ],
       "poss_values": [
-        "36"
+        "62"
       ],
       "filter_keywords": [
         "JJ"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=63",
-        "easyocr_allowlist": "63"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=62",
+        "easyocr_allowlist": "62"
       }
     },
     {
@@ -700,14 +699,14 @@
         119
       ],
       "poss_values": [
-        "44"
+        "27"
       ],
       "filter_keywords": [
         "KK"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=4",
-        "easyocr_allowlist": "4"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=27",
+        "easyocr_allowlist": "27"
       }
     },
     {
@@ -719,14 +718,14 @@
         119
       ],
       "poss_values": [
-        "29"
+        "21"
       ],
       "filter_keywords": [
         "LL"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=92",
-        "easyocr_allowlist": "92"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=21",
+        "easyocr_allowlist": "21"
       }
     },
     {
@@ -738,14 +737,14 @@
         119
       ],
       "poss_values": [
-        "38"
+        "5"
       ],
       "filter_keywords": [
         "MM"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=83",
-        "easyocr_allowlist": "83"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=5",
+        "easyocr_allowlist": "5"
       }
     },
     {
@@ -757,14 +756,14 @@
         119
       ],
       "poss_values": [
-        "20"
+        "40"
       ],
       "filter_keywords": [
         "NN"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=02",
-        "easyocr_allowlist": "02"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=40",
+        "easyocr_allowlist": "40"
       }
     },
     {
@@ -776,14 +775,14 @@
         119
       ],
       "poss_values": [
-        "52"
+        "54"
       ],
       "filter_keywords": [
         "OO"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=52",
-        "easyocr_allowlist": "52"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=54",
+        "easyocr_allowlist": "54"
       }
     },
     {
@@ -795,14 +794,14 @@
         119
       ],
       "poss_values": [
-        "16"
+        "47"
       ],
       "filter_keywords": [
         "PP"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=16",
-        "easyocr_allowlist": "16"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=47",
+        "easyocr_allowlist": "47"
       }
     },
     {
@@ -814,14 +813,14 @@
         119
       ],
       "poss_values": [
-        "55"
+        "44"
       ],
       "filter_keywords": [
         "QQ"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=5",
-        "easyocr_allowlist": "5"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=4",
+        "easyocr_allowlist": "4"
       }
     },
     {
@@ -833,14 +832,14 @@
         119
       ],
       "poss_values": [
-        "45"
+        "61"
       ],
       "filter_keywords": [
         "RR"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=54",
-        "easyocr_allowlist": "54"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=61",
+        "easyocr_allowlist": "61"
       }
     },
     {
@@ -852,14 +851,14 @@
         119
       ],
       "poss_values": [
-        "19"
+        "48"
       ],
       "filter_keywords": [
         "SS"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=91",
-        "easyocr_allowlist": "91"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=48",
+        "easyocr_allowlist": "48"
       }
     },
     {
@@ -871,14 +870,14 @@
         119
       ],
       "poss_values": [
-        "17"
+        "15"
       ],
       "filter_keywords": [
         "TT"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=17",
-        "easyocr_allowlist": "17"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=15",
+        "easyocr_allowlist": "15"
       }
     },
     {
@@ -890,14 +889,14 @@
         119
       ],
       "poss_values": [
-        "24"
+        "2"
       ],
       "filter_keywords": [
         "UU"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=42",
-        "easyocr_allowlist": "42"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=2",
+        "easyocr_allowlist": "2"
       }
     },
     {
@@ -909,14 +908,14 @@
         119
       ],
       "poss_values": [
-        "22"
+        "60"
       ],
       "filter_keywords": [
         "VV"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=2",
-        "easyocr_allowlist": "2"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=60",
+        "easyocr_allowlist": "60"
       }
     },
     {
@@ -928,14 +927,14 @@
         119
       ],
       "poss_values": [
-        "38"
+        "32"
       ],
       "filter_keywords": [
         "WW"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=83",
-        "easyocr_allowlist": "83"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=32",
+        "easyocr_allowlist": "32"
       }
     },
     {
@@ -947,14 +946,14 @@
         119
       ],
       "poss_values": [
-        "39"
+        "17"
       ],
       "filter_keywords": [
         "XX"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=93",
-        "easyocr_allowlist": "93"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=17",
+        "easyocr_allowlist": "17"
       }
     },
     {
@@ -966,14 +965,14 @@
         119
       ],
       "poss_values": [
-        "10"
+        "29"
       ],
       "filter_keywords": [
         "AAA"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=10",
-        "easyocr_allowlist": "10"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=29",
+        "easyocr_allowlist": "29"
       }
     },
     {
@@ -985,14 +984,14 @@
         119
       ],
       "poss_values": [
-        "63"
+        "6"
       ],
       "filter_keywords": [
         "BBB"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=36",
-        "easyocr_allowlist": "36"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=6",
+        "easyocr_allowlist": "6"
       }
     },
     {
@@ -1004,14 +1003,14 @@
         119
       ],
       "poss_values": [
-        "9"
+        "57"
       ],
       "filter_keywords": [
         "CCC"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
-        "easyocr_allowlist": "9"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=57",
+        "easyocr_allowlist": "57"
       }
     },
     {
@@ -1023,14 +1022,14 @@
         119
       ],
       "poss_values": [
-        "777"
+        "33"
       ],
       "filter_keywords": [
         "DDD"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=7",
-        "easyocr_allowlist": "7"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=3",
+        "easyocr_allowlist": "3"
       }
     },
     {
@@ -1042,14 +1041,14 @@
         119
       ],
       "poss_values": [
-        "42"
+        "4"
       ],
       "filter_keywords": [
         "EEE"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=42",
-        "easyocr_allowlist": "42"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=4",
+        "easyocr_allowlist": "4"
       }
     },
     {
@@ -1061,14 +1060,14 @@
         119
       ],
       "poss_values": [
-        "75"
+        "56"
       ],
       "filter_keywords": [
         "FFF"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=57",
-        "easyocr_allowlist": "57"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=56",
+        "easyocr_allowlist": "56"
       }
     },
     {
@@ -1080,14 +1079,14 @@
         119
       ],
       "poss_values": [
-        "65"
+        "59"
       ],
       "filter_keywords": [
         "GGG"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=56",
-        "easyocr_allowlist": "56"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=59",
+        "easyocr_allowlist": "59"
       }
     },
     {
@@ -1099,14 +1098,14 @@
         119
       ],
       "poss_values": [
-        "47"
+        "10"
       ],
       "filter_keywords": [
         "HHH"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=47",
-        "easyocr_allowlist": "47"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=10",
+        "easyocr_allowlist": "10"
       }
     },
     {
@@ -1118,14 +1117,14 @@
         119
       ],
       "poss_values": [
-        "26"
+        "51"
       ],
       "filter_keywords": [
         "III"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=26",
-        "easyocr_allowlist": "26"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=51",
+        "easyocr_allowlist": "51"
       }
     },
     {
@@ -1137,14 +1136,14 @@
         119
       ],
       "poss_values": [
-        "70"
+        "7"
       ],
       "filter_keywords": [
         "JJJ"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=07",
-        "easyocr_allowlist": "07"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=7",
+        "easyocr_allowlist": "7"
       }
     },
     {
@@ -1156,14 +1155,14 @@
         119
       ],
       "poss_values": [
-        "69"
+        "41"
       ],
       "filter_keywords": [
         "LLL"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=96",
-        "easyocr_allowlist": "96"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=41",
+        "easyocr_allowlist": "41"
       }
     },
     {
@@ -1175,14 +1174,14 @@
         119
       ],
       "poss_values": [
-        "34"
+        "63"
       ],
       "filter_keywords": [
         "MMM"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=43",
-        "easyocr_allowlist": "43"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=63",
+        "easyocr_allowlist": "63"
       }
     },
     {
@@ -1194,14 +1193,14 @@
         119
       ],
       "poss_values": [
-        "53"
+        "42"
       ],
       "filter_keywords": [
         "NNN"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=53",
-        "easyocr_allowlist": "53"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=42",
+        "easyocr_allowlist": "42"
       }
     },
     {
@@ -1213,14 +1212,14 @@
         119
       ],
       "poss_values": [
-        "67"
+        "22"
       ],
       "filter_keywords": [
         "OOO"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=76",
-        "easyocr_allowlist": "76"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=2",
+        "easyocr_allowlist": "2"
       }
     },
     {
@@ -1232,14 +1231,14 @@
         119
       ],
       "poss_values": [
-        "50"
+        "28"
       ],
       "filter_keywords": [
         "PPP"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=50",
-        "easyocr_allowlist": "50"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=28",
+        "easyocr_allowlist": "28"
       }
     },
     {
@@ -1251,14 +1250,14 @@
         119
       ],
       "poss_values": [
-        "62"
+        "39"
       ],
       "filter_keywords": [
         "QQQ"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=26",
-        "easyocr_allowlist": "26"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=39",
+        "easyocr_allowlist": "39"
       }
     },
     {
@@ -1270,14 +1269,14 @@
         119
       ],
       "poss_values": [
-        "58"
+        "49"
       ],
       "filter_keywords": [
         "RRR"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=85",
-        "easyocr_allowlist": "85"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=49",
+        "easyocr_allowlist": "49"
       }
     },
     {
@@ -1289,14 +1288,14 @@
         119
       ],
       "poss_values": [
-        "51"
+        "53"
       ],
       "filter_keywords": [
         "SSS"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=15",
-        "easyocr_allowlist": "15"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=53",
+        "easyocr_allowlist": "53"
       }
     },
     {
@@ -1308,14 +1307,14 @@
         119
       ],
       "poss_values": [
-        "57"
+        "25"
       ],
       "filter_keywords": [
         "TTT"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=57",
-        "easyocr_allowlist": "57"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=25",
+        "easyocr_allowlist": "25"
       }
     },
     {
@@ -1327,14 +1326,14 @@
         119
       ],
       "poss_values": [
-        "56"
+        "58"
       ],
       "filter_keywords": [
         "UUU"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=56",
-        "easyocr_allowlist": "56"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=58",
+        "easyocr_allowlist": "58"
       }
     },
     {
@@ -1346,14 +1345,14 @@
         119
       ],
       "poss_values": [
-        "31"
+        "999"
       ],
       "filter_keywords": [
         "VVV"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=13",
-        "easyocr_allowlist": "13"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -1365,14 +1364,14 @@
         119
       ],
       "poss_values": [
-        "68"
+        "65"
       ],
       "filter_keywords": [
         "WWW"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=86",
-        "easyocr_allowlist": "86"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=65",
+        "easyocr_allowlist": "65"
       }
     },
     {
@@ -1384,14 +1383,14 @@
         119
       ],
       "poss_values": [
-        "80"
+        "67"
       ],
       "filter_keywords": [
         "AB"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=80",
-        "easyocr_allowlist": "80"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=67",
+        "easyocr_allowlist": "67"
       }
     },
     {
@@ -1403,18 +1402,18 @@
         119
       ],
       "poss_values": [
-        "12"
+        "72"
       ],
       "filter_keywords": [
         "CA"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=12",
-        "easyocr_allowlist": "12"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=72",
+        "easyocr_allowlist": "72"
       }
     },
     {
-      "id": "cm_ET",
+      "id": "cm_EZ",
       "bbox": [
         1530,
         2103,
@@ -1422,14 +1421,14 @@
         119
       ],
       "poss_values": [
-        "73"
+        "64"
       ],
       "filter_keywords": [
-        "ET"
+        "EZ"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=73",
-        "easyocr_allowlist": "73"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=64",
+        "easyocr_allowlist": "64"
       }
     },
     {
@@ -1441,14 +1440,14 @@
         119
       ],
       "poss_values": [
-        "4265"
+        "999"
       ],
       "filter_keywords": [
         "FT"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=5426",
-        "easyocr_allowlist": "5426"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -1460,15 +1459,14 @@
         119
       ],
       "poss_values": [
-        "25100",
-        "15185"
+        "80"
       ],
       "filter_keywords": [
         "GC"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=10852",
-        "easyocr_allowlist": "10852"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=80",
+        "easyocr_allowlist": "80"
       }
     },
     {
@@ -1480,14 +1478,14 @@
         119
       ],
       "poss_values": [
-        "35"
+        "74"
       ],
       "filter_keywords": [
         "GM"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=53",
-        "easyocr_allowlist": "53"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=74",
+        "easyocr_allowlist": "74"
       }
     },
     {
@@ -1499,14 +1497,14 @@
         119
       ],
       "poss_values": [
-        "2061"
+        "999"
       ],
       "filter_keywords": [
         "HR"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=1026",
-        "easyocr_allowlist": "1026"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -1518,14 +1516,14 @@
         119
       ],
       "poss_values": [
-        "64"
+        "77"
       ],
       "filter_keywords": [
         "IL"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=46",
-        "easyocr_allowlist": "46"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=7",
+        "easyocr_allowlist": "7"
       }
     },
     {
@@ -1537,14 +1535,14 @@
         119
       ],
       "poss_values": [
-        "25"
+        "34"
       ],
       "filter_keywords": [
         "MT"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=52",
-        "easyocr_allowlist": "52"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=34",
+        "easyocr_allowlist": "34"
       }
     },
     {
@@ -1556,14 +1554,14 @@
         119
       ],
       "poss_values": [
-        "2525"
+        "999"
       ],
       "filter_keywords": [
         "MTMT"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=52",
-        "easyocr_allowlist": "52"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -1575,14 +1573,14 @@
         119
       ],
       "poss_values": [
-        "49"
+        "71"
       ],
       "filter_keywords": [
         "NV"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=94",
-        "easyocr_allowlist": "94"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=71",
+        "easyocr_allowlist": "71"
       }
     },
     {
@@ -1594,14 +1592,14 @@
         119
       ],
       "poss_values": [
-        "61"
+        "999"
       ],
       "filter_keywords": [
         "XU"
       ],
       "ocr_config": {
-        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=16",
-        "easyocr_allowlist": "16"
+        "tesseract_config": "--psm 7 -c tessedit_char_whitelist=9",
+        "easyocr_allowlist": "9"
       }
     },
     {
@@ -1617,5 +1615,8 @@
         "number"
       ]
     }
-  ]
+  ],
+  "other_fields": {
+    "driver_larsen": "Is Fred Larsen listed as the driver? (y/n): "
+  }
 }

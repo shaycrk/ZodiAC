@@ -55,6 +55,7 @@ class OCRFormParser:
         self.debug = debug
         self.OCRLocation = namedtuple("OCRLocation", ["id", "bbox", "filter_keywords", "ocr_config", "poss_values"])
         self.roi_config = None
+        self.other_fields_config = None
         
     def preprocess_image(self, image: np.ndarray, method: str = "threshold") -> np.ndarray:
         """
@@ -249,6 +250,12 @@ class OCRFormParser:
                 ))
             
             self.roi_config = locations
+
+            # Other fields handle additional gimmicks (e.g., driver name, date, etc.) and currently
+            # must be in the form of a question with expected answer of y/n. The config should
+            # contain a dictionary with the field name as key and the question as value, e.g.:
+            # {"driver_larsen": "Is Fred Larsen listed as the driver? (y/n): "}
+            self.other_fields_config = config_data.get('other_fields', {})
         except Exception as e:
             print(f"Error loading ROI config: {e}")
             self.roi_config = []
@@ -336,7 +343,7 @@ class OCRFormParser:
             "fields": {}
         }
         for field_id, value in results.items():
-            if field_id in ['Finished', 'Zodiac_1969', 'Date_1886', 'Passenger_Floyd', 'Passenger_Lick', 'Sunshine'] or field_id.startswith('CP_'):
+            if field_id == 'Finished' or field_id in self.other_fields_config or field_id.startswith('CP_'):
                 continue
             field_data = config_rois[field_id]
             result_type = None
@@ -424,7 +431,7 @@ class OCRFormParser:
         
         return results
 
-def collect_other_fields():
+def collect_other_fields(other_fields_config: Dict):
     """Collect other fields from user input"""
     other_fields = {}
 
@@ -435,11 +442,8 @@ def collect_other_fields():
     for i in signed_cps:
         other_fields[i] = True
 
-    other_fields['Zodiac_1969'] = input("Is 1969 Written next to the Z in ZodiAC? (y/n): ") == 'y'
-    other_fields['Date_1886'] = input("Is the date December 27, 1886? (y/n): ") == 'y'
-    other_fields['Passenger_Floyd'] = input("Is Richard Floyd on the passenger list? (y/n): ") == 'y'
-    other_fields['Passenger_Lick'] = input("Is James Lick on the passenger list? (y/n): ") == 'y'
-    other_fields['Sunshine'] = input("Is there a happy face next to the driver's name? (y/n): ") == 'y'
+    for field_name, question in other_fields_config.items():
+        other_fields[field_name] = input(question) == 'y'
 
     return other_fields
 
@@ -491,7 +495,7 @@ def main():
         if args.output:
             output_dict = {k: v['ocr_results']['best'] for k, v in results['fields'].items()}
             output_dict['Finished'] = True
-            other_fields = collect_other_fields()
+            other_fields = collect_other_fields(ocr_parser.other_fields_config)
             output_dict.update(other_fields)
             with open(args.output, 'w') as f:
                 json.dump(output_dict, f, indent=2)

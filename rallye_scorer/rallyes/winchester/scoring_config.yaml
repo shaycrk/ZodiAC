@@ -14,7 +14,7 @@ Bad SUPP 64:
   - {points: -10, all: {cm_M: 43, cm_LL: 21}}
   - {points: 10, all: {cm_LL: 21}}
   - {points: 5, all: {cm_M: 43}}
-Ave Doesn't Exist on Signs:
+Five 10 Not a Government-Erected Sign:
   - {points: 10, all: {cm_EE: 73}}
 On Course (CCC 57):
   - {points: 10, all: {cm_CCC: 57}}
@@ -116,7 +116,7 @@ Lagging RIs 17-20:
   - {points: -10, all: {cm_QQ: 44}}
   - {points: 5, all: {cm_T: 26, cm_Q: 11}}
   - {points: 0, all: {cm_Q: 11}}
-Everything Following 'at' (Carson and Leota):
+Ave Doesn't Exist on Signs:
   - {points: 10, all: {cm_K: 9}}
 On Course (W is on Signs):
   - {points: 0, all: {cm_W: 8, cm_S: 36}}

@@ -1,1 +1,1 @@
-python scoring.py -s rallyes/$1/results/car_$2/ocr_output_$2.json -o rallyes/$1/results/car_$2/scored_$2.txt
+python scoring.py -s rallyes/$1/results/car_$2/ocr_output_$2.json -o rallyes/$1/results/car_$2/scored_$2.txt -c rallyes/$1/scoring_config.yaml

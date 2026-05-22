@@ -5,7 +5,7 @@ RI 1 Never Started (and is bad):
   - {points: 10, all: {cm_P: 20}}
 Nothing to DRI:
   - {points: -10, all: {cm_P: "", cm_TT: 15}}
-  - {points: 10, all: {cm_TT: 15}}
+  - {points: 20, all: {cm_TT: 15}}
 Onto Easy Street:
   - {points: -10, all: {cm_EZ: 64, cm_GG: 52}}
   - {points: 10, all: {cm_EZ: 64}}
